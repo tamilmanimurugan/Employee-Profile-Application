@@ -1,1 +1,146 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+body{
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #f4f7fb;
+}
+/* DARK MODE */
+
+body.dark-theme{
+
+  background: #0f172a;
+
+}
+
+/* PAGE BACKGROUND */
+
+body.dark-theme .employees-page,
+body.dark-theme .attendance-page,
+body.dark-theme .settings-page,
+body.dark-theme .profile-wrapper,
+body.dark-theme .dashboard-page{
+
+  background: #0f172a !important;
+
+}
+
+/* CARDS */
+
+body.dark-theme .employee-table-card,
+body.dark-theme .settings-card,
+body.dark-theme .attendance-table-card,
+body.dark-theme .profile-card,
+body.dark-theme .info-card,
+body.dark-theme .about-box,
+body.dark-theme .filter-card,
+body.dark-theme .modal-box{
+
+  background: #1e293b !important;
+
+  color: white;
+
+}
+
+/* SIDEBAR */
+
+body.dark-theme .sidebar{
+
+  background: #111827 !important;
+
+}
+
+/* TOPBAR */
+
+body.dark-theme .topbar{
+
+  background: #1e293b !important;
+
+}
+
+/* HEADINGS */
+
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5,
+body.dark-theme h6{
+
+  color: white !important;
+
+}
+
+/* NORMAL TEXT */
+
+body.dark-theme p,
+body.dark-theme span,
+body.dark-theme label,
+body.dark-theme td,
+body.dark-theme th{
+
+  color: #cbd5e1 !important;
+
+}
+
+/* TABLE */
+
+body.dark-theme table{
+
+  color: white;
+
+}
+
+body.dark-theme td{
+
+  border-color: #334155 !important;
+
+}
+
+/* INPUT */
+
+body.dark-theme input,
+body.dark-theme .form-control,
+body.dark-theme .form-select{
+
+  background: #0f172a !important;
+
+  color: white !important;
+
+  border: 1px solid #334155 !important;
+
+}
+
+/* PLACEHOLDER */
+
+body.dark-theme input::placeholder{
+
+  color: #94a3b8;
+
+}
+
+/* SEARCH */
+
+body.dark-theme .search-box{
+
+  background: #1e293b !important;
+
+}
+
+/* BUTTONS */
+
+body.dark-theme .cancel-btn{
+
+  background: #334155;
+
+  color: white;
+
+}
+
+/* ICONS */
+
+body.dark-theme i{
+
+  color: inherit;
+
+}

@@ -1,0 +1,267 @@
+<div class="profile-wrapper">
+
+  <!-- COVER -->
+
+  <div class="cover-section">
+
+    <div class="overlay"></div>
+
+    <div class="floating-circle one"></div>
+    <div class="floating-circle two"></div>
+
+  </div>
+
+  <div class="container">
+
+    <div class="profile-card shadow-lg">
+
+      <!-- TOP -->
+
+      <div class="profile-top">
+
+        <!-- IMAGE -->
+
+        <div class="profile-image-section">
+
+          <div class="profile-image-box">
+
+            <img [src]="profile.image"
+                 class="profile-img">
+
+            <label class="upload-icon">
+
+              <i class="bi bi-camera-fill"></i>
+
+              <input type="file"
+                     hidden
+                     accept="image/*"
+                     (change)="onImageSelect($event)">
+
+            </label>
+
+          </div>
+
+        </div>
+
+        <!-- DETAILS -->
+
+        <div class="profile-details">
+
+          <h2 class="fw-bold mb-1">
+            {{ profile.name }}
+          </h2>
+
+          <p class="text-muted mb-2">
+            {{ profile.role }}
+          </p>
+
+          <div class="d-flex gap-2 flex-wrap">
+
+            <span class="badge bg-primary">
+              Angular
+            </span>
+
+            <span class="badge bg-dark">
+              TypeScript
+            </span>
+
+            <span class="badge bg-success">
+              Bootstrap
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- BUTTON -->
+
+        <button class="btn btn-primary edit-btn"
+                (click)="openEditModal()">
+
+          <i class="bi bi-pencil-square me-2"></i>
+
+          Edit Profile
+
+        </button>
+
+      </div>
+
+      <!-- INFO -->
+
+      <div class="row mt-5 g-4">
+
+        <div class="col-md-4">
+
+          <div class="info-card">
+
+            <i class="bi bi-envelope-fill"></i>
+
+            <h6>Email</h6>
+
+            <p>{{ profile.email }}</p>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+          <div class="info-card">
+
+            <i class="bi bi-building"></i>
+
+            <h6>Department</h6>
+
+            <p>{{ profile.department }}</p>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+          <div class="info-card">
+
+            <i class="bi bi-geo-alt-fill"></i>
+
+            <h6>Location</h6>
+
+            <p>{{ profile.location }}</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ABOUT -->
+
+      <div class="about-box mt-5">
+
+        <h4 class="fw-bold mb-3">
+
+          About Employee
+
+        </h4>
+
+        <p>
+
+          {{ profile.about }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- EDIT MODAL -->
+
+<div class="custom-modal"
+     *ngIf="showEditModal">
+
+  <div class="modal-box">
+
+    <div class="modal-header-custom">
+
+      <h3>Edit Profile</h3>
+
+      <button class="close-btn"
+              (click)="closeModal()">
+
+        ✕
+
+      </button>
+
+    </div>
+
+    <div class="modal-body-custom">
+
+      <div class="mb-3">
+
+        <label>Name</label>
+
+        <input type="text"
+               class="form-control"
+               [(ngModel)]="profile.name">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>Role</label>
+
+        <input type="text"
+               class="form-control"
+               [(ngModel)]="profile.role">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>Email</label>
+
+        <input type="email"
+               class="form-control"
+               [(ngModel)]="profile.email">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>Department</label>
+
+        <input type="text"
+               class="form-control"
+               [(ngModel)]="profile.department">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>Location</label>
+
+        <input type="text"
+               class="form-control"
+               [(ngModel)]="profile.location">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>About</label>
+
+        <textarea class="form-control"
+                  rows="4"
+                  [(ngModel)]="profile.about">
+
+        </textarea>
+
+      </div>
+
+      <div class="modal-footer-custom">
+
+        <button class="cancel-btn"
+                (click)="closeModal()">
+
+          Cancel
+
+        </button>
+
+        <button class="save-btn"
+                (click)="saveProfile()">
+
+          Save Changes
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

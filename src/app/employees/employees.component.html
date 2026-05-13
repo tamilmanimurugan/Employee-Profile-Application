@@ -1,0 +1,476 @@
+<!-- EMPLOYEES PAGE -->
+
+<div class="employees-page container-fluid">
+
+  <!-- TOP HEADER -->
+
+  <div class="employees-header">
+
+    <div>
+
+      <h1>
+        Employees
+      </h1>
+
+      <p>
+        Manage employee profiles, departments and performance
+      </p>
+
+    </div>
+
+    <div class="header-right">
+
+      <!-- SEARCH -->
+
+      <div class="search-box">
+
+        <i class="bi bi-search"></i>
+
+        <input
+          type="text"
+          placeholder="Search employees..."
+          [(ngModel)]="searchText">
+
+      </div>
+
+      <!-- BUTTON -->
+
+      <button
+        class="add-employee-btn"
+        (click)="openAddModal()">
+
+        <i class="bi bi-plus-circle-fill"></i>
+
+        Add Employee
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- STATS -->
+
+  <div class="row g-4 mb-4">
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="stat-card blue">
+
+        <div>
+
+          <h6>Total Employees</h6>
+
+          <h2>{{ employees.length }}</h2>
+
+        </div>
+
+        <div class="stat-icon">
+
+          <i class="bi bi-people-fill"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="stat-card green">
+
+        <div>
+
+          <h6>Active Employees</h6>
+
+          <h2>7</h2>
+
+        </div>
+
+        <div class="stat-icon">
+
+          <i class="bi bi-person-check-fill"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="stat-card orange">
+
+        <div>
+
+          <h6>On Leave</h6>
+
+          <h2>2</h2>
+
+        </div>
+
+        <div class="stat-icon">
+
+          <i class="bi bi-calendar-event-fill"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="stat-card purple">
+
+        <div>
+
+          <h6>Departments</h6>
+
+          <h2>7</h2>
+
+        </div>
+
+        <div class="stat-icon">
+
+          <i class="bi bi-building-fill"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- TABLE -->
+
+  <div class="employee-table-card">
+
+    <div class="table-top">
+
+      <div>
+
+        <h3>
+          Employee Directory
+        </h3>
+
+        <p>
+          Latest employee records
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="table-responsive">
+
+      <table class="table align-middle employee-table">
+
+        <thead>
+
+          <tr>
+
+            <th>Employee</th>
+            <th>Department</th>
+            <th>Role</th>
+            <th>Experience</th>
+            <th>Status</th>
+            <th>Performance</th>
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let emp of filteredEmployees; let i = index">
+
+            <!-- EMPLOYEE -->
+
+            <td>
+
+              <div class="employee-info">
+
+                <img [src]="emp.image">
+
+                <div>
+
+                  <h6>
+                    {{ emp.name }}
+                  </h6>
+
+                  <span>
+                    {{ emp.email }}
+                  </span>
+
+                </div>
+
+              </div>
+
+            </td>
+
+            <!-- DEPARTMENT -->
+
+            <td>
+
+              <span class="department">
+
+                {{ emp.department }}
+
+              </span>
+
+            </td>
+
+            <!-- ROLE -->
+
+            <td>
+
+              {{ emp.role }}
+
+            </td>
+
+            <!-- EXPERIENCE -->
+
+            <td>
+
+              <div class="experience-badge">
+
+                <i class="bi bi-briefcase-fill"></i>
+
+                {{ emp.experience }}
+
+              </div>
+
+            </td>
+
+            <!-- STATUS -->
+
+            <td>
+
+              <span
+                class="status"
+                [ngClass]="{
+                  'active': emp.status === 'Active',
+                  'leave': emp.status === 'On Leave'
+                }">
+
+                {{ emp.status }}
+
+              </span>
+
+            </td>
+
+            <!-- PERFORMANCE -->
+
+            <td>
+
+              <div class="progress progress-bar-custom">
+
+                <div
+                  class="progress-bar"
+                  [style.width.%]="emp.performance">
+
+                </div>
+
+              </div>
+
+            </td>
+
+            <!-- ACTION -->
+
+            <td>
+
+              <div class="table-actions">
+
+                <button
+                  class="action-btn view"
+                  (click)="viewEmployee(emp)">
+
+                  <i class="bi bi-eye-fill"></i>
+
+                </button>
+
+                <button
+                  class="action-btn edit"
+                  (click)="editEmployee(emp, i)">
+
+                  <i class="bi bi-pencil-fill"></i>
+
+                </button>
+
+                <button
+                  class="action-btn delete"
+                  (click)="deleteEmployee(i)">
+
+                  <i class="bi bi-trash-fill"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MODAL -->
+
+<div
+  class="custom-modal"
+  *ngIf="showModal">
+
+  <div class="modal-box">
+
+    <div class="modal-header-custom">
+
+      <h3>
+
+        {{ editMode ? 'Edit Employee' : 'Add Employee' }}
+
+      </h3>
+
+      <button
+        class="close-btn"
+        (click)="closeModal()">
+
+        ✕
+
+      </button>
+
+    </div>
+
+    <div class="modal-body-custom">
+
+      <div class="mb-3">
+
+        <label>Name</label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="employee.name">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>Email</label>
+
+        <input
+          type="email"
+          class="form-control"
+          [(ngModel)]="employee.email">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>Department</label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="employee.department">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>Role</label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="employee.role">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>Experience</label>
+
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="employee.experience">
+
+      </div>
+
+      <div class="mb-3">
+
+        <label>Performance</label>
+
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="employee.performance">
+
+      </div>
+<!-- IMAGE UPLOAD -->
+
+<div class="mb-3">
+
+  <label>Upload Profile Image</label>
+
+  <input
+    type="file"
+    class="form-control"
+    accept="image/*"
+    (change)="onImageSelected($event)">
+
+</div>
+
+<!-- IMAGE PREVIEW -->
+
+<div class="image-preview"
+     *ngIf="employee.image">
+
+  <img [src]="employee.image">
+
+</div>
+      <div class="modal-footer-custom">
+
+        <button
+          class="cancel-btn"
+          (click)="closeModal()">
+
+          Cancel
+
+        </button>
+
+        <button
+          class="save-btn"
+          *ngIf="!editMode"
+          (click)="addEmployee()">
+
+          Add Employee
+
+        </button>
+
+        <button
+          class="save-btn"
+          *ngIf="editMode"
+          (click)="updateEmployee()">
+
+          Update Employee
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,461 @@
+<div class="settings-page container-fluid">
+
+  <!-- TOP BAR -->
+
+  <div class="top-navbar">
+
+    <div class="welcome-section">
+
+      <h1>
+        Settings Center
+      </h1>
+
+      <p>
+        Manage account preferences, security & application settings
+      </p>
+
+    </div>
+
+    <div class="top-actions">
+
+      <button class="notification-btn">
+        <i class="bi bi-bell-fill"></i>
+        <span class="notification-dot"></span>
+      </button>
+
+      <div class="admin-profile">
+
+        <img src="https://i.pravatar.cc/100?img=12">
+
+        <div>
+          <h6>Tamilmani</h6>
+          <span>Administrator</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+<!-- THEME SETTINGS -->
+
+<div class="settings-card">
+
+  <div class="notification-item">
+
+    <div>
+
+      <h5>
+        Dark Mode
+      </h5>
+
+      <span>
+        Enable dark theme for full application
+      </span>
+
+    </div>
+
+    <div class="form-check form-switch">
+
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [checked]="darkMode"
+        (change)="toggleTheme()">
+
+    </div>
+
+  </div>
+
+</div>
+  <!-- QUICK CARDS -->
+
+  <div class="row g-4 mb-4">
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="quick-card blue-card">
+
+        <div>
+          <span>Security Score</span>
+          <h2>92%</h2>
+        </div>
+
+        <i class="bi bi-shield-lock-fill"></i>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="quick-card green-card">
+
+        <div>
+          <span>Notifications</span>
+          <h2>12</h2>
+        </div>
+
+        <i class="bi bi-bell-fill"></i>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="quick-card orange-card">
+
+        <div>
+          <span>Devices</span>
+          <h2>4</h2>
+        </div>
+
+        <i class="bi bi-phone-fill"></i>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="quick-card purple-card">
+
+        <div>
+          <span>Cloud Backup</span>
+          <h2>ON</h2>
+        </div>
+
+        <i class="bi bi-cloud-check-fill"></i>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- PROFILE SETTINGS -->
+
+  <div class="settings-card">
+
+    <div class="card-header-custom">
+
+      <div>
+
+        <h3>
+          Profile Information
+        </h3>
+
+        <p>
+          Update your personal details
+        </p>
+
+      </div>
+
+      <button class="edit-profile-btn">
+        <i class="bi bi-pencil-fill"></i>
+        Edit
+      </button>
+
+    </div>
+
+    <div class="profile-layout">
+
+      <div class="profile-image-section">
+
+        <img src="https://i.pravatar.cc/200?img=12">
+
+        <button class="change-photo-btn">
+          <i class="bi bi-camera-fill"></i>
+          Change Photo
+        </button>
+
+      </div>
+
+      <div class="profile-form">
+
+        <div class="row g-4">
+
+          <div class="col-md-6">
+
+            <label>Full Name</label>
+
+            <input type="text"
+                   class="form-control"
+                   [(ngModel)]="profile.fullName">
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label>Email Address</label>
+
+            <input type="email"
+                   class="form-control"
+                   [(ngModel)]="profile.email">
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label>Department</label>
+
+            <input type="text"
+                   class="form-control"
+                   [(ngModel)]="profile.department">
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label>Designation</label>
+
+            <input type="text"
+                   class="form-control"
+                   [(ngModel)]="profile.designation">
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label>Phone Number</label>
+
+            <input type="text"
+                   class="form-control"
+                   placeholder="+91 9876543210">
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label>Location</label>
+
+            <input type="text"
+                   class="form-control"
+                   placeholder="Chennai, India">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SECURITY -->
+
+  <div class="settings-card">
+
+    <div class="card-header-custom">
+
+      <div>
+
+        <h3>
+          Security Settings
+        </h3>
+
+        <p>
+          Keep your account secure
+        </p>
+
+      </div>
+
+      <span class="security-badge">
+        High Security
+      </span>
+
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-6">
+
+        <label>Current Password</label>
+
+        <input type="password"
+               class="form-control"
+               [(ngModel)]="security.currentPassword">
+
+      </div>
+
+      <div class="col-md-6">
+
+        <label>New Password</label>
+
+        <input type="password"
+               class="form-control"
+               [(ngModel)]="security.newPassword">
+
+      </div>
+
+      <div class="col-md-6">
+
+        <label>Recovery Email</label>
+
+        <input type="email"
+               class="form-control"
+               placeholder="backup@gmail.com">
+
+      </div>
+
+      <div class="col-md-6">
+
+        <label>Two Factor Authentication</label>
+
+        <select class="form-select">
+
+          <option>Enabled</option>
+          <option>Disabled</option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- NOTIFICATIONS -->
+
+  <div class="settings-card">
+
+    <div class="card-header-custom">
+
+      <div>
+
+        <h3>
+          Notification Preferences
+        </h3>
+
+        <p>
+          Control alerts & updates
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="notification-box">
+
+      <div class="notification-item">
+
+        <div class="notification-left">
+
+          <div class="icon-circle blue-bg">
+
+            <i class="bi bi-envelope-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h5>Email Notifications</h5>
+
+            <span>
+              Receive important updates by email
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="form-check form-switch">
+
+          <input class="form-check-input"
+                 type="checkbox"
+                 [(ngModel)]="notifications.emailNotifications">
+
+        </div>
+
+      </div>
+
+      <div class="notification-item">
+
+        <div class="notification-left">
+
+          <div class="icon-circle green-bg">
+
+            <i class="bi bi-calendar-check-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h5>Attendance Alerts</h5>
+
+            <span>
+              Attendance reminders & updates
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="form-check form-switch">
+
+          <input class="form-check-input"
+                 type="checkbox"
+                 [(ngModel)]="notifications.attendanceAlerts">
+
+        </div>
+
+      </div>
+
+      <div class="notification-item">
+
+        <div class="notification-left">
+
+          <div class="icon-circle orange-bg">
+
+            <i class="bi bi-phone-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h5>Push Notifications</h5>
+
+            <span>
+              Receive browser push alerts
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="form-check form-switch">
+
+          <input class="form-check-input"
+                 type="checkbox"
+                 [(ngModel)]="notifications.pushNotifications">
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SAVE -->
+
+  <div class="save-section">
+
+    <button class="discard-btn">
+      Discard
+    </button>
+
+    <button class="main-save-btn"
+            (click)="saveSettings()">
+
+      <i class="bi bi-check-circle-fill"></i>
+
+      Save All Changes
+
+    </button>
+
+  </div>
+
+</div>
