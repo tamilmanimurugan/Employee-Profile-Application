@@ -83,7 +83,7 @@
 
           <h6>Active Employees</h6>
 
-          <h2>7</h2>
+          <h2>{{ activeEmployeesCount }}</h2>
 
         </div>
 
@@ -105,7 +105,7 @@
 
           <h6>On Leave</h6>
 
-          <h2>2</h2>
+          <h2>{{ onLeaveEmployeesCount }}</h2>
 
         </div>
 
@@ -284,6 +284,8 @@
 
               <div class="table-actions">
 
+                <!-- VIEW -->
+
                 <button
                   class="action-btn view"
                   (click)="viewEmployee(emp)">
@@ -292,6 +294,8 @@
 
                 </button>
 
+                <!-- EDIT -->
+
                 <button
                   class="action-btn edit"
                   (click)="editEmployee(emp, i)">
@@ -299,6 +303,8 @@
                   <i class="bi bi-pencil-fill"></i>
 
                 </button>
+
+                <!-- DELETE -->
 
                 <button
                   class="action-btn delete"
@@ -332,6 +338,8 @@
 
   <div class="modal-box">
 
+    <!-- HEADER -->
+
     <div class="modal-header-custom">
 
       <h3>
@@ -350,7 +358,11 @@
 
     </div>
 
+    <!-- BODY -->
+
     <div class="modal-body-custom">
+
+      <!-- NAME -->
 
       <div class="mb-3">
 
@@ -363,6 +375,8 @@
 
       </div>
 
+      <!-- EMAIL -->
+
       <div class="mb-3">
 
         <label>Email</label>
@@ -373,6 +387,8 @@
           [(ngModel)]="employee.email">
 
       </div>
+
+      <!-- DEPARTMENT -->
 
       <div class="mb-3">
 
@@ -385,6 +401,8 @@
 
       </div>
 
+      <!-- ROLE -->
+
       <div class="mb-3">
 
         <label>Role</label>
@@ -395,6 +413,8 @@
           [(ngModel)]="employee.role">
 
       </div>
+
+      <!-- EXPERIENCE -->
 
       <div class="mb-3">
 
@@ -407,6 +427,30 @@
 
       </div>
 
+      <!-- STATUS -->
+
+      <div class="mb-3">
+
+        <label>Status</label>
+
+        <select
+          class="form-control"
+          [(ngModel)]="employee.status">
+
+          <option value="Active">
+            Active
+          </option>
+
+          <option value="On Leave">
+            On Leave
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- PERFORMANCE -->
+
       <div class="mb-3">
 
         <label>Performance</label>
@@ -417,28 +461,33 @@
           [(ngModel)]="employee.performance">
 
       </div>
-<!-- IMAGE UPLOAD -->
 
-<div class="mb-3">
+      <!-- IMAGE -->
 
-  <label>Upload Profile Image</label>
+      <div class="mb-3">
 
-  <input
-    type="file"
-    class="form-control"
-    accept="image/*"
-    (change)="onImageSelected($event)">
+        <label>Upload Profile Image</label>
 
-</div>
+        <input
+          type="file"
+          class="form-control"
+          accept="image/*"
+          (change)="onImageSelected($event)">
 
-<!-- IMAGE PREVIEW -->
+      </div>
 
-<div class="image-preview"
-     *ngIf="employee.image">
+      <!-- IMAGE PREVIEW -->
 
-  <img [src]="employee.image">
+      <div
+        class="image-preview"
+        *ngIf="employee.image">
 
-</div>
+        <img [src]="employee.image">
+
+      </div>
+
+      <!-- FOOTER -->
+
       <div class="modal-footer-custom">
 
         <button
