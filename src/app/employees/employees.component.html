@@ -1,202 +1,104 @@
-<!-- EMPLOYEES PAGE -->
-
 <div class="employees-page container-fluid">
-
-  <!-- TOP HEADER -->
-
   <div class="employees-header">
-
     <div>
-
-      <h1>
-        Employees
-      </h1>
-
-      <p>
-        Manage employee profiles, departments and performance
-      </p>
-
+      <h1>Employees</h1>
+      <p>Manage employee profiles, departments and performance</p>
     </div>
 
     <div class="header-right">
-
-      <!-- SEARCH -->
-
       <div class="search-box">
-
         <i class="bi bi-search"></i>
-
         <input
           type="text"
           placeholder="Search employees..."
-          [(ngModel)]="searchText">
-
+          [(ngModel)]="searchText"
+        />
       </div>
 
-      <!-- BUTTON -->
-
-      <button
-        class="add-employee-btn"
-        (click)="openAddModal()">
-
+      <button class="add-employee-btn" (click)="openAddModal()">
         <i class="bi bi-plus-circle-fill"></i>
-
         Add Employee
-
       </button>
-      <button
-class="add-employee-btn"
-(click)="downloadEmployeePDF()">
 
-<i class="bi bi-file-earmark-pdf-fill"></i>
- PDF
+      <button class="add-employee-btn" (click)="downloadEmployeePDF()">
+        <i class="bi bi-file-earmark-pdf-fill"></i>
+        PDF
+      </button>
 
-</button>
+      <button class="add-employee-btn" (click)="printEmployees()">
+        <i class="bi bi-printer-fill"></i>
+        Print
+      </button>
 
-
-<button
-class="add-employee-btn"
-(click)="printEmployees()">
-
-<i class="bi bi-printer-fill"></i>
-Print
-
-</button>
-<button
-class="add-employee-btn"
-(click)="exportExcel()">
-
-<i class="bi bi-file-earmark-excel-fill"></i>
-
-Export Excel
-
-</button>
+      <button class="add-employee-btn" (click)="exportExcel()">
+        <i class="bi bi-file-earmark-excel-fill"></i>
+        Export Excel
+      </button>
     </div>
-
   </div>
-
-  <!-- STATS -->
 
   <div class="row g-4 mb-4">
-
     <div class="col-lg-3 col-md-6">
-
       <div class="stat-card blue">
-
         <div>
-
           <h6>Total Employees</h6>
-
           <h2>{{ employees.length }}</h2>
-
         </div>
-
         <div class="stat-icon">
-
           <i class="bi bi-people-fill"></i>
-
         </div>
-
       </div>
-
     </div>
 
     <div class="col-lg-3 col-md-6">
-
       <div class="stat-card green">
-
         <div>
-
           <h6>Active Employees</h6>
-
           <h2>{{ activeEmployeesCount }}</h2>
-
         </div>
-
         <div class="stat-icon">
-
           <i class="bi bi-person-check-fill"></i>
-
         </div>
-
       </div>
-
     </div>
 
     <div class="col-lg-3 col-md-6">
-
       <div class="stat-card orange">
-
         <div>
-
           <h6>On Leave</h6>
-
           <h2>{{ onLeaveEmployeesCount }}</h2>
-
         </div>
-
         <div class="stat-icon">
-
           <i class="bi bi-calendar-event-fill"></i>
-
         </div>
-
       </div>
-
     </div>
 
     <div class="col-lg-3 col-md-6">
-
       <div class="stat-card purple">
-
         <div>
-
           <h6>Departments</h6>
-
           <h2>{{ departmentsCount }}</h2>
-
         </div>
-
         <div class="stat-icon">
-
           <i class="bi bi-building-fill"></i>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
 
-  <!-- TABLE -->
-
   <div class="employee-table-card">
-
     <div class="table-top">
-
       <div>
-
-        <h3>
-          Employee Directory
-        </h3>
-
-        <p>
-          Latest employee records
-        </p>
-
+        <h3>Employee Directory</h3>
+        <p>Latest employee records</p>
       </div>
-
     </div>
 
     <div class="table-responsive">
-
       <table class="table align-middle employee-table">
-
         <thead>
-
           <tr>
-
             <th>Employee</th>
             <th>Department</th>
             <th>Role</th>
@@ -204,459 +106,273 @@ Export Excel
             <th>Status</th>
             <th>Performance</th>
             <th>Action</th>
-
           </tr>
-
         </thead>
 
         <tbody>
-
           <tr *ngFor="let emp of filteredEmployees; let i = index">
-
-            <!-- EMPLOYEE -->
-
             <td>
-
               <div class="employee-info">
-
-                <img [src]="emp.image">
-
+                <img [src]="emp.image" alt="employee" />
                 <div>
-
-                  <h6>
-                    {{ emp.name }}
-                  </h6>
-
-                  <span>
-                    {{ emp.email }}
-                  </span>
-
+                  <h6>{{ emp.name }}</h6>
+                  <span>{{ emp.email }}</span>
                 </div>
-
               </div>
-
             </td>
 
-            <!-- DEPARTMENT -->
-
             <td>
-
               <span class="department">
-
                 {{ emp.department ?? 'Unknown' }}
-
               </span>
-
             </td>
 
-            <!-- ROLE -->
+            <td>{{ emp.role }}</td>
 
             <td>
-
-              {{ emp.role }}
-
-            </td>
-
-            <!-- EXPERIENCE -->
-
-            <td>
-
               <div class="experience-badge">
-
                 <i class="bi bi-briefcase-fill"></i>
-
                 {{ emp.experience }}
-
               </div>
-
             </td>
 
-            <!-- STATUS -->
-
             <td>
-
               <span
                 class="status"
                 [ngClass]="{
-                  'active': emp.status === 'Active',
-                  'leave': emp.status === 'On Leave'
-                }">
-
+                  active: emp.status === 'Active',
+                  leave: emp.status === 'On Leave'
+                }"
+              >
                 {{ emp.status }}
-
               </span>
-
             </td>
 
-            <!-- PERFORMANCE -->
-
             <td>
-
               <div class="progress progress-bar-custom">
-
                 <div
                   class="progress-bar"
-                  [style.width.%]="emp.performance">
-
-                </div>
-
+                  [style.width.%]="emp.performance"
+                ></div>
               </div>
-
             </td>
-
-            <!-- ACTION -->
 
             <td>
-
               <div class="table-actions">
-
-                <!-- VIEW -->
-
-                <button
-                  class="action-btn view"
-                  (click)="viewEmployee(emp)">
-
+                <button class="action-btn view" (click)="viewEmployee(emp)">
                   <i class="bi bi-eye-fill"></i>
-
                 </button>
 
-                <!-- EDIT -->
-
-                <button
-                  class="action-btn edit"
-                  (click)="editEmployee(emp, i)">
-
+                <button class="action-btn edit" (click)="editEmployee(emp, i)">
                   <i class="bi bi-pencil-fill"></i>
-
                 </button>
 
-                <!-- DELETE -->
-
-                <button
-                  class="action-btn delete"
-                  (click)="deleteEmployee(i)">
-
+                <button class="action-btn delete" (click)="deleteEmployee(i)">
                   <i class="bi bi-trash-fill"></i>
-
                 </button>
-
               </div>
-
             </td>
-
           </tr>
-
         </tbody>
-
       </table>
-
     </div>
-
   </div>
-
 </div>
 
-<!-- MODAL -->
-
-<div
-  class="custom-modal"
-  *ngIf="showModal">
-
+<div class="custom-modal" *ngIf="showModal">
   <div class="modal-box">
-
-    <!-- HEADER -->
-
     <div class="modal-header-custom">
-
-      <h3>
-
-        {{ editMode ? 'Edit Employee' : 'Add Employee' }}
-
-      </h3>
-
-      <button
-        class="close-btn"
-        (click)="closeModal()">
-
-        ✕
-
-      </button>
-
+      <h3>{{ editMode ? 'Edit Employee' : 'Add Employee' }}</h3>
+      <button class="close-btn" (click)="closeModal()">✕</button>
     </div>
 
-    <!-- BODY -->
-
-<div class="modal-body-custom">
-
-<!-- NAME -->
-
-<div class="mb-3">
-  <label>Name</label>
-
-  <input
-    type="text"
-    class="form-control"
-    [(ngModel)]="employee.name"
-    list="nameList"
-    name="name">
-
-  <datalist id="nameList">
-    <option value="Tamilmani"></option>
-    <option value="Rahul"></option>
-    <option value="Priya"></option>
-    <option value="Karthika"></option>
-    <option value="Sneha"></option>
-    <option value="Arun"></option>
-    <option value="Divya"></option>
-    <option value="Vijay"></option>
-  </datalist>
-
-  <small
-    class="error-text"
-    *ngIf="submitted && !employee.name">
-
-    Name is required
-
-  </small>
-</div>
-
-
-<!-- EMAIL -->
-
-<div class="mb-3">
-  <label>Email</label>
-
-  <input
-    type="email"
-    class="form-control"
-    [(ngModel)]="employee.email"
-    list="emailList"
-    name="email">
-
-  <datalist id="emailList">
-    <option value="tamil@gmail.com"></option>
-    <option value="rahul@gmail.com"></option>
-    <option value="priya@gmail.com"></option>
-    <option value="karthika@gmail.com"></option>
-    <option value="sneha@gmail.com"></option>
-    <option value="arun@gmail.com"></option>
-  </datalist>
-
-  <small
-    class="error-text"
-    *ngIf="submitted && !employee.email">
-
-    Email is required
-
-  </small>
-
-  <small
-    class="error-text"
-    *ngIf="submitted && employee.email &&
-      !employee.email.match('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')">
-
-    Enter valid email
-
-  </small>
-
-
-</div>
-
-<!-- DEPARTMENT -->
-
-<div class="mb-3">
-
-<label>Department</label>
-
-<select
-class="form-control"
-[(ngModel)]="employee.department"
-[class.border-danger]="submitted && !employee.department">
-
-<option value="">Select Department</option>
-
-<option>Development</option>
-<option>Backend</option>
-<option>UI/UX</option>
-<option>Testing</option>
-<option>HR</option>
-<option>Support</option>
-<option>Finance</option>
-<option>Marketing</option>
-<option>Security</option>
-
-</select>
-
-<small
-class="text-danger"
-*ngIf="submitted && !employee.department">
-
-Department required
-
-</small>
-
-</div>
-
-<!-- ROLE -->
-
-<div class="mb-3">
-
-<label>Role</label>
-
-<select
-class="form-control"
-[(ngModel)]="employee.role"
-[class.border-danger]="submitted && !employee.role">
-
-<option value="">Select Role</option>
-
-<option>Angular Developer</option>
-<option>.NET Developer</option>
-<option>UI Designer</option>
-<option>QA Engineer</option>
-<option>HR Manager</option>
-<option>Support Engineer</option>
-<option>Frontend Developer</option>
-<option>Marketing Lead</option>
-<option>Accountant</option>
-<option>Security Analyst</option>
-
-</select>
-
-<small
-class="text-danger"
-*ngIf="submitted && !employee.role">
-
-Role required
-
-</small>
-
-</div>
-
-<!-- EXPERIENCE -->
-
-<div class="mb-3">
-
-<label>Experience</label>
-
-<select
-class="form-control"
-[(ngModel)]="employee.experience"
-[class.border-danger]="submitted && !employee.experience">
-
-<option value="">Select Experience</option>
-
-<option>1 Year</option>
-<option>2 Years</option>
-<option>3 Years</option>
-<option>4 Years</option>
-<option>5 Years</option>
-<option>6 Years</option>
-<option>7 Years</option>
-<option>8+ Years</option>
-
-</select>
-
-<small
-class="text-danger"
-*ngIf="submitted && !employee.experience">
-
-Experience required
-
-</small>
-
-</div>
-
-<!-- STATUS -->
-
-<div class="mb-3">
-
-<label>Status</label>
-
-<select
-class="form-control"
-[(ngModel)]="employee.status">
-
-<option>Active</option>
-<option>On Leave</option>
-
-</select>
-
-</div>
-
-<!-- PERFORMANCE -->
-
-<div class="mb-3">
-
-<label>Performance</label>
-
-<input
-type="number"
-class="form-control"
-[(ngModel)]="employee.performance">
-
-</div>
-
-<!-- IMAGE -->
-
-<div class="mb-3">
-
-<label>Upload Profile Image</label>
-
-<input
-type="file"
-class="form-control"
-accept="image/*"
-(change)="onImageSelected($event)">
-
-</div>
-
-<!-- IMAGE PREVIEW -->
-
-<div
-class="image-preview"
-*ngIf="employee.image">
-
-<img [src]="employee.image">
-
-</div>
-
-<!-- FOOTER -->
-
-<div class="modal-footer-custom">
-
-<button
-class="cancel-btn"
-(click)="closeModal()">
-
-Cancel
-
-</button>
-
-<button
-class="save-btn"
-*ngIf="!editMode"
-(click)="addEmployee()"
-[disabled]="
-!employee.name ||
-!employee.email ||
-!employee.department ||
-!employee.role ||
-!employee.experience">
-
-Add Employee
-
-</button>
-
-<button
-class="save-btn"
-*ngIf="editMode"
-(click)="updateEmployee()">
-
-Update Employee
-
-</button>
-
-</div>
-
+    <div class="modal-body-custom">
+      <div class="mb-3">
+        <label>Name</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="employee.name"
+          list="nameList"
+          name="name"
+        />
+
+        <datalist id="nameList">
+          <option value="Tamilmani"></option>
+          <option value="Rahul"></option>
+          <option value="Priya"></option>
+          <option value="Karthika"></option>
+          <option value="Sneha"></option>
+          <option value="Arun"></option>
+          <option value="Divya"></option>
+          <option value="Vijay"></option>
+        </datalist>
+
+        <small class="error-text" *ngIf="submitted && !employee.name">
+          Name is required
+        </small>
+      </div>
+
+      <div class="mb-3">
+        <label>Email</label>
+        <input
+          type="email"
+          class="form-control"
+          [(ngModel)]="employee.email"
+          list="emailList"
+          name="email"
+        />
+
+        <datalist id="emailList">
+          <option value="tamil@gmail.com"></option>
+          <option value="rahul@gmail.com"></option>
+          <option value="priya@gmail.com"></option>
+          <option value="karthika@gmail.com"></option>
+          <option value="sneha@gmail.com"></option>
+          <option value="arun@gmail.com"></option>
+        </datalist>
+
+        <small class="error-text" *ngIf="submitted && !employee.email">
+          Email is required
+        </small>
+
+        <small
+          class="error-text"
+          *ngIf="
+            submitted &&
+            employee.email &&
+            !employee.email.match('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')
+          "
+        >
+          Enter valid email
+        </small>
+      </div>
+
+      <div class="mb-3">
+        <label>Department</label>
+        <select
+          class="form-control"
+          [(ngModel)]="employee.department"
+          [class.border-danger]="submitted && !employee.department"
+        >
+          <option value="">Select Department</option>
+          <option>Development</option>
+          <option>Backend</option>
+          <option>UI/UX</option>
+          <option>Testing</option>
+          <option>HR</option>
+          <option>Support</option>
+          <option>Finance</option>
+          <option>Marketing</option>
+          <option>Security</option>
+        </select>
+
+        <small class="text-danger" *ngIf="submitted && !employee.department">
+          Department required
+        </small>
+      </div>
+
+      <div class="mb-3">
+        <label>Role</label>
+        <select
+          class="form-control"
+          [(ngModel)]="employee.role"
+          [class.border-danger]="submitted && !employee.role"
+        >
+          <option value="">Select Role</option>
+          <option>Angular Developer</option>
+          <option>.NET Developer</option>
+          <option>UI Designer</option>
+          <option>QA Engineer</option>
+          <option>HR Manager</option>
+          <option>Support Engineer</option>
+          <option>Frontend Developer</option>
+          <option>Marketing Lead</option>
+          <option>Accountant</option>
+          <option>Security Analyst</option>
+        </select>
+
+        <small class="text-danger" *ngIf="submitted && !employee.role">
+          Role required
+        </small>
+      </div>
+
+      <div class="mb-3">
+        <label>Experience</label>
+        <select
+          class="form-control"
+          [(ngModel)]="employee.experience"
+          [class.border-danger]="submitted && !employee.experience"
+        >
+          <option value="">Select Experience</option>
+          <option>1 Year</option>
+          <option>2 Years</option>
+          <option>3 Years</option>
+          <option>4 Years</option>
+          <option>5 Years</option>
+          <option>6 Years</option>
+          <option>7 Years</option>
+          <option>8+ Years</option>
+        </select>
+
+        <small class="text-danger" *ngIf="submitted && !employee.experience">
+          Experience required
+        </small>
+      </div>
+
+      <div class="mb-3">
+        <label>Status</label>
+        <select class="form-control" [(ngModel)]="employee.status">
+          <option>Active</option>
+          <option>On Leave</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label>Performance</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="employee.performance"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label>Upload Profile Image</label>
+        <input
+          type="file"
+          class="form-control"
+          accept="image/*"
+          (change)="onImageSelected($event)"
+        />
+      </div>
+
+      <div class="image-preview" *ngIf="employee.image">
+        <img [src]="employee.image" alt="preview" />
+      </div>
+
+      <div class="modal-footer-custom">
+        <button class="cancel-btn" (click)="closeModal()">Cancel</button>
+
+        <button
+          class="save-btn"
+          *ngIf="!editMode"
+          (click)="addEmployee()"
+          [disabled]="
+            !employee.name ||
+            !employee.email ||
+            !employee.department ||
+            !employee.role ||
+            !employee.experience
+          "
+        >
+          Add Employee
+        </button>
+
+        <button class="save-btn" *ngIf="editMode" (click)="updateEmployee()">
+          Update Employee
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
