@@ -1,69 +1,228 @@
-<div class="container py-5">
+<div class="container py-5 employee-details-page">
 
-  <div class="card border-0 shadow-lg rounded-4 p-5">
+  <!-- TOP BAR -->
 
-    <div class="text-center">
+  <div class="top-bar">
 
-      <img
-        [src]="employee?.image"
-        class="rounded-circle shadow"
-        width="140">
+    <h2 class="page-title">
+      Employee Details
+    </h2>
 
-      <h2 class="fw-bold mt-3">
+    <button
+      class="close-btn"
+      routerLink="/employees">
+
+      <i class="bi bi-arrow-left"></i>
+
+    </button>
+
+  </div>
+
+  <!-- MAIN CARD -->
+
+  <div class="employee-card">
+
+    <!-- PROFILE SECTION -->
+
+    <div class="profile-section">
+
+      <div class="profile-image-wrapper">
+
+        <img
+          [src]="employee?.image"
+          class="profile-image">
+
+      </div>
+
+      <h1>
         {{ employee?.name }}
-      </h2>
+      </h1>
 
-      <p class="text-muted">
+      <p class="role-text">
         {{ employee?.role }}
       </p>
 
+      <!-- STATUS -->
+
+      <div
+        class="status-badge"
+        [ngClass]="{
+          'active-status': employee?.status === 'Active',
+          'leave-status': employee?.status === 'On Leave'
+        }">
+
+        <i
+          class="bi"
+          [ngClass]="{
+            'bi-check-circle-fill': employee?.status === 'Active',
+            'bi-calendar-x-fill': employee?.status === 'On Leave'
+          }">
+
+        </i>
+
+        {{ employee?.status }}
+
+      </div>
+
     </div>
 
-    <div class="row mt-5 g-4">
+    <!-- QUICK STATS -->
 
-      <div class="col-md-6">
+    <div class="row g-4 mt-4">
+
+      <!-- EMAIL -->
+
+      <div class="col-lg-6">
 
         <div class="detail-card">
 
-          <h6>Email</h6>
+          <div class="icon-box blue">
 
-          <p>{{ employee?.email }}</p>
+            <i class="bi bi-envelope-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h6>Email Address</h6>
+
+            <p>
+              {{ employee?.email }}
+            </p>
+
+          </div>
 
         </div>
 
       </div>
 
-      <div class="col-md-6">
+      <!-- DEPARTMENT -->
+
+      <div class="col-lg-6">
 
         <div class="detail-card">
 
-          <h6>Department</h6>
+          <div class="icon-box purple">
 
-          <p>{{ employee?.department }}</p>
+            <i class="bi bi-building-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h6>Department</h6>
+
+            <p>
+              {{ employee?.department || 'Unknown' }}
+            </p>
+
+          </div>
 
         </div>
 
       </div>
 
-      <div class="col-md-6">
+      <!-- ROLE -->
+
+      <div class="col-lg-6">
 
         <div class="detail-card">
 
-          <h6>Status</h6>
+          <div class="icon-box orange">
 
-          <p>{{ employee?.status }}</p>
+            <i class="bi bi-person-workspace"></i>
+
+          </div>
+
+          <div>
+
+            <h6>Role</h6>
+
+            <p>
+              {{ employee?.role }}
+            </p>
+
+          </div>
 
         </div>
 
       </div>
 
-      <div class="col-md-6">
+      <!-- EXPERIENCE -->
+
+      <div class="col-lg-6">
 
         <div class="detail-card">
 
-          <h6>Performance</h6>
+          <div class="icon-box green">
 
-          <p>{{ employee?.performance }}%</p>
+            <i class="bi bi-briefcase-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h6>Experience</h6>
+
+            <p>
+              {{ employee?.experience }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PERFORMANCE -->
+
+      <div class="col-12">
+
+        <div class="performance-card">
+
+          <div class="performance-top">
+
+            <h5>
+              Employee Performance
+            </h5>
+
+            <span>
+              {{ employee?.performance }}%
+            </span>
+
+          </div>
+
+          <div class="progress custom-progress">
+
+            <div
+              class="progress-bar"
+              [style.width.%]="employee?.performance">
+
+            </div>
+
+          </div>
+
+          <!-- PERFORMANCE TEXT -->
+
+          <div class="performance-label">
+
+            <span *ngIf="employee?.performance >= 90">
+              Excellent Performance 
+            </span>
+
+            <span
+              *ngIf="employee?.performance >= 70 &&
+                     employee?.performance < 90">
+
+              Good Performance 
+            </span>
+
+            <span *ngIf="employee?.performance < 70">
+
+              Needs Improvement ⚠️
+            </span>
+
+          </div>
 
         </div>
 

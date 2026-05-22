@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
-
 import { FormsModule } from '@angular/forms';
-
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,6 +21,8 @@ export class DashboardComponent implements OnInit {
   searchText = '';
 
   showModal = false;
+
+  submitted = false;
 
   employees: any[] = [];
 
@@ -120,6 +119,8 @@ export class DashboardComponent implements OnInit {
 
     this.showModal = true;
 
+    this.submitted = false;
+
   }
 
   closeModal() {
@@ -129,6 +130,49 @@ export class DashboardComponent implements OnInit {
   }
 
   addEmployee() {
+
+    this.submitted = true;
+
+    // Empty validation
+
+    if (
+
+      !this.newEmployee.name ||
+
+      !this.newEmployee.email ||
+
+      !this.newEmployee.department ||
+
+      !this.newEmployee.role ||
+
+      !this.newEmployee.experience
+
+    ) {
+
+      return;
+
+    }
+
+    // Email validation
+
+    const emailPattern =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (
+
+      !emailPattern.test(
+        this.newEmployee.email
+      )
+
+    ) {
+
+      alert(
+        'Enter valid email address'
+      );
+
+      return;
+
+    }
 
     this.employees.push({
 
@@ -153,6 +197,8 @@ export class DashboardComponent implements OnInit {
 
     };
 
+    this.submitted = false;
+
     this.closeModal();
 
   }
@@ -168,7 +214,11 @@ export class DashboardComponent implements OnInit {
   viewProfile(emp: any) {
 
     alert(
-      'Viewing Profile: ' + emp.name
+
+      'Viewing Profile : ' +
+
+      emp.name
+
     );
 
   }
@@ -177,15 +227,25 @@ export class DashboardComponent implements OnInit {
 
     return this.employees.filter(emp =>
 
-      emp.name.toLowerCase().includes(
+      (emp.name || '')
+      .toLowerCase()
+      .includes(
         this.searchText.toLowerCase()
-      ) ||
+      )
 
-      emp.role.toLowerCase().includes(
+      ||
+
+      (emp.role || '')
+      .toLowerCase()
+      .includes(
         this.searchText.toLowerCase()
-      ) ||
+      )
 
-      emp.department.toLowerCase().includes(
+      ||
+
+      (emp.department || '')
+      .toLowerCase()
+      .includes(
         this.searchText.toLowerCase()
       )
 

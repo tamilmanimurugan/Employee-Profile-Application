@@ -44,7 +44,33 @@
         Add Employee
 
       </button>
+      <button
+class="add-employee-btn"
+(click)="downloadEmployeePDF()">
 
+<i class="bi bi-file-earmark-pdf-fill"></i>
+ PDF
+
+</button>
+
+
+<button
+class="add-employee-btn"
+(click)="printEmployees()">
+
+<i class="bi bi-printer-fill"></i>
+Print
+
+</button>
+<button
+class="add-employee-btn"
+(click)="exportExcel()">
+
+<i class="bi bi-file-earmark-excel-fill"></i>
+
+Export Excel
+
+</button>
     </div>
 
   </div>
@@ -83,7 +109,7 @@
 
           <h6>Active Employees</h6>
 
-          <h2>7</h2>
+          <h2>{{ activeEmployeesCount }}</h2>
 
         </div>
 
@@ -105,7 +131,7 @@
 
           <h6>On Leave</h6>
 
-          <h2>2</h2>
+          <h2>{{ onLeaveEmployeesCount }}</h2>
 
         </div>
 
@@ -127,7 +153,7 @@
 
           <h6>Departments</h6>
 
-          <h2>7</h2>
+          <h2>{{ departmentsCount }}</h2>
 
         </div>
 
@@ -217,7 +243,7 @@
 
               <span class="department">
 
-                {{ emp.department }}
+                {{ emp.department ?? 'Unknown' }}
 
               </span>
 
@@ -284,6 +310,8 @@
 
               <div class="table-actions">
 
+                <!-- VIEW -->
+
                 <button
                   class="action-btn view"
                   (click)="viewEmployee(emp)">
@@ -292,6 +320,8 @@
 
                 </button>
 
+                <!-- EDIT -->
+
                 <button
                   class="action-btn edit"
                   (click)="editEmployee(emp, i)">
@@ -299,6 +329,8 @@
                   <i class="bi bi-pencil-fill"></i>
 
                 </button>
+
+                <!-- DELETE -->
 
                 <button
                   class="action-btn delete"
@@ -332,6 +364,8 @@
 
   <div class="modal-box">
 
+    <!-- HEADER -->
+
     <div class="modal-header-custom">
 
       <h3>
@@ -350,127 +384,279 @@
 
     </div>
 
-    <div class="modal-body-custom">
+    <!-- BODY -->
 
-      <div class="mb-3">
+<div class="modal-body-custom">
 
-        <label>Name</label>
+<!-- NAME -->
 
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="employee.name">
+<div class="mb-3">
+  <label>Name</label>
 
-      </div>
+  <input
+    type="text"
+    class="form-control"
+    [(ngModel)]="employee.name"
+    list="nameList"
+    name="name">
 
-      <div class="mb-3">
+  <datalist id="nameList">
+    <option value="Tamilmani"></option>
+    <option value="Rahul"></option>
+    <option value="Priya"></option>
+    <option value="Karthika"></option>
+    <option value="Sneha"></option>
+    <option value="Arun"></option>
+    <option value="Divya"></option>
+    <option value="Vijay"></option>
+  </datalist>
 
-        <label>Email</label>
+  <small
+    class="error-text"
+    *ngIf="submitted && !employee.name">
 
-        <input
-          type="email"
-          class="form-control"
-          [(ngModel)]="employee.email">
+    Name is required
 
-      </div>
+  </small>
+</div>
 
-      <div class="mb-3">
 
-        <label>Department</label>
+<!-- EMAIL -->
 
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="employee.department">
+<div class="mb-3">
+  <label>Email</label>
 
-      </div>
+  <input
+    type="email"
+    class="form-control"
+    [(ngModel)]="employee.email"
+    list="emailList"
+    name="email">
 
-      <div class="mb-3">
+  <datalist id="emailList">
+    <option value="tamil@gmail.com"></option>
+    <option value="rahul@gmail.com"></option>
+    <option value="priya@gmail.com"></option>
+    <option value="karthika@gmail.com"></option>
+    <option value="sneha@gmail.com"></option>
+    <option value="arun@gmail.com"></option>
+  </datalist>
 
-        <label>Role</label>
+  <small
+    class="error-text"
+    *ngIf="submitted && !employee.email">
 
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="employee.role">
+    Email is required
 
-      </div>
+  </small>
 
-      <div class="mb-3">
+  <small
+    class="error-text"
+    *ngIf="submitted && employee.email &&
+      !employee.email.match('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')">
 
-        <label>Experience</label>
+    Enter valid email
 
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="employee.experience">
+  </small>
 
-      </div>
 
-      <div class="mb-3">
+</div>
 
-        <label>Performance</label>
-
-        <input
-          type="number"
-          class="form-control"
-          [(ngModel)]="employee.performance">
-
-      </div>
-<!-- IMAGE UPLOAD -->
+<!-- DEPARTMENT -->
 
 <div class="mb-3">
 
-  <label>Upload Profile Image</label>
+<label>Department</label>
 
-  <input
-    type="file"
-    class="form-control"
-    accept="image/*"
-    (change)="onImageSelected($event)">
+<select
+class="form-control"
+[(ngModel)]="employee.department"
+[class.border-danger]="submitted && !employee.department">
+
+<option value="">Select Department</option>
+
+<option>Development</option>
+<option>Backend</option>
+<option>UI/UX</option>
+<option>Testing</option>
+<option>HR</option>
+<option>Support</option>
+<option>Finance</option>
+<option>Marketing</option>
+<option>Security</option>
+
+</select>
+
+<small
+class="text-danger"
+*ngIf="submitted && !employee.department">
+
+Department required
+
+</small>
+
+</div>
+
+<!-- ROLE -->
+
+<div class="mb-3">
+
+<label>Role</label>
+
+<select
+class="form-control"
+[(ngModel)]="employee.role"
+[class.border-danger]="submitted && !employee.role">
+
+<option value="">Select Role</option>
+
+<option>Angular Developer</option>
+<option>.NET Developer</option>
+<option>UI Designer</option>
+<option>QA Engineer</option>
+<option>HR Manager</option>
+<option>Support Engineer</option>
+<option>Frontend Developer</option>
+<option>Marketing Lead</option>
+<option>Accountant</option>
+<option>Security Analyst</option>
+
+</select>
+
+<small
+class="text-danger"
+*ngIf="submitted && !employee.role">
+
+Role required
+
+</small>
+
+</div>
+
+<!-- EXPERIENCE -->
+
+<div class="mb-3">
+
+<label>Experience</label>
+
+<select
+class="form-control"
+[(ngModel)]="employee.experience"
+[class.border-danger]="submitted && !employee.experience">
+
+<option value="">Select Experience</option>
+
+<option>1 Year</option>
+<option>2 Years</option>
+<option>3 Years</option>
+<option>4 Years</option>
+<option>5 Years</option>
+<option>6 Years</option>
+<option>7 Years</option>
+<option>8+ Years</option>
+
+</select>
+
+<small
+class="text-danger"
+*ngIf="submitted && !employee.experience">
+
+Experience required
+
+</small>
+
+</div>
+
+<!-- STATUS -->
+
+<div class="mb-3">
+
+<label>Status</label>
+
+<select
+class="form-control"
+[(ngModel)]="employee.status">
+
+<option>Active</option>
+<option>On Leave</option>
+
+</select>
+
+</div>
+
+<!-- PERFORMANCE -->
+
+<div class="mb-3">
+
+<label>Performance</label>
+
+<input
+type="number"
+class="form-control"
+[(ngModel)]="employee.performance">
+
+</div>
+
+<!-- IMAGE -->
+
+<div class="mb-3">
+
+<label>Upload Profile Image</label>
+
+<input
+type="file"
+class="form-control"
+accept="image/*"
+(change)="onImageSelected($event)">
 
 </div>
 
 <!-- IMAGE PREVIEW -->
 
-<div class="image-preview"
-     *ngIf="employee.image">
+<div
+class="image-preview"
+*ngIf="employee.image">
 
-  <img [src]="employee.image">
+<img [src]="employee.image">
 
 </div>
-      <div class="modal-footer-custom">
 
-        <button
-          class="cancel-btn"
-          (click)="closeModal()">
+<!-- FOOTER -->
 
-          Cancel
+<div class="modal-footer-custom">
 
-        </button>
+<button
+class="cancel-btn"
+(click)="closeModal()">
 
-        <button
-          class="save-btn"
-          *ngIf="!editMode"
-          (click)="addEmployee()">
+Cancel
 
-          Add Employee
+</button>
 
-        </button>
+<button
+class="save-btn"
+*ngIf="!editMode"
+(click)="addEmployee()"
+[disabled]="
+!employee.name ||
+!employee.email ||
+!employee.department ||
+!employee.role ||
+!employee.experience">
 
-        <button
-          class="save-btn"
-          *ngIf="editMode"
-          (click)="updateEmployee()">
+Add Employee
 
-          Update Employee
+</button>
 
-        </button>
+<button
+class="save-btn"
+*ngIf="editMode"
+(click)="updateEmployee()">
 
-      </div>
+Update Employee
 
-    </div>
+</button>
 
-  </div>
+</div>
 
 </div>

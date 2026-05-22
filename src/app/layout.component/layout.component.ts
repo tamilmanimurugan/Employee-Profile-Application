@@ -1,87 +1,110 @@
-import { Component ,OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { AuthService } from '../auth.service/auth.service';
+
 import {
-  RouterOutlet,
-  RouterLink,
-  Router
+RouterOutlet,
+RouterLink,
+Router
 } from '@angular/router';
 
-
 @Component({
-  selector: 'app-layout',
-  standalone: true,
 
-  imports: [
-    RouterOutlet,
-    RouterLink
-  ],
+selector:'app-layout',
 
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.css']
+standalone:true,
+
+imports:[
+RouterOutlet,
+RouterLink
+],
+
+templateUrl:'./layout.component.html',
+
+styleUrls:['./layout.component.css']
+
 })
 
 export class LayoutComponent implements OnInit {
 
-  constructor(
-    private auth: AuthService,
-    private router: Router
-  ) {}
+darkMode=false;
 
-  logout() {
+profileImage='https://i.pravatar.cc/100?img=12';
 
-    this.auth.logout();
+constructor(
 
-    this.router.navigate(['/login']);
+private auth:AuthService,
+private router:Router
 
-  }
- darkMode = false;
+){}
 
-ngOnInit() {
+ngOnInit(){
 
-  const savedTheme =
-    localStorage.getItem('theme');
+/* Theme load */
 
-  if (savedTheme === 'dark') {
+const savedTheme =
+localStorage.getItem('theme');
 
-    this.darkMode = true;
+if(savedTheme==='dark'){
 
-    document.body.classList.add(
-      'dark-theme'
-    );
+this.darkMode=true;
 
-  }
+document.body.classList.add(
+'dark-theme'
+);
 
 }
 
-toggleTheme() {
+/* Profile image load */
 
-  this.darkMode = !this.darkMode;
+this.profileImage=
+localStorage.getItem(
+'profileImage'
+) ||
+'https://i.pravatar.cc/100?img=12';
 
-  if (this.darkMode) {
-
-    document.body.classList.add(
-      'dark-theme'
-    );
-
-    localStorage.setItem(
-      'theme',
-      'dark'
-    );
-
-  }
-
-  else {
-
-    document.body.classList.remove(
-      'dark-theme'
-    );
-
-    localStorage.setItem(
-      'theme',
-      'light'
-    );
-
-  }
-  
 }
-} 
+
+logout(){
+
+this.auth.logout();
+
+this.router.navigate([
+'/login'
+]);
+
+}
+
+toggleTheme(){
+
+this.darkMode=!this.darkMode;
+
+if(this.darkMode){
+
+document.body.classList.add(
+'dark-theme'
+);
+
+localStorage.setItem(
+'theme',
+'dark'
+);
+
+}
+
+else{
+
+document.body.classList.remove(
+'dark-theme'
+);
+
+localStorage.setItem(
+'theme',
+'light'
+);
+
+}
+
+}
+
+}

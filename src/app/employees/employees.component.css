@@ -130,6 +130,32 @@
 
 }
 
+.search-box i{
+
+  color: #2563eb;
+
+  font-size: 18px;
+
+  animation: searchMove 2s infinite ease-in-out;
+
+}
+
+@keyframes searchMove{
+
+  0%{
+    transform: translateX(0);
+  }
+
+  50%{
+    transform: translateX(4px);
+  }
+
+  100%{
+    transform: translateX(0);
+  }
+
+}
+
 .search-box input{
 
   border: none;
@@ -160,6 +186,32 @@
   font-weight: 600;
 
   transition: .3s;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+}
+
+.add-employee-btn i{
+
+  font-size: 18px;
+
+  animation: plusRotate 3s linear infinite;
+
+}
+
+@keyframes plusRotate{
+
+  from{
+    transform: rotate(0deg);
+  }
+
+  to{
+    transform: rotate(360deg);
+  }
 
 }
 
@@ -197,6 +249,28 @@
 
   animation: fadeUp .7s ease;
 
+  position: relative;
+
+  overflow: hidden;
+
+}
+
+.stat-card::before{
+
+  content: '';
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  background: rgba(255,255,255,.12);
+
+  border-radius: 50%;
+
+  top: -80px;
+  right: -80px;
+
 }
 
 @keyframes fadeUp{
@@ -215,7 +289,7 @@
 
 .stat-card:hover{
 
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(1.02);
 
 }
 
@@ -251,11 +325,57 @@
 
   justify-content: center;
 
+  animation: floatIcon 3s ease-in-out infinite;
+
+  transition: .3s;
+
+}
+
+.stat-card:hover .stat-icon{
+
+  transform: rotate(12deg) scale(1.1);
+
+  background: rgba(255,255,255,.3);
+
 }
 
 .stat-icon i{
 
   font-size: 30px;
+
+  animation: pulseIcon 2s infinite;
+
+}
+
+@keyframes floatIcon{
+
+  0%{
+    transform: translateY(0);
+  }
+
+  50%{
+    transform: translateY(-8px);
+  }
+
+  100%{
+    transform: translateY(0);
+  }
+
+}
+
+@keyframes pulseIcon{
+
+  0%{
+    transform: scale(1);
+  }
+
+  50%{
+    transform: scale(1.15);
+  }
+
+  100%{
+    transform: scale(1);
+  }
 
 }
 
@@ -457,6 +577,10 @@
 
   font-weight: 700;
 
+  background: #eef2ff;
+
+  color: #4338ca;
+
 }
 
 /* STATUS */
@@ -512,6 +636,32 @@
   font-weight: 700;
 
   transition: .3s;
+
+}
+
+.experience-badge i{
+
+  animation: briefcaseShake 2s infinite;
+
+}
+
+@keyframes briefcaseShake{
+
+  0%{
+    transform: rotate(0);
+  }
+
+  25%{
+    transform: rotate(-8deg);
+  }
+
+  50%{
+    transform: rotate(8deg);
+  }
+
+  100%{
+    transform: rotate(0);
+  }
 
 }
 
@@ -582,9 +732,21 @@
 
 }
 
+.action-btn i{
+
+  transition: .3s;
+
+}
+
 .action-btn:hover{
 
   transform: translateY(-3px) scale(1.1);
+
+}
+
+.action-btn:hover i{
+
+  transform: scale(1.2) rotate(8deg);
 
 }
 
@@ -630,6 +792,10 @@
 
   z-index: 9999;
 
+  padding: 20px;
+
+  overflow-y: auto;
+
   animation: modalFade .3s ease;
 
 }
@@ -648,15 +814,19 @@
 
 .modal-box{
 
-  width: 500px;
+  width: 100%;
+
+  max-width: 500px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
 
   background: rgba(255,255,255,.95);
 
   backdrop-filter: blur(12px);
 
   border-radius: 24px;
-
-  overflow: hidden;
 
   animation: popupSmooth .4s ease;
 
@@ -681,7 +851,7 @@
 
 .modal-header-custom{
 
-  padding: 20px;
+  padding: 18px 22px;
 
   background:
   linear-gradient(135deg,#2563eb,#4f46e5);
@@ -710,7 +880,7 @@
 
 .modal-body-custom{
 
-  padding: 25px;
+  padding: 20px;
 
 }
 
@@ -718,7 +888,7 @@
 
 .form-control{
 
-  height: 50px;
+  height: 48px;
 
   border-radius: 14px;
 
@@ -755,9 +925,9 @@
 
 .image-preview img{
 
-  width: 120px;
+  width: 100px;
 
-  height: 120px;
+  height: 100px;
 
   border-radius: 50%;
 
@@ -868,10 +1038,78 @@
 
   .add-employee-btn{
     width: 100%;
+    justify-content: center;
   }
 
   .modal-box{
-    width: 95%;
+    width: 100%;
+    max-height: 88vh;
+  }
+/* PRINT ONLY EMPLOYEE CONTENT */
+
+@media print {
+
+  .sidebar,
+  .topbar,
+  .employees-header,
+  .table-actions,
+  .add-employee-btn,
+  .search-box,
+  .theme-btn,
+  .logout-btn {
+
+    display: none !important;
+
   }
 
+  .main-content{
+
+    margin-left:0 !important;
+
+    width:100% !important;
+
+  }
+
+  .employee-table-card{
+
+    width:100% !important;
+
+    box-shadow:none !important;
+
+    border:none !important;
+
+    padding:0 !important;
+
+  }
+
+  body{
+
+    background:white !important;
+
+  }
+
+}
+
+}
+.save-btn:disabled{
+
+opacity:.5;
+cursor:not-allowed;
+background:#9ca3af !important;
+
+}
+
+.form-control.ng-invalid.ng-touched{
+
+border:2px solid #ef4444 !important;
+
+box-shadow:0 0 10px rgba(239,68,68,.3);
+
+}
+.error-text{
+color:#ef4444;
+font-size:13px;
+font-weight:600;
+display:block;
+margin-top:5px;
 }

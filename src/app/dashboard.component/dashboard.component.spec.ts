@@ -1,51 +1,22 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-@Component({
-  selector: 'app-dashboard',
+import { DashboardComponent } from './dashboard.component';
 
-  standalone: true,
+describe('DashboardComponent', () => {
+  let component: DashboardComponent;
+  let fixture: ComponentFixture<DashboardComponent>;
 
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DashboardComponent],
+    }).compileComponents();
 
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
-})
-export class DashboardComponent {
+    fixture = TestBed.createComponent(DashboardComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-  employees = [
-    {
-      id: 101,
-      name: 'Tamilmani',
-      department: 'Developer'
-    }
-  ];
-
-  employee = {
-    name: '',
-    department: ''
-  };
-
-  addEmployee() {
-
-    const newEmployee = {
-      id: this.employees.length + 101,
-      name: this.employee.name,
-      department: this.employee.department
-    };
-
-    this.employees.push(newEmployee);
-
-    this.employee = {
-      name: '',
-      department: ''
-    };
-
-    alert("Employee Added Successfully ✅");
-  }
-
-}
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -23,25 +23,47 @@ export class ProfileComponent {
 
   showEditModal = false;
 
-  profile = {
+profile = {
 
-    name: 'Tamilmani',
+  name: 'Tamilmani',
 
-    role: 'Senior Angular Developer',
+  role: 'Senior Angular Developer',
 
-    email: 'tamil@gmail.com',
+  employeeId:'EMP-2026-101',
 
-    department: 'Development',
+  email: 'tamil@gmail.com',
 
-    location: 'Chennai, India',
+  phone:'+91 9876543210',
 
-    about:
-      'Passionate Angular developer with experience in enterprise dashboard systems.',
+  department: 'Development',
 
-    image:
-      'https://i.pravatar.cc/200?img=12'
+  location: 'Chennai, India',
 
-  };
+  experience:'5 Years',
+
+  joiningDate:'12 Jan 2024',
+
+  teamLead:'Rahul Kumar',
+
+  performance:92,
+
+  attendance:96,
+
+  projects:18,
+
+  skills:[
+    'Angular',
+    'TypeScript',
+    'Bootstrap',
+    'Node JS',
+    'SQL'
+  ],
+
+  about:'Passionate Angular developer with experience in enterprise dashboard systems.',
+
+  image:'https://i.pravatar.cc/200?img=12'
+
+};
 
   ngOnInit() {
 
@@ -82,34 +104,38 @@ export class ProfileComponent {
     this.closeModal();
 
   }
+onImageSelect(event: any) {
 
-  onImageSelect(event: any) {
+const file = event.target.files[0];
 
-    const file = event.target.files[0];
+if(file){
 
-    if(file){
+const reader = new FileReader();
 
-      const reader = new FileReader();
+reader.onload = () => {
 
-      reader.onload = () => {
+this.profile.image =
+reader.result as string;
 
-        this.profile.image =
-          reader.result as string;
+/* save full profile */
 
-        localStorage.setItem(
+localStorage.setItem(
+'profile',
+JSON.stringify(this.profile)
+);
 
-          'profile',
+/* save image separately */
 
-          JSON.stringify(this.profile)
+localStorage.setItem(
+'profileImage',
+this.profile.image
+);
 
-        );
+};
 
-      };
+reader.readAsDataURL(file);
 
-      reader.readAsDataURL(file);
+}
 
-    }
-
-  }
-
+}
 }

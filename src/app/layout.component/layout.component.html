@@ -18,7 +18,7 @@
     <!-- PROFILE -->
     <div class="profile-box">
 
-      <img src="https://i.pravatar.cc/200?img=12" alt="profile">
+      <img [src]="profileImage">
 
       <h5 class="mt-3 mb-1">
         Tamilmani
@@ -126,12 +126,12 @@
       </div>
 
       <div class="top-right">
-         <button class="theme-btn" (click)="toggleTheme()">
+         <!-- <button class="theme-btn" (click)="toggleTheme()">
 
       <i class="bi" [class.bi-moon-fill]="!darkMode" [class.bi-sun-fill]="darkMode">
       </i>
 
-    </button>
+    </button> -->
 
         <!-- <div class="search-box">
           <i class="bi bi-search"></i>
@@ -142,7 +142,7 @@
         <button class="notification-btn">
           <i class="bi bi-bell-fill"></i>
         </button>
-        <img src="https://i.pravatar.cc/100?img=12" class="profile-img">
+        <img [src]="profileImage" class="profile-img">
 
       </div>
 

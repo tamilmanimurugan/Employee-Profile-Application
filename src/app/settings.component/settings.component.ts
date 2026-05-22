@@ -34,6 +34,8 @@ export class SettingsComponent implements OnInit {
 
   };
 
+  profileImage: string = 'https://i.pravatar.cc/100?img=12';
+
   security = {
 
     currentPassword: '',
@@ -59,16 +61,31 @@ export class SettingsComponent implements OnInit {
       this.darkMode = true;
 
       document.body.classList.add('dark-mode');
+      const savedProfile =
+      localStorage.getItem('profile');
+
+    if (savedProfile) {
+
+      this.profile =
+        JSON.parse(savedProfile);
+
+    }
 
     }
 
     this.updateClock();
-
+ 
     setInterval(() => {
 
       this.updateClock();
 
     }, 1000);
+
+    // load saved profile image if any
+    const savedImage = localStorage.getItem('profileImage');
+    if (savedImage) {
+      this.profileImage = savedImage;
+    }
 
   }
 
@@ -127,6 +144,23 @@ export class SettingsComponent implements OnInit {
 
     }, 2000);
 
+  }
+
+  onImageSelected(event: any) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.profileImage = reader.result as string;
+      // persist image to localStorage so it stays between reloads
+      try {
+        localStorage.setItem('profileImage', this.profileImage);
+      } catch (e) {
+        // ignore storage errors
+      }
+    };
+    reader.readAsDataURL(file);
   }
 
 }

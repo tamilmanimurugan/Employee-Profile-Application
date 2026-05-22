@@ -133,7 +133,74 @@
         </div>
 
       </div>
+<!-- EXTRA STATS -->
 
+<div class="row mt-4 g-4">
+
+<div class="col-md-4">
+
+<div class="info-card">
+
+<i class="bi bi-graph-up-arrow"></i>
+
+<h6>Performance</h6>
+
+<p>{{profile.performance}}%</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="info-card">
+
+<i class="bi bi-calendar-check-fill"></i>
+
+<h6>Attendance</h6>
+
+<p>{{profile.attendance}}%</p>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="info-card">
+
+<i class="bi bi-folder-fill"></i>
+
+<h6>Projects</h6>
+
+<p>{{profile.projects}}</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SKILLS -->
+
+<div class="about-box mt-4">
+
+<h4>Skills</h4>
+
+<div class="d-flex gap-2 flex-wrap">
+
+<span
+class="badge bg-primary p-2"
+*ngFor="let skill of profile.skills">
+
+{{skill}}
+
+</span>
+
+</div>
+
+</div>
       <!-- ABOUT -->
 
       <div class="about-box mt-5">
@@ -229,7 +296,83 @@
                [(ngModel)]="profile.location">
 
       </div>
+<!-- PHONE -->
 
+<div class="mb-3">
+
+<label>Phone</label>
+
+<input
+type="text"
+class="form-control"
+[(ngModel)]="profile.phone">
+
+</div>
+
+<!-- EXPERIENCE -->
+
+<div class="mb-3">
+
+<label>Experience</label>
+
+<input
+type="text"
+class="form-control"
+[(ngModel)]="profile.experience">
+
+</div>
+
+<!-- EMPLOYEE ID -->
+
+<div class="mb-3">
+
+<label>Employee ID</label>
+
+<input
+type="text"
+class="form-control"
+[(ngModel)]="profile.employeeId">
+
+</div>
+
+<!-- PERFORMANCE -->
+
+<div class="mb-3">
+
+<label>Performance %</label>
+
+<input
+type="number"
+class="form-control"
+[(ngModel)]="profile.performance">
+
+</div>
+
+<!-- ATTENDANCE -->
+
+<div class="mb-3">
+
+<label>Attendance %</label>
+
+<input
+type="number"
+class="form-control"
+[(ngModel)]="profile.attendance">
+
+</div>
+
+<!-- PROJECTS -->
+
+<div class="mb-3">
+
+<label>Projects</label>
+
+<input
+type="number"
+class="form-control"
+[(ngModel)]="profile.projects">
+
+</div>
       <div class="mb-3">
 
         <label>About</label>
