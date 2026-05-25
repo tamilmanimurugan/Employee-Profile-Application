@@ -1,0 +1,144 @@
+<!-- LOGIN PAGE ONLY -->
+<ng-container *ngIf="isLoginPage(); else mainApp">
+
+  <router-outlet></router-outlet>
+
+</ng-container>
+
+<!-- MAIN APPLICATION -->
+<ng-template #mainApp>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- BRAND -->
+      <div class="brand-group">
+
+        <div class="brand-mark">
+          EA
+        </div>
+
+        <div>
+
+          <h2 class="brand">
+            EmployeeApp
+          </h2>
+
+          <span class="brand-subtitle">
+            Enterprise Workforce Suite
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- NAVIGATION -->
+      <nav class="nav-links">
+
+        <!-- DASHBOARD -->
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+
+          <span>📊</span>
+
+          Dashboard
+
+        </a>
+
+        <!-- EMPLOYEES -->
+        <a
+          routerLink="/employees"
+          routerLinkActive="active">
+
+          <span>👨‍💼</span>
+
+          Employees
+
+        </a>
+
+        <!-- DEPARTMENTS -->
+        <a
+          routerLink="/departments"
+          routerLinkActive="active">
+
+          <span>🏢</span>
+
+          Departments
+
+        </a>
+
+        <!-- CONTACT -->
+        <a
+          routerLink="/contact"
+          routerLinkActive="active">
+
+          <span>📞</span>
+
+          Contact
+
+        </a>
+
+      </nav>
+
+      <!-- FOOTER -->
+      <div class="sidebar-footer">
+        
+        <!-- LOGOUT BUTTON -->
+        <button
+          class="sidebar-logout-btn"
+          (click)="logout()">
+
+          <span>⎋</span>
+
+          Sign Out
+
+        </button>
+
+      </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+
+        <div class="topbar-title">
+
+          <h3>
+            Employee Dashboard
+          </h3>
+
+          <p>
+            Smart workforce insights and employee management.
+          </p>
+
+        </div>
+
+        <div class="topbar-actions">
+
+          <span class="pill">
+            Live Analytics
+          </span>
+
+        </div>
+
+      </header>
+
+      <!-- ROUTER PAGE -->
+      <section class="page">
+
+        <router-outlet></router-outlet>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</ng-template>
