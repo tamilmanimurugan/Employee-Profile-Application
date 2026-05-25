@@ -60,7 +60,7 @@ export class SettingsComponent implements OnInit {
 
       this.darkMode = true;
 
-      document.body.classList.add('dark-mode');
+      document.body.classList.add('dark-theme');
       const savedProfile =
       localStorage.getItem('profile');
 
@@ -104,7 +104,7 @@ export class SettingsComponent implements OnInit {
 
     if (this.darkMode) {
 
-      document.body.classList.add('dark-mode');
+      document.body.classList.add('dark-theme');
 
       localStorage.setItem(
         'theme',
@@ -115,7 +115,7 @@ export class SettingsComponent implements OnInit {
 
     else {
 
-      document.body.classList.remove('dark-mode');
+      document.body.classList.remove('dark-theme');
 
       localStorage.setItem(
         'theme',

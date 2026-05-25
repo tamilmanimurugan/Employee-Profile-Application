@@ -19,7 +19,8 @@ body.dark-theme .employees-page,
 body.dark-theme .attendance-page,
 body.dark-theme .settings-page,
 body.dark-theme .profile-wrapper,
-body.dark-theme .dashboard-page{
+body.dark-theme .dashboard-page,
+body.dark-theme .contact-page{
 
   background: #0f172a !important;
 

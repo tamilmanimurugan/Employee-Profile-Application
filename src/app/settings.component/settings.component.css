@@ -367,7 +367,7 @@ label{
 }
 /* DARK MODE */
 
-body.dark-mode{
+:host-context(.dark-theme) .settings-page {
 
   background: #0f172a !important;
 
@@ -377,12 +377,12 @@ body.dark-mode{
 
 /* CARDS */
 
-body.dark-mode .settings-card,
-body.dark-mode .employee-table-card,
-body.dark-mode .attendance-table-card,
-body.dark-mode .profile-card,
-body.dark-mode .stat-card,
-body.dark-mode .attendance-card{
+:host-context(.dark-theme) .settings-card,
+:host-context(.dark-theme) .employee-table-card,
+:host-context(.dark-theme) .attendance-table-card,
+:host-context(.dark-theme) .profile-card,
+:host-context(.dark-theme) .stat-card,
+:host-context(.dark-theme) .attendance-card{
 
   background: #1e293b !important;
 
@@ -392,9 +392,9 @@ body.dark-mode .attendance-card{
 
 /* INPUTS */
 
-body.dark-mode .form-control,
-body.dark-mode .form-select,
-body.dark-mode .search-box{
+:host-context(.dark-theme) .form-control,
+:host-context(.dark-theme) .form-select,
+:host-context(.dark-theme) .search-box{
 
   background: #0f172a !important;
 
@@ -406,13 +406,13 @@ body.dark-mode .search-box{
 
 /* TABLE */
 
-body.dark-mode table{
+:host-context(.dark-theme) table{
 
   color: white !important;
 
 }
 
-body.dark-mode th{
+:host-context(.dark-theme) th{
 
   color: #cbd5e1 !important;
 
@@ -420,7 +420,7 @@ body.dark-mode th{
 
 /* SIDEBAR */
 
-body.dark-mode .sidebar{
+:host-context(.dark-theme) .sidebar{
 
   background: #020617 !important;
 
@@ -428,9 +428,9 @@ body.dark-mode .sidebar{
 
 /* TEXT */
 
-body.dark-mode p,
-body.dark-mode span,
-body.dark-mode label{
+:host-context(.dark-theme) p,
+:host-context(.dark-theme) span,
+:host-context(.dark-theme) label{
 
   color: #cbd5e1 !important;
 
@@ -719,10 +719,10 @@ body.dark-mode label{
    DARK MODE IMPROVEMENTS
 ========================================= */
 
-body.dark-mode .top-navbar,
-body.dark-mode .settings-card,
-body.dark-mode .notification-item,
-body.dark-mode .admin-profile{
+:host-context(.dark-theme) .top-navbar,
+:host-context(.dark-theme) .settings-card,
+:host-context(.dark-theme) .notification-item,
+:host-context(.dark-theme) .admin-profile{
 
   background: #1e293b !important;
 
@@ -730,28 +730,28 @@ body.dark-mode .admin-profile{
 
 }
 
-body.dark-mode .welcome-section h1,
-body.dark-mode h3,
-body.dark-mode h5,
-body.dark-mode h6{
+:host-context(.dark-theme) .welcome-section h1,
+:host-context(.dark-theme) h3,
+:host-context(.dark-theme) h5,
+:host-context(.dark-theme) h6{
 
   color: white !important;
 
 }
 
-body.dark-mode .live-time{
+:host-context(.dark-theme) .live-time{
 
   background: #2563eb;
 
 }
 
-body.dark-mode .notification-item:hover{
+:host-context(.dark-theme) .notification-item:hover{
 
   background: #334155 !important;
 
 }
 
-body.dark-mode .discard-btn{
+:host-context(.dark-theme) .discard-btn{
 
   background: #334155;
 
