@@ -1,0 +1,386 @@
+﻿<div class="emp-wrap">
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-chip">
+      <div class="stat-icon">👥</div>
+      <span class="stat-val">{{ employees.length }}</span>
+      <span class="stat-label">Total Employees</span>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-icon">✅</div>
+      <span class="stat-val">{{ totalActive }}</span>
+      <span class="stat-label">Active</span>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-icon">⏸</div>
+      <span class="stat-val">{{ totalInactive }}</span>
+      <span class="stat-label">Inactive</span>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-icon">💰</div>
+      <span class="stat-val">{{ formatSalary(avgSalary) }}</span>
+      <span class="stat-label">Avg Salary</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="emp-header">
+    <div>
+      <h2>Employees</h2>
+      <p>{{ filtered.length }} of {{ employees.length }} records</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-export" (click)="exportExcel()">&#128196; Excel</button>
+      <button class="btn-export" (click)="exportCSV()">&#128196; CSV</button>
+      <button class="btn-export print" (click)="exportPDF()">&#128424; Print</button>
+      <button class="btn-primary" (click)="openAdd()">+ Add Employee</button>
+    </div>
+  </div>
+
+  <!-- BULK ACTION BAR -->
+  <div class="bulk-bar" *ngIf="someSelected">
+    <span class="bulk-count">{{ selectedIds.size }} selected</span>
+    <div class="bulk-actions">
+      <button class="bulk-btn" (click)="bulkSetStatus('Active')">&#10003; Set Active</button>
+      <button class="bulk-btn" (click)="bulkSetStatus('Inactive')">&#9679; Set Inactive</button>
+      <button class="bulk-btn danger" (click)="bulkDelete()">&#128465; Delete Selected</button>
+      <button class="bulk-btn ghost" (click)="selectedIds.clear(); cdr.detectChanges()">&#10005; Clear</button>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">&#128269;</span>
+      <input type="text" placeholder="Search name, role, email, department..."
+        [(ngModel)]="search" (ngModelChange)="applyFilter()" />
+    </div>
+    <select [(ngModel)]="deptFilter" (ngModelChange)="applyFilter()">
+      <option value="">All Departments</option>
+      <option *ngFor="let d of deptList" [value]="d">{{ d }}</option>
+    </select>
+    <select [(ngModel)]="statusFilter" (ngModelChange)="applyFilter()">
+      <option value="">All Statuses</option>
+      <option value="Active">Active</option>
+      <option value="Inactive">Inactive</option>
+    </select>
+    <select [(ngModel)]="pageSize" (ngModelChange)="goToPage(1)">
+      <option [value]="5">5 / page</option>
+      <option [value]="10">10 / page</option>
+      <option [value]="25">25 / page</option>
+      <option [value]="50">50 / page</option>
+    </select>
+  </div>
+
+  <!-- SKELETON -->
+  <div *ngIf="loading" class="skeleton-wrap">
+    <div class="skeleton-row" *ngFor="let i of [1,2,3,4,5]">
+      <div class="skel skel-avatar"></div>
+      <div class="skel skel-text"></div>
+      <div class="skel skel-text short"></div>
+      <div class="skel skel-text"></div>
+      <div class="skel skel-text short"></div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap" *ngIf="!loading">
+    <table>
+      <thead>
+        <tr>
+          <th class="check-col">
+            <label class="custom-check">
+              <input type="checkbox" [checked]="allSelected" (change)="toggleAll()" />
+              <span class="checkmark"></span>
+            </label>
+          </th>
+          <th class="sortable" (click)="sortBy('name')">Name <span class="sort-icon">{{ sortIcon('name') }}</span></th>
+          <th class="sortable" (click)="sortBy('role')">Role <span class="sort-icon">{{ sortIcon('role') }}</span></th>
+          <th class="sortable" (click)="sortBy('department')">Department <span class="sort-icon">{{ sortIcon('department') }}</span></th>
+          <th>Email</th>
+          <th class="sortable" (click)="sortBy('salary')">Salary <span class="sort-icon">{{ sortIcon('salary') }}</span></th>
+          <th class="sortable" (click)="sortBy('joinDate')">Joined <span class="sort-icon">{{ sortIcon('joinDate') }}</span></th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of paginatedList"
+          [class.row-selected]="selectedIds.has(e.id)"
+          (click)="navigateTo(e.id)"
+          class="clickable-row">
+
+          <td class="check-col" (click)="$event.stopPropagation()">
+            <label class="custom-check">
+              <input type="checkbox" [checked]="selectedIds.has(e.id)" (change)="toggleSelect(e.id)" />
+              <span class="checkmark"></span>
+            </label>
+          </td>
+
+          <td>
+            <div class="name-cell">
+              <div class="avatar">{{ initials(e.name) }}</div>
+              <span class="name-text">{{ e.name }}</span>
+            </div>
+          </td>
+          <td class="role-cell">{{ e.role }}</td>
+          <td><span class="dept-badge">{{ e.department }}</span></td>
+          <td class="muted">{{ e.email }}</td>
+          <td class="salary-cell">{{ formatSalary(e.salary) }}</td>
+          <td class="date-cell">{{ e.joinDate }}</td>
+          <td>
+            <span class="badge"
+              [class.active]="e.status === 'Active'"
+              [class.inactive]="e.status !== 'Active'">
+              <span class="badge-dot"></span>{{ e.status }}
+            </span>
+          </td>
+          <td (click)="$event.stopPropagation()">
+            <div class="actions">
+              <button class="btn-icon edit" title="Edit" (click)="openEdit(e)">&#9998;</button>
+              <button class="btn-icon danger" title="Delete" (click)="openDeleteModal(e.id)">&#128465;</button>
+            </div>
+          </td>
+        </tr>
+
+        <tr *ngIf="!filtered.length">
+          <td colspan="9" class="empty">
+            <div class="empty-state">
+              <div class="empty-icon">&#128193;</div>
+              <p>No employees found</p>
+              <span>Try adjusting your search or filters</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- PAGINATION — inside table-wrap, below rows -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <span class="page-info">
+        Showing {{ (currentPage - 1) * pageSize + 1 }}–{{ min(currentPage * pageSize, filtered.length) }} of {{ filtered.length }}
+      </span>
+      <div class="page-btns">
+        <button class="page-btn" (click)="goToPage(1)" [disabled]="currentPage === 1" title="First">«</button>
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 1" title="Previous">‹</button>
+        <ng-container *ngFor="let p of pageNumbers">
+          <button class="page-btn" [class.page-active]="p === currentPage"
+            (click)="goToPage(p)"
+            *ngIf="p <= currentPage + 2 && p >= currentPage - 2">
+            {{ p }}
+          </button>
+        </ng-container>
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages" title="Next">›</button>
+        <button class="page-btn" (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages" title="Last">»</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" *ngIf="toast" [class.error]="toastType === 'error'">
+    <span class="toast-icon">{{ toastType === 'success' ? '&#10003;' : '&#10005;' }}</span>
+    {{ toast }}
+  </div>
+
+</div>
+
+<!-- ============ ADD/EDIT MODAL ============ -->
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <div class="modal-head">
+      <div>
+        <h3>{{ editMode ? 'Edit Employee' : 'Add New Employee' }}</h3>
+        <span class="modal-sub">Step {{ currentStep }} of 2 —
+          {{ currentStep === 1 ? 'Personal Info' : 'Work Details' }}</span>
+      </div>
+      <button class="close-btn" (click)="tryClose()">&#10005;</button>
+    </div>
+
+    <div class="step-bar">
+      <div class="step-item" [class.s-active]="currentStep === 1" [class.s-done]="currentStep > 1">
+        <div class="step-dot">{{ currentStep > 1 ? '&#10003;' : '1' }}</div>
+        <span>Personal Info</span>
+      </div>
+      <div class="step-connector" [class.s-done]="currentStep > 1"></div>
+      <div class="step-item" [class.s-active]="currentStep === 2">
+        <div class="step-dot">2</div>
+        <span>Work Details</span>
+      </div>
+    </div>
+
+    <form #empForm="ngForm">
+
+      <!-- STEP 1 -->
+      <div class="modal-body" *ngIf="currentStep === 1">
+        <div class="photo-row">
+          <div class="photo-circle"
+            [style.background-image]="avatarPreview ? 'url(' + avatarPreview + ')' : 'none'">
+            <span *ngIf="!avatarPreview" class="photo-initials">
+              {{ form.name ? initials(form.name) : '?' }}
+            </span>
+          </div>
+          <div class="photo-meta">
+            <label class="photo-upload-btn" for="photoFile">&#128247; Upload Photo</label>
+            <input id="photoFile" type="file" accept="image/*"
+              (change)="onAvatarChange($event)" style="display:none" />
+            <p class="photo-hint">JPG, PNG — max 2MB</p>
+            <p class="photo-hint" *ngIf="avatarPreview" style="color:#059669;font-weight:600">
+              &#10003; Photo selected
+            </p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field span2">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" [(ngModel)]="form.name" name="name"
+              required #nameRef="ngModel" placeholder="e.g. Priya Sharma"
+              (ngModelChange)="markDirty()"
+              [class.field-err-input]="nameRef.invalid && nameRef.touched" />
+            <span class="err-msg" *ngIf="nameRef.invalid && nameRef.touched">Name is required</span>
+          </div>
+          <div class="field">
+            <label>Email Address <span class="req">*</span></label>
+            <input type="email" [(ngModel)]="form.email" name="email"
+              required email #emailRef="ngModel" placeholder="name@company.com"
+              (ngModelChange)="markDirty()"
+              [class.field-err-input]="emailRef.invalid && emailRef.touched" />
+            <span class="err-msg" *ngIf="emailRef.invalid && emailRef.touched">Valid email required</span>
+          </div>
+          <div class="field">
+            <label>Phone Number <span class="req">*</span></label>
+            <input type="tel" [(ngModel)]="form.phone" name="phone"
+              required #phoneRef="ngModel" placeholder="+91 98765 43210"
+              (ngModelChange)="markDirty()"
+              [class.field-err-input]="phoneRef.invalid && phoneRef.touched" />
+            <span class="err-msg" *ngIf="phoneRef.invalid && phoneRef.touched">Phone is required</span>
+          </div>
+          <div class="field span2">
+            <label>Employment Status</label>
+            <div class="status-row">
+              <label class="status-chip" [class.chip-active]="form.status === 'Active'">
+                <input type="radio" [(ngModel)]="form.status" name="status" value="Active" (change)="markDirty()" />
+                <span class="chip-dot active-dot"></span> Active
+              </label>
+              <label class="status-chip" [class.chip-inactive]="form.status === 'Inactive'">
+                <input type="radio" [(ngModel)]="form.status" name="status" value="Inactive" (change)="markDirty()" />
+                <span class="chip-dot inactive-dot"></span> Inactive
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-foot">
+          <button type="button" class="btn-ghost" (click)="tryClose()">Cancel</button>
+          <button type="button" class="btn-next" (click)="nextStep()" [disabled]="!isStep1Valid()">
+            Next &#8594;
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="modal-body" *ngIf="currentStep === 2">
+        <div class="form-grid">
+          <div class="field">
+            <label>Role / Position <span class="req">*</span></label>
+            <input type="text" [(ngModel)]="form.role" name="role"
+              required #roleRef="ngModel" placeholder="e.g. Software Engineer"
+              (ngModelChange)="markDirty()"
+              [class.field-err-input]="roleRef.invalid && roleRef.touched" />
+            <span class="err-msg" *ngIf="roleRef.invalid && roleRef.touched">Role is required</span>
+          </div>
+          <div class="field">
+            <label>Department <span class="req">*</span></label>
+            <input type="text" [(ngModel)]="form.department" name="department"
+              required #deptRef="ngModel" placeholder="e.g. Engineering"
+              (ngModelChange)="markDirty()"
+              [class.field-err-input]="deptRef.invalid && deptRef.touched" />
+            <span class="err-msg" *ngIf="deptRef.invalid && deptRef.touched">Department is required</span>
+          </div>
+          <div class="field span2">
+            <label>Salary (INR) <span class="req">*</span>
+              <strong class="salary-live">{{ formatSalary(form.salary) }}</strong>
+            </label>
+            <input type="range" [(ngModel)]="form.salary" name="salarySlider"
+              min="10000" max="500000" step="5000" class="slider" (ngModelChange)="markDirty()" />
+            <div class="slider-labels">
+              <span>&#8377;10K</span><span>&#8377;2.5L</span><span>&#8377;5L</span>
+            </div>
+            <input type="number" [(ngModel)]="form.salary" name="salaryNum"
+              min="0" placeholder="Or type exact amount" class="salary-input" (ngModelChange)="markDirty()" />
+          </div>
+          <div class="field">
+            <label>Join Date <span class="req">*</span></label>
+            <input type="date" [(ngModel)]="form.joinDate" name="joinDate"
+              required #joinRef="ngModel" (ngModelChange)="markDirty()"
+              [class.field-err-input]="joinRef.invalid && joinRef.touched" />
+            <span class="err-msg" *ngIf="joinRef.invalid && joinRef.touched">Join date is required</span>
+          </div>
+          <div class="field">
+            <label>Employee ID</label>
+            <input type="text"
+              [value]="editMode ? '#' + form.id : 'Auto-generated'"
+              disabled class="field-disabled" />
+          </div>
+        </div>
+
+        <!-- LIVE PREVIEW -->
+        <div class="preview-wrap" *ngIf="form.name">
+          <div class="preview-tag">&#128065; Live Preview</div>
+          <div class="preview-card">
+            <div class="preview-ava"
+              [style.background-image]="avatarPreview ? 'url(' + avatarPreview + ')' : 'none'">
+              <span *ngIf="!avatarPreview">{{ initials(form.name) }}</span>
+            </div>
+            <div class="preview-detail">
+              <div class="preview-name">{{ form.name }}</div>
+              <div class="preview-role">{{ form.role || '—' }} &nbsp;·&nbsp; {{ form.department || '—' }}</div>
+              <div class="preview-row">
+                <span>{{ form.email || '—' }}</span>
+                <span class="preview-status" [class.ps-active]="form.status === 'Active'">{{ form.status }}</span>
+              </div>
+              <div class="preview-sal">{{ formatSalary(form.salary) }} / year &nbsp;·&nbsp; Joined {{ form.joinDate || '—' }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-foot">
+          <button type="button" class="btn-back" (click)="prevStep()">&#8592; Back</button>
+          <button type="button" class="btn-ghost" (click)="tryClose()">Cancel</button>
+          <button type="button" class="btn-save" (click)="save()"
+            [disabled]="!isStep2Valid() || saving">
+            {{ saving ? 'Saving...' : (editMode ? 'Update Employee' : 'Add Employee') }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- UNSAVED WARNING -->
+<div class="modal-overlay" *ngIf="showUnsavedWarning">
+  <div class="del-box">
+    <div class="del-icon">&#9888;</div>
+    <h3>Unsaved Changes</h3>
+    <p>You have unsaved changes. Close without saving?</p>
+    <div class="del-actions">
+      <button class="btn-ghost" (click)="showUnsavedWarning = false">Keep Editing</button>
+      <button class="btn-delete" (click)="closeModal()">Discard</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-overlay" *ngIf="deleteEmployeeId !== null">
+  <div class="del-box">
+    <div class="del-icon">&#128465;</div>
+    <h3>Remove Employee</h3>
+    <p>This cannot be undone. The record will be permanently deleted.</p>
+    <div class="del-actions">
+      <button class="btn-ghost" (click)="closeDeleteModal()">Cancel</button>
+      <button class="btn-delete" (click)="confirmDelete()">Yes, Delete</button>
+    </div>
+  </div>
+</div>
