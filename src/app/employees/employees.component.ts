@@ -170,8 +170,21 @@ export class EmployeesComponent implements OnInit {
       experience: '',
       status: 'Active',
       performance: 80,
-      image: 'https://i.pravatar.cc/100?img=12'
+      image: ''
     };
+  }
+
+  private pickUniqueAvatar(): string {
+    const used = this.employees
+      .map(e => { const m = e.image?.match(/img=(\d+)/); return m ? +m[1] : -1; })
+      .filter(n => n > 0);
+    let n: number;
+    let tries = 0;
+    do {
+      n = Math.floor(Math.random() * 70) + 1;
+      tries++;
+    } while (used.includes(n) && tries < 100);
+    return `https://i.pravatar.cc/100?img=${n}`;
   }
 
   closeModal(): void {
@@ -213,6 +226,10 @@ export class EmployeesComponent implements OnInit {
     if (this.employee.role.length < 3) {
       alert('Role name too short');
       return;
+    }
+
+    if (!this.employee.image) {
+      this.employee.image = this.pickUniqueAvatar();
     }
 
     this.employees.push({ ...this.employee });

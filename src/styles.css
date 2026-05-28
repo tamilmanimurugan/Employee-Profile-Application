@@ -1,146 +1,388 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
-body{
+/* ============================================================
+   THEME TOKENS  (dark-mode values used by the override block)
+============================================================ */
+:root {
+  --dm-bg-page:    #0f172a;
+  --dm-bg-surface: #1e293b;
+  --dm-bg-input:   #0f172a;
+  --dm-border:     #334155;
+  --dm-text-1:     #f1f5f9;
+  --dm-text-2:     #cbd5e1;
+  --dm-text-3:     #94a3b8;
+}
+
+/* BASE */
+body {
   margin: 0;
   font-family: "Poppins", sans-serif;
   background: #f4f7fb;
 }
-/* DARK MODE */
 
-body.dark-theme{
+/* ============================================================
+   DARK MODE
+============================================================ */
 
+/* --- Body base + Bootstrap CSS variable overrides --- */
+body.dark-theme {
   background: #0f172a;
+  color: #f1f5f9;
 
+  /* Override Bootstrap 5 CSS variables so table/form/border colors work */
+  --bs-body-color:        #f1f5f9;
+  --bs-body-bg:           #0f172a;
+  --bs-table-color:       #f1f5f9;
+  --bs-table-bg:          transparent;
+  --bs-table-border-color:#334155;
+  --bs-table-striped-bg:  rgba(255,255,255,0.03);
+  --bs-table-hover-bg:    rgba(37,99,235,0.12);
+  --bs-table-hover-color: #f1f5f9;
+  --bs-border-color:      #334155;
+  --bs-border-color-translucent: rgba(255,255,255,0.1);
+  --bs-form-control-bg:   #0f172a;
+  --bs-form-control-color:#f1f5f9;
+  --bs-secondary-color:   #94a3b8;
+  --bs-emphasis-color:    #f1f5f9;
+  --bs-progress-bg:       #334155;
+  --bs-progress-bar-bg:   #2563eb;
 }
 
-/* PAGE BACKGROUND */
-
+/* --- Page-level backgrounds --- */
 body.dark-theme .employees-page,
 body.dark-theme .attendance-page,
 body.dark-theme .settings-page,
 body.dark-theme .profile-wrapper,
-body.dark-theme .dashboard-page{
-
+body.dark-theme .dashboard-container,
+body.dark-theme .contact-page {
   background: #0f172a !important;
-
 }
 
-/* CARDS */
-
+/* --- Cards & surfaces --- */
 body.dark-theme .employee-table-card,
+body.dark-theme .employee-directory-card,
 body.dark-theme .settings-card,
 body.dark-theme .attendance-table-card,
+body.dark-theme .live-status-card,
 body.dark-theme .profile-card,
 body.dark-theme .info-card,
 body.dark-theme .about-box,
-body.dark-theme .filter-card,
-body.dark-theme .modal-box{
-
+body.dark-theme .modal-box,
+body.dark-theme .top-navbar,
+body.dark-theme .glass-card,
+body.dark-theme .attendance-modal-box,
+body.dark-theme .notification-item,
+body.dark-theme .admin-profile {
   background: #1e293b !important;
-
-  color: white;
-
+  backdrop-filter: none !important;
+  border-color: #334155 !important;
 }
 
-/* SIDEBAR */
-
-body.dark-theme .sidebar{
-
+/* --- Sidebar --- */
+body.dark-theme .sidebar {
   background: #111827 !important;
-
 }
 
-/* TOPBAR */
-
-body.dark-theme .topbar{
-
+/* --- Topbar --- */
+body.dark-theme .topbar {
   background: #1e293b !important;
-
+  border-bottom: 1px solid #334155;
 }
 
-/* HEADINGS */
+/* --- Layout wrappers --- */
+body.dark-theme .app-layout {
+  background: #0f172a !important;
+}
 
+body.dark-theme .page-content {
+  background: #0f172a !important;
+}
+
+body.dark-theme .logo-text {
+  color: #60a5fa !important;
+}
+
+body.dark-theme .welcome-text {
+  color: #94a3b8 !important;
+}
+
+/* --- Headings --- */
 body.dark-theme h1,
 body.dark-theme h2,
 body.dark-theme h3,
 body.dark-theme h4,
 body.dark-theme h5,
-body.dark-theme h6{
-
-  color: white !important;
-
+body.dark-theme h6 {
+  color: #f1f5f9 !important;
 }
 
-/* NORMAL TEXT */
-
+/* --- Body text --- */
 body.dark-theme p,
-body.dark-theme span,
 body.dark-theme label,
 body.dark-theme td,
-body.dark-theme th{
-
+body.dark-theme th {
   color: #cbd5e1 !important;
-
 }
 
-/* TABLE */
-
-body.dark-theme table{
-
-  color: white;
-
+body.dark-theme span {
+  color: #cbd5e1 !important;
 }
 
-body.dark-theme td{
-
-  border-color: #334155 !important;
-
-}
-
-/* INPUT */
-
-body.dark-theme input,
-body.dark-theme .form-control,
-body.dark-theme .form-select{
-
-  background: #0f172a !important;
-
+/* EXCEPTION – gradient/colored cards keep white text */
+body.dark-theme .stat-card *,
+body.dark-theme .attendance-card *,
+body.dark-theme .quick-card *,
+body.dark-theme .hero-banner *,
+body.dark-theme .modal-header-custom *,
+body.dark-theme .modal-top * {
   color: white !important;
-
-  border: 1px solid #334155 !important;
-
 }
 
-/* PLACEHOLDER */
-
-body.dark-theme input::placeholder{
-
-  color: #94a3b8;
-
+/* Hero button — white bg with blue text, sits on the gradient banner */
+body.dark-theme .hero-btn {
+  background: white !important;
+  color: #2563eb !important;
 }
 
-/* SEARCH */
+/* Ensure primary action buttons stay white */
+body.dark-theme .mark-btn,
+body.dark-theme .add-btn,
+body.dark-theme .add-employee-btn,
+body.dark-theme .save-btn,
+body.dark-theme .main-save-btn,
+body.dark-theme .send-btn,
+body.dark-theme .confirm-btn,
+body.dark-theme .logout-btn {
+  color: white !important;
+}
 
-body.dark-theme .search-box{
+/* --- Tables --- */
+body.dark-theme td {
+  border-color: #334155 !important;
+}
 
+body.dark-theme th {
+  border-color: #334155 !important;
   background: #1e293b !important;
-
 }
 
-/* BUTTONS */
-
-body.dark-theme .cancel-btn{
-
-  background: #334155;
-
-  color: white;
-
+body.dark-theme tbody tr:hover {
+  background: rgba(37,99,235,0.1) !important;
+  transform: none !important;
 }
 
-/* ICONS */
+/* --- Inputs & forms --- */
+body.dark-theme input,
+body.dark-theme textarea,
+body.dark-theme select,
+body.dark-theme .form-control,
+body.dark-theme .form-select {
+  background: #0f172a !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #334155 !important;
+}
 
-body.dark-theme i{
+body.dark-theme input::placeholder,
+body.dark-theme textarea::placeholder {
+  color: #64748b !important;
+}
 
+body.dark-theme .form-control:focus,
+body.dark-theme .form-select:focus {
+  background: #0f172a !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.2) !important;
+}
+
+/* --- Search box --- */
+body.dark-theme .search-box {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+body.dark-theme .search-box input {
+  color: #f1f5f9 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* --- Cancel / discard buttons --- */
+body.dark-theme .cancel-btn,
+body.dark-theme .discard-btn {
+  background: #334155 !important;
+  color: #f1f5f9 !important;
+}
+
+/* --- Notification item hover --- */
+body.dark-theme .notification-item:hover {
+  background: #263044 !important;
+}
+
+/* --- Action icon buttons (view / edit / delete) --- */
+body.dark-theme .view-btn,
+body.dark-theme .icon-btn.view-btn,
+body.dark-theme .action-btn.view {
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+body.dark-theme .edit-btn,
+body.dark-theme .icon-btn.edit-btn,
+body.dark-theme .action-btn.edit,
+body.dark-theme .edit-profile-btn {
+  background: rgba(124,58,237,0.2) !important;
+  color: #c4b5fd !important;
+}
+
+body.dark-theme .delete-btn,
+body.dark-theme .icon-btn.delete-btn,
+body.dark-theme .action-btn.delete {
+  background: rgba(220,38,38,0.2) !important;
+  color: #fca5a5 !important;
+}
+
+/* --- Status / department badges --- */
+body.dark-theme .department-badge,
+body.dark-theme .department,
+body.dark-theme .experience-badge {
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+body.dark-theme .status-badge.active,
+body.dark-theme .status.active,
+body.dark-theme .present-status {
+  background: rgba(16,185,129,0.2) !important;
+  color: #6ee7b7 !important;
+}
+
+body.dark-theme .status-badge.leave,
+body.dark-theme .status.leave,
+body.dark-theme .leave-status {
+  background: rgba(245,158,11,0.2) !important;
+  color: #fcd34d !important;
+}
+
+body.dark-theme .hero-badge {
+  background: rgba(37,99,235,0.25) !important;
+  color: #93c5fd !important;
+}
+
+body.dark-theme .development {
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+body.dark-theme .backend {
+  background: rgba(124,58,237,0.2) !important;
+  color: #c4b5fd !important;
+}
+
+body.dark-theme .uiux {
+  background: rgba(225,29,72,0.2) !important;
+  color: #fda4af !important;
+}
+
+/* --- Progress bar tracks --- */
+body.dark-theme .progress-custom,
+body.dark-theme .progress-bar-custom {
+  background: #334155 !important;
+}
+
+/* --- Activity boxes (attendance) --- */
+body.dark-theme .activity-box {
+  background: #1e293b !important;
+}
+
+body.dark-theme .activity-box:hover {
+  background: #263044 !important;
+}
+
+body.dark-theme .activity-box h4 {
+  color: #60a5fa !important;
+}
+
+body.dark-theme .activity-box span {
+  color: #94a3b8 !important;
+}
+
+/* --- Contact page specific --- */
+body.dark-theme .floating-card {
+  background: #1e293b !important;
+}
+
+body.dark-theme .floating-card i {
+  color: #60a5fa !important;
+}
+
+body.dark-theme .social-icons a {
+  background: #1e293b !important;
+  color: #60a5fa !important;
+}
+
+body.dark-theme .live-support {
+  background: rgba(37,99,235,0.15) !important;
+  border: 1px solid #334155;
+}
+
+body.dark-theme .faq-item {
+  border-bottom-color: #334155 !important;
+}
+
+body.dark-theme .secondary-btn {
+  background: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+/* --- Attendance specific --- */
+body.dark-theme .date-box {
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+body.dark-theme .export-btn {
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+body.dark-theme .checkin-box {
+  background: rgba(37,99,235,0.15) !important;
+}
+
+/* --- Settings specific --- */
+body.dark-theme .settings-page .notification-btn {
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+/* --- Profile images --- */
+body.dark-theme .profile-img {
+  border-color: #475569 !important;
+}
+
+body.dark-theme .employee-info img {
+  border-color: #334155 !important;
+}
+
+/* --- Info card labels --- */
+body.dark-theme .info-card h6 {
+  color: #94a3b8 !important;
+}
+
+/* --- Icon circles / boxes always white on their gradient bg --- */
+body.dark-theme .icon-circle i,
+body.dark-theme .icon-box i,
+body.dark-theme .card-icon i,
+body.dark-theme .stat-icon i {
+  color: white !important;
+}
+
+/* --- Notification sub-text in settings --- */
+body.dark-theme .notification-item span {
+  color: #94a3b8 !important;
+}
+
+/* --- Icons inherit parent color --- */
+body.dark-theme i {
   color: inherit;
-
 }

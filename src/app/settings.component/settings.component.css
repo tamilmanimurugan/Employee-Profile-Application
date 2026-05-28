@@ -162,7 +162,7 @@
 }
 
 .security-badge{
-  background: #dcfce7;
+  background: #eb9b1b;
   color: #15803d;
   padding: 10px 18px;
   border-radius: 30px;
@@ -365,76 +365,7 @@ label{
   }
 
 }
-/* DARK MODE */
 
-body.dark-mode{
-
-  background: #0f172a !important;
-
-  color: white !important;
-
-}
-
-/* CARDS */
-
-body.dark-mode .settings-card,
-body.dark-mode .employee-table-card,
-body.dark-mode .attendance-table-card,
-body.dark-mode .profile-card,
-body.dark-mode .stat-card,
-body.dark-mode .attendance-card{
-
-  background: #1e293b !important;
-
-  color: white !important;
-
-}
-
-/* INPUTS */
-
-body.dark-mode .form-control,
-body.dark-mode .form-select,
-body.dark-mode .search-box{
-
-  background: #0f172a !important;
-
-  color: white !important;
-
-  border: 1px solid #334155 !important;
-
-}
-
-/* TABLE */
-
-body.dark-mode table{
-
-  color: white !important;
-
-}
-
-body.dark-mode th{
-
-  color: #cbd5e1 !important;
-
-}
-
-/* SIDEBAR */
-
-body.dark-mode .sidebar{
-
-  background: #020617 !important;
-
-}
-
-/* TEXT */
-
-body.dark-mode p,
-body.dark-mode span,
-body.dark-mode label{
-
-  color: #cbd5e1 !important;
-
-}
 /* =========================================
    LIVE CLOCK
 ========================================= */
@@ -716,47 +647,85 @@ body.dark-mode label{
 }
 
 /* =========================================
-   DARK MODE IMPROVEMENTS
+   DARK MODE
 ========================================= */
 
-body.dark-mode .top-navbar,
-body.dark-mode .settings-card,
-body.dark-mode .notification-item,
-body.dark-mode .admin-profile{
+:host-context(body.dark-theme) .settings-page{
+  background: #0f172a !important;
+}
 
+:host-context(body.dark-theme) .top-navbar,
+:host-context(body.dark-theme) .settings-card,
+:host-context(body.dark-theme) .notification-item,
+:host-context(body.dark-theme) .admin-profile{
   background: #1e293b !important;
-
-  color: white !important;
-
+  color: #f1f5f9 !important;
+  border-color: #334155 !important;
 }
 
-body.dark-mode .welcome-section h1,
-body.dark-mode h3,
-body.dark-mode h5,
-body.dark-mode h6{
-
-  color: white !important;
-
+:host-context(body.dark-theme) .welcome-section h1,
+:host-context(body.dark-theme) .card-header-custom h3,
+:host-context(body.dark-theme) .notification-item h5,
+:host-context(body.dark-theme) .admin-profile h6{
+  color: #f1f5f9 !important;
 }
 
-body.dark-mode .live-time{
-
-  background: #2563eb;
-
+:host-context(body.dark-theme) .welcome-section p,
+:host-context(body.dark-theme) .card-header-custom p,
+:host-context(body.dark-theme) .notification-item span,
+:host-context(body.dark-theme) .admin-profile span{
+  color: #94a3b8 !important;
 }
 
-body.dark-mode .notification-item:hover{
+:host-context(body.dark-theme) label{
+  color: #cbd5e1 !important;
+}
 
+:host-context(body.dark-theme) .form-control,
+:host-context(body.dark-theme) .form-select{
+  background: #0f172a !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #334155 !important;
+}
+
+:host-context(body.dark-theme) .form-control:hover,
+:host-context(body.dark-theme) .form-select:hover{
+  background: #0f172a !important;
+}
+
+:host-context(body.dark-theme) .form-control:focus,
+:host-context(body.dark-theme) .form-select:focus{
+  background: #0f172a !important;
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 0.15rem rgba(37,99,235,0.25) !important;
+}
+
+:host-context(body.dark-theme) .notification-btn{
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+:host-context(body.dark-theme) .edit-profile-btn{
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+:host-context(body.dark-theme) .live-time{
+  background: #1e3a8a;
+}
+
+:host-context(body.dark-theme) .notification-item:hover{
+  background: #263044 !important;
+}
+
+:host-context(body.dark-theme) .discard-btn{
   background: #334155 !important;
-
+  color: #f1f5f9 !important;
 }
 
-body.dark-mode .discard-btn{
-
-  background: #334155;
-
-  color: white;
-
+:host-context(body.dark-theme) .change-photo-btn{
+  background: #334155 !important;
+  color: #f1f5f9 !important;
 }
 
 /* =========================================

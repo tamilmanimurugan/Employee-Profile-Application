@@ -52,6 +52,9 @@ this.darkMode=true;
 document.body.classList.add(
 'dark-theme'
 );
+document.body.classList.remove(
+'dark-mode'
+);
 
 }
 
@@ -84,6 +87,9 @@ if(this.darkMode){
 document.body.classList.add(
 'dark-theme'
 );
+document.body.classList.remove(
+'dark-mode'
+);
 
 localStorage.setItem(
 'theme',
@@ -95,7 +101,8 @@ localStorage.setItem(
 else{
 
 document.body.classList.remove(
-'dark-theme'
+'dark-theme',
+'dark-mode'
 );
 
 localStorage.setItem(

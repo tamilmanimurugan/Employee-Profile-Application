@@ -1,13 +1,4 @@
 /* =========================================
-   GOOGLE FONT
-========================================= */
-
-*{
-  font-family: 'Inter', sans-serif;
-  box-sizing: border-box;
-}
-
-/* =========================================
    PAGE
 ========================================= */
 
@@ -1033,4 +1024,178 @@
   transform: translateY(-3px);
 
 }
+}
+
+/* ============================================================
+   DARK MODE
+============================================================ */
+
+:host-context(body.dark-theme) .attendance-page{
+  background: #0f172a !important;
+}
+
+:host-context(body.dark-theme) .top-navbar{
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  backdrop-filter: none !important;
+}
+
+:host-context(body.dark-theme) .top-navbar h1{
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .top-navbar p{
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .date-box{
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+:host-context(body.dark-theme) .live-status-card{
+  background: #1e293b !important;
+  backdrop-filter: none !important;
+}
+
+:host-context(body.dark-theme) .live-header h3{
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .live-header p{
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .activity-box{
+  background: #1e293b !important;
+}
+
+:host-context(body.dark-theme) .activity-box:hover{
+  background: #263044 !important;
+}
+
+:host-context(body.dark-theme) .activity-box h4{
+  color: #60a5fa !important;
+}
+
+:host-context(body.dark-theme) .activity-box span{
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .attendance-table-card{
+  background: #1e293b !important;
+  backdrop-filter: none !important;
+}
+
+:host-context(body.dark-theme) .table-header h3{
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .table-header p{
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .search-box{
+  background: #0f172a !important;
+  border-color: #334155 !important;
+}
+
+:host-context(body.dark-theme) .search-box input{
+  color: #f1f5f9;
+  background: transparent;
+}
+
+:host-context(body.dark-theme) .export-btn{
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+:host-context(body.dark-theme) .attendance-table th{
+  color: #94a3b8 !important;
+  background: #1e293b !important;
+  border-bottom-color: #334155 !important;
+}
+
+:host-context(body.dark-theme) .attendance-table td{
+  border-color: #334155 !important;
+}
+
+:host-context(body.dark-theme) .attendance-table tbody tr:hover{
+  background: rgba(37,99,235,0.1) !important;
+  transform: none;
+}
+
+:host-context(body.dark-theme) .employee-info h6{
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .employee-info span{
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .employee-info img{
+  border-color: #334155 !important;
+}
+
+:host-context(body.dark-theme) .development{
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+:host-context(body.dark-theme) .backend{
+  background: rgba(124,58,237,0.2) !important;
+  color: #c4b5fd !important;
+}
+
+:host-context(body.dark-theme) .uiux{
+  background: rgba(225,29,72,0.2) !important;
+  color: #fda4af !important;
+}
+
+:host-context(body.dark-theme) .present-status{
+  background: rgba(16,185,129,0.2) !important;
+  color: #6ee7b7 !important;
+}
+
+:host-context(body.dark-theme) .leave-status{
+  background: rgba(245,158,11,0.2) !important;
+  color: #fcd34d !important;
+}
+
+:host-context(body.dark-theme) .progress-custom{
+  background: #334155 !important;
+}
+
+:host-context(body.dark-theme) .view-btn{
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}
+
+:host-context(body.dark-theme) .edit-btn{
+  background: rgba(124,58,237,0.2) !important;
+  color: #c4b5fd !important;
+}
+
+:host-context(body.dark-theme) .attendance-modal-box{
+  background: #1e293b !important;
+}
+
+:host-context(body.dark-theme) .modal-body{
+  background: #1e293b !important;
+}
+
+:host-context(body.dark-theme) .attendance-user h6{
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .attendance-user span{
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .checkin-box{
+  background: rgba(37,99,235,0.15) !important;
+}
+
+:host-context(body.dark-theme) .checkin-box h2{
+  color: #60a5fa !important;
 }

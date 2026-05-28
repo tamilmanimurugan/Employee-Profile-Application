@@ -542,3 +542,80 @@ grid-column:span 1;
 }
 
 }
+
+/* ============================================================
+   DARK MODE
+============================================================ */
+
+:host-context(body.dark-theme) .profile-wrapper{
+  background: #0f172a !important;
+}
+
+:host-context(body.dark-theme) .profile-card{
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  backdrop-filter: none !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+:host-context(body.dark-theme) .profile-top h2{
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .profile-top p{
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .profile-img{
+  border-color: #475569 !important;
+}
+
+:host-context(body.dark-theme) .info-card{
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+:host-context(body.dark-theme) .info-card h6{
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .info-card p{
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .about-box{
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+:host-context(body.dark-theme) .about-box h4{
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .about-box p{
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .modal-box{
+  background: #1e293b !important;
+}
+
+:host-context(body.dark-theme) .form-control{
+  background: #0f172a !important;
+  color: #f1f5f9 !important;
+  border-color: #334155 !important;
+}
+
+:host-context(body.dark-theme) .form-control:focus{
+  border-color: #2563eb !important;
+}
+
+:host-context(body.dark-theme) .cancel-btn{
+  background: #334155 !important;
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .badge{
+  background: rgba(37,99,235,0.2) !important;
+  color: #93c5fd !important;
+}

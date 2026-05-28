@@ -53,39 +53,29 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
 
-    const savedTheme =
-      localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem('theme');
 
     if (savedTheme === 'dark') {
-
       this.darkMode = true;
+      document.body.classList.add('dark-theme');
+      document.body.classList.remove('dark-mode');
+    }
 
-      document.body.classList.add('dark-mode');
-      const savedProfile =
-      localStorage.getItem('profile');
-
+    const savedProfile = localStorage.getItem('profile');
     if (savedProfile) {
-
-      this.profile =
-        JSON.parse(savedProfile);
-
+      this.profile = JSON.parse(savedProfile);
     }
 
-    }
-
-    this.updateClock();
- 
-    setInterval(() => {
-
-      this.updateClock();
-
-    }, 1000);
-
-    // load saved profile image if any
     const savedImage = localStorage.getItem('profileImage');
     if (savedImage) {
       this.profileImage = savedImage;
     }
+
+    this.updateClock();
+
+    setInterval(() => {
+      this.updateClock();
+    }, 1000);
 
   }
 
@@ -104,7 +94,8 @@ export class SettingsComponent implements OnInit {
 
     if (this.darkMode) {
 
-      document.body.classList.add('dark-mode');
+      document.body.classList.add('dark-theme');
+      document.body.classList.remove('dark-mode');
 
       localStorage.setItem(
         'theme',
@@ -115,7 +106,7 @@ export class SettingsComponent implements OnInit {
 
     else {
 
-      document.body.classList.remove('dark-mode');
+      document.body.classList.remove('dark-theme', 'dark-mode');
 
       localStorage.setItem(
         'theme',

@@ -1,13 +1,3 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body{
-  font-family: "Poppins", sans-serif;
-}
-
 .dashboard-container{
   min-height: 100vh;
   background: #f4f7fb;
@@ -405,4 +395,44 @@ body{
     opacity: 1;
   }
 
+}
+
+/* ============================================================
+   DARK MODE
+============================================================ */
+
+:host-context(body.dark-theme) .dashboard-container{
+  background: #0f172a !important;
+}
+
+:host-context(body.dark-theme) .employee-directory-card{
+  background: #1e293b !important;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.3);
+}
+
+:host-context(body.dark-theme) .directory-title{
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .directory-subtitle{
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .search-box{
+  background: #0f172a !important;
+  border: 1px solid #334155;
+}
+
+:host-context(body.dark-theme) .search-box input{
+  color: #f1f5f9;
+  background: transparent;
+}
+
+:host-context(body.dark-theme) .custom-table tbody tr:hover{
+  background: rgba(37,99,235,0.1) !important;
+  transform: none;
+}
+
+:host-context(body.dark-theme) .modal-box{
+  background: #1e293b !important;
 }

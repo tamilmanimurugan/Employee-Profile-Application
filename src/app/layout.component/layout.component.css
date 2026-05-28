@@ -769,41 +769,44 @@ body{
 /* DARK MODE */
 
 .dark-theme{
-
   background:#0f172a !important;
+  color:#f1f5f9 !important;
+}
 
-  color:white !important;
-
+.dark-theme .app-layout{
+  background:#0f172a !important;
 }
 
 .dark-theme .sidebar{
-
   background:#111827 !important;
-
 }
 
 .dark-theme .topbar{
-
   background:#1e293b !important;
-
+  backdrop-filter:none !important;
+  border-bottom:1px solid #334155;
 }
 
 .dark-theme .page-content{
-
   background:#0f172a !important;
-
 }
 
 .dark-theme .logo-text{
-
-  color:#60a5fa;
-
+  color:#60a5fa !important;
 }
 
 .dark-theme .welcome-text{
+  color:#94a3b8 !important;
+}
 
-  color:#cbd5e1;
+.dark-theme .search-box{
+  background:#1e293b !important;
+  border-color:#334155 !important;
+}
 
+.dark-theme .search-box input{
+  color:#f1f5f9 !important;
+  background:transparent !important;
 }
 
 /* MOBILE */
