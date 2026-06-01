@@ -2,8 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError, shareReplay, tap } from 'rxjs';
 import { Employee, CreateEmployeePayload, UpdateEmployeePayload } from './employee.model';
+import { environment } from '../../environments/environment';
 
-const API_BASE = 'http://localhost:5000/api/employees';
+const API_BASE = `${environment.apiUrl}/employees`;
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeApiService {

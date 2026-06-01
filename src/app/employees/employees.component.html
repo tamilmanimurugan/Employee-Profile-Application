@@ -263,8 +263,8 @@
           </div>
         }
 
-        @if (apiError) {
-          <div style="color:#ef4444;font-size:13px;font-weight:600;margin:10px 0;">⚠ {{ apiError }}</div>
+        @if (saveError) {
+          <div style="color:#ef4444;font-size:14px;font-weight:600;margin:10px 0;padding:10px 14px;background:rgba(239,68,68,0.1);border-radius:8px;border:1px solid rgba(239,68,68,0.3);">⚠ {{ saveError }}</div>
         }
 
         <div class="modal-footer-custom">

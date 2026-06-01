@@ -27,6 +27,7 @@ export class EmployeesComponent implements OnInit {
   loading     = false;
   apiOnline   = false;   // true when API responded
   apiError    = '';
+  saveError   = '';      // error shown inside the modal
   statusMsg   = '';      // shown in the UI header
   currentId:  number | null = null;
   nextLocalId = 1000;
@@ -79,14 +80,14 @@ export class EmployeesComponent implements OnInit {
     this.submitted = false;
     this.currentId = null;
     this.employee  = this.emptyForm();
-    this.apiError  = '';
+    this.saveError = '';
     this.showModal = true;
   }
 
   closeModal(): void {
     this.showModal = false;
     this.submitted = false;
-    this.apiError  = '';
+    this.saveError = '';
   }
 
   // ── Add ────────────────────────────────────────────────────────────────────
@@ -100,11 +101,16 @@ export class EmployeesComponent implements OnInit {
     }
 
     if (this.apiOnline) {
-      // ✅ Save to SQL Server via API
-      this.loading = true;
+      this.loading   = true;
+      this.saveError = '';
       this.api.create(this.employee).subscribe({
-        next:  () => { this.loadEmployees(); this.closeModal(); },
-        error: (err) => { this.apiError = err.message; this.loading = false; }
+        next: (created) => {
+          this.employees = [...this.employees, created]
+            .sort((a, b) => a.name.localeCompare(b.name));
+          this.loading = false;
+          this.closeModal();
+        },
+        error: (err) => { this.saveError = err.message; this.loading = false; }
       });
     } else {
       // Offline fallback — save to localStorage only
@@ -121,7 +127,7 @@ export class EmployeesComponent implements OnInit {
     this.editMode  = true;
     this.submitted = false;
     this.currentId = emp.id ?? null;
-    this.apiError  = '';
+    this.saveError = '';
     this.employee  = {
       name: emp.name, email: emp.email, department: emp.department,
       role: emp.role, experience: emp.experience, status: emp.status,
@@ -135,10 +141,15 @@ export class EmployeesComponent implements OnInit {
     if (!this.isFormValid() || this.currentId === null) return;
 
     if (this.apiOnline) {
-      this.loading = true;
+      this.loading   = true;
+      this.saveError = '';
       this.api.update(this.currentId, this.employee).subscribe({
-        next:  () => { this.loadEmployees(); this.closeModal(); },
-        error: (err) => { this.apiError = err.message; this.loading = false; }
+        next: (updated) => {
+          this.employees = this.employees.map(e => e.id === updated.id ? updated : e);
+          this.loading = false;
+          this.closeModal();
+        },
+        error: (err) => { this.saveError = err.message; this.loading = false; }
       });
     } else {
       this.employees = this.employees.map(e =>
@@ -156,7 +167,7 @@ export class EmployeesComponent implements OnInit {
 
     if (this.apiOnline) {
       this.api.delete(emp.id!).subscribe({
-        next:  () => this.loadEmployees(),
+        next:  () => { this.employees = this.employees.filter(e => e.id !== emp.id); },
         error: (err) => alert('Delete failed: ' + err.message)
       });
     } else {
