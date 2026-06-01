@@ -1,0 +1,155 @@
+# ============================================================
+# Azure DevOps CI/CD Pipeline
+# Deploys:
+#   - ASP.NET Core API  → employeeprofileapi  (App Service)
+#   - Angular Web App   → employeeprofileweb  (App Service)
+# ============================================================
+
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  # Azure Service Connection
+  azureServiceConnection: 'EmployeeProfileManagementServiceConnection'
+
+  # API
+  apiProjectPath:   'api/EmployeeProfile.Api/EmployeeProfile.Api.csproj'
+  apiAppName:       'employeeprofileapi'
+
+  # Angular Web
+  webAppName:       'employeeprofileweb'
+  nodeVersion:      '20.x'
+
+  # ⚠️ Add AZURE_SQL_CONNECTION_STRING as a Secret Variable in Azure DevOps:
+  #    Pipelines → Edit → Variables → + Add
+  #    Name  : AZURE_SQL_CONNECTION_STRING
+  #    Value : <your production SQL connection string>
+  #    ✅ Check "Keep this value secret"
+
+# ============================================================
+# STAGE 1 — Build & Deploy API
+# ============================================================
+stages:
+
+- stage: BuildAndDeployAPI
+  displayName: 'Build & Deploy ASP.NET Core API'
+  jobs:
+  - job: BuildAPI
+    displayName: 'Build API'
+    steps:
+
+    - task: UseDotNet@2
+      displayName: 'Install .NET 10 SDK'
+      inputs:
+        packageType: 'sdk'
+        version:     '10.x'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet packages'
+      inputs:
+        command:   'restore'
+        projects:  '$(apiProjectPath)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build API (Release)'
+      inputs:
+        command:   'build'
+        projects:  '$(apiProjectPath)'
+        arguments: '--configuration Release'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish API'
+      inputs:
+        command:            'publish'
+        publishWebProjects: false
+        projects:           '$(apiProjectPath)'
+        arguments:          '--configuration Release --output $(Build.ArtifactStagingDirectory)/api'
+        zipAfterPublish:    true
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Upload API artifact'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/api'
+        ArtifactName:  'api-drop'
+
+  - job: DeployAPI
+    displayName: 'Deploy API to Azure'
+    dependsOn: BuildAPI
+    steps:
+
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        artifactName: 'api-drop'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - task: AzureWebApp@1
+      displayName: 'Deploy API → employeeprofileapi'
+      inputs:
+        azureSubscription:  '$(azureServiceConnection)'
+        appType:            'webApp'
+        appName:            '$(apiAppName)'
+        package:            '$(System.ArtifactsDirectory)/api-drop/*.zip'
+        deploymentMethod:   'auto'
+        appSettings: >
+          -ASPNETCORE_ENVIRONMENT Production
+          -ConnectionStrings__DefaultConnection "$(AZURE_SQL_CONNECTION_STRING)"
+
+# ============================================================
+# STAGE 2 — Build & Deploy Angular Web
+# ============================================================
+
+- stage: BuildAndDeployWeb
+  displayName: 'Build & Deploy Angular Web App'
+  dependsOn: BuildAndDeployAPI
+  jobs:
+  - job: BuildWeb
+    displayName: 'Build Angular'
+    steps:
+
+    - task: NodeTool@0
+      displayName: 'Install Node.js $(nodeVersion)'
+      inputs:
+        versionSpec: '$(nodeVersion)'
+
+    - task: Npm@1
+      displayName: 'npm install'
+      inputs:
+        command:         'install'
+        workingDir:      '.'
+
+    - task: Npm@1
+      displayName: 'ng build --configuration production'
+      inputs:
+        command:         'custom'
+        workingDir:      '.'
+        customCommand:   'run build -- --configuration production'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Upload Web artifact'
+      inputs:
+        PathtoPublish: 'dist/Employee_profile/browser'
+        ArtifactName:  'web-drop'
+
+  - job: DeployWeb
+    displayName: 'Deploy Web to Azure'
+    dependsOn: BuildWeb
+    steps:
+
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        artifactName: 'web-drop'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - task: AzureWebApp@1
+      displayName: 'Deploy Web → employeeprofileweb'
+      inputs:
+        azureSubscription:  '$(azureServiceConnection)'
+        appType:            'webApp'
+        appName:            '$(webAppName)'
+        package:            '$(System.ArtifactsDirectory)/web-drop'
+        deploymentMethod:   'auto'
