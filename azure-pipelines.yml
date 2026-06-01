@@ -25,6 +25,12 @@ variables:
   webAppName:       'employeeprofileweb'
   nodeVersion:      '20.x'
 
+  # ⚠️ Add AZURE_SQL_CONNECTION_STRING as a Secret Variable in Azure DevOps:
+  #    Pipelines → Edit → Variables → + Add
+  #    Name  : AZURE_SQL_CONNECTION_STRING
+  #    Value : <your production SQL connection string>
+  #    ✅ Check "Keep this value secret"
+
 # ============================================================
 # STAGE 1 — Build & Deploy API
 # ============================================================
@@ -89,6 +95,9 @@ stages:
         appName:            '$(apiAppName)'
         package:            '$(System.ArtifactsDirectory)/api-drop/*.zip'
         deploymentMethod:   'auto'
+        appSettings: >
+          -ASPNETCORE_ENVIRONMENT Production
+          -ConnectionStrings__DefaultConnection "$(AZURE_SQL_CONNECTION_STRING)"
 
 # ============================================================
 # STAGE 2 — Build & Deploy Angular Web
