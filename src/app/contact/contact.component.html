@@ -1,0 +1,387 @@
+<div class="contact-page container-fluid">
+
+  <!-- TOAST -->
+
+  <div class="success-toast"
+       *ngIf="showToast">
+
+    <i class="bi bi-check-circle-fill"></i>
+
+    Message Sent Successfully 🚀
+
+  </div>
+
+  <!-- HERO -->
+
+  <div class="contact-hero">
+
+    <div class="hero-content">
+
+      <span class="hero-badge">
+        CONTACT SUPPORT
+      </span>
+     
+      <h1>
+        Let's Build Something Amazing Together
+      </h1>
+
+      <p>
+        Have questions, feedback or project ideas?
+        Our team is always ready to help you.
+      </p>
+<a routerLink="/contact" class="sidebar-link">
+
+  <i class="bi bi-headset"></i>
+
+  Contact Us
+
+</a>
+      <div class="hero-buttons">
+
+        <button class="hero-btn primary-btn">
+          <i class="bi bi-chat-dots-fill"></i>
+          Live Chat
+        </button>
+
+        <button class="hero-btn secondary-btn">
+          <i class="bi bi-telephone-fill"></i>
+          Call Us
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="hero-image">
+
+      <div class="floating-card card-one">
+        <i class="bi bi-envelope-fill"></i>
+      </div>
+
+      <div class="floating-card card-two">
+        <i class="bi bi-headset"></i>
+      </div>
+
+      <div class="floating-card card-three">
+        <i class="bi bi-geo-alt-fill"></i>
+      </div>
+
+      <img src="https://cdn-icons-png.flaticon.com/512/295/295128.png">
+
+    </div>
+
+  </div>
+
+  <!-- CONTACT SECTION -->
+
+  <div class="row g-4">
+
+    <!-- LEFT -->
+
+    <div class="col-lg-5">
+
+      <div class="contact-info-card glass-card">
+
+        <h2>
+          Contact Information
+        </h2>
+
+        <p class="info-text">
+          Reach us through any platform below.
+        </p>
+
+        <div class="info-item">
+
+          <div class="icon-box blue-box">
+            <i class="bi bi-envelope-fill"></i>
+          </div>
+
+          <div>
+            <h5>Email Address</h5>
+            <span>support@infinire.com</span>
+          </div>
+
+        </div>
+
+        <div class="info-item">
+
+          <div class="icon-box green-box">
+            <i class="bi bi-telephone-fill"></i>
+          </div>
+
+          <div>
+            <h5>Phone Number</h5>
+            <span>+91 9876543210</span>
+          </div>
+
+        </div>
+
+        <div class="info-item">
+
+          <div class="icon-box orange-box">
+            <i class="bi bi-geo-alt-fill"></i>
+          </div>
+
+          <div>
+            <h5>Office Address</h5>
+            <span>Chennai, Tamil Nadu, India</span>
+          </div>
+
+        </div>
+
+        <!-- SOCIAL -->
+
+        <div class="social-section">
+
+          <h4>
+            Follow Us
+          </h4>
+
+          <div class="social-icons">
+
+            <a href="#">
+              <i class="bi bi-facebook"></i>
+            </a>
+
+            <a href="#">
+              <i class="bi bi-instagram"></i>
+            </a>
+
+            <a href="#">
+              <i class="bi bi-linkedin"></i>
+            </a>
+
+            <a href="#">
+              <i class="bi bi-twitter-x"></i>
+            </a>
+
+          </div>
+
+        </div>
+
+        <!-- LIVE SUPPORT -->
+
+        <div class="live-support">
+
+          <div class="live-left">
+
+            <span class="live-dot"></span>
+
+            <div>
+              <h5>Live Support</h5>
+              <small>Usually replies instantly</small>
+            </div>
+
+          </div>
+
+          <button>
+            Chat Now
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="col-lg-7">
+
+      <div class="contact-form-card glass-card">
+
+        <div class="form-header">
+
+          <h2>
+            Send Message
+          </h2>
+
+          <p>
+            Fill the form and our team will contact you shortly.
+          </p>
+
+        </div>
+
+        <div class="row g-4">
+
+          <div class="col-md-6">
+
+            <label>Full Name</label>
+
+            <input type="text"
+                   class="form-control"
+                   [(ngModel)]="formData.name"
+                   placeholder="Enter your name">
+
+          </div>
+
+          <div class="col-md-6">
+
+            <label>Email Address</label>
+
+            <input type="email"
+                   class="form-control"
+                   [(ngModel)]="formData.email"
+                   placeholder="Enter your email">
+
+          </div>
+
+          <div class="col-12">
+
+            <label>Subject</label>
+
+            <input type="text"
+                   class="form-control"
+                   [(ngModel)]="formData.subject"
+                   placeholder="Enter subject">
+
+          </div>
+
+          <div class="col-12">
+
+            <label>Message</label>
+
+            <textarea rows="6"
+                      class="form-control textarea-control"
+                      [(ngModel)]="formData.message"
+                      placeholder="Write your message..."></textarea>
+
+          </div>
+
+          <div class="col-12">
+
+            <button class="send-btn"
+                    (click)="sendMessage()"
+                    [disabled]="isSending">
+
+              <span *ngIf="!isSending">
+
+                <i class="bi bi-send-fill"></i>
+                Send Message
+
+              </span>
+
+              <span *ngIf="isSending">
+
+                <span class="spinner-border spinner-border-sm"></span>
+
+                Sending...
+
+              </span>
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FAQ -->
+
+  <div class="faq-card glass-card">
+
+    <div class="faq-header">
+
+      <h2>
+        Frequently Asked Questions
+      </h2>
+
+      <p>
+        Quick answers for common questions
+      </p>
+
+    </div>
+
+    <div class="faq-item">
+
+      <div class="faq-question"
+           (click)="toggleFaq($event)">
+
+        <span>
+          How fast will support reply?
+        </span>
+
+        <i class="bi bi-plus-lg"></i>
+
+      </div>
+
+      <div class="faq-answer">
+
+        We usually respond within 10-30 minutes during business hours.
+
+      </div>
+
+    </div>
+
+    <div class="faq-item">
+
+      <div class="faq-question"
+           (click)="toggleFaq($event)">
+
+        <span>
+          Can I request custom features?
+        </span>
+
+        <i class="bi bi-plus-lg"></i>
+
+      </div>
+
+      <div class="faq-answer">
+
+        Yes. Our development team can build custom enterprise solutions.
+
+      </div>
+
+    </div>
+
+    <div class="faq-item">
+
+      <div class="faq-question"
+           (click)="toggleFaq($event)">
+
+        <span>
+          Do you provide 24/7 support?
+        </span>
+
+        <i class="bi bi-plus-lg"></i>
+
+      </div>
+
+      <div class="faq-answer">
+
+        Premium customers receive dedicated 24/7 technical support.
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MAP -->
+
+  <div class="map-card glass-card">
+
+    <div class="map-header">
+
+      <h2>
+        Our Location
+      </h2>
+
+      <p>
+        Visit our office anytime
+      </p>
+
+    </div>
+
+    <iframe
+      src="https://maps.google.com/maps?q=chennai&t=&z=13&ie=UTF8&iwloc=&output=embed">
+    </iframe>
+
+  </div>
+
+</div>

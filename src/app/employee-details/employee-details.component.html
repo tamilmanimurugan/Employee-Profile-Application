@@ -1,0 +1,235 @@
+<div class="container py-5 employee-details-page">
+
+  <!-- TOP BAR -->
+
+  <div class="top-bar">
+
+    <h2 class="page-title">
+      Employee Details
+    </h2>
+
+    <button
+      class="close-btn"
+      routerLink="/employees">
+
+      <i class="bi bi-arrow-left"></i>
+
+    </button>
+
+  </div>
+
+  <!-- MAIN CARD -->
+
+  <div class="employee-card">
+
+    <!-- PROFILE SECTION -->
+
+    <div class="profile-section">
+
+      <div class="profile-image-wrapper">
+
+        <img
+          [src]="employee?.image"
+          class="profile-image">
+
+      </div>
+
+      <h1>
+        {{ employee?.name }}
+      </h1>
+
+      <p class="role-text">
+        {{ employee?.role }}
+      </p>
+
+      <!-- STATUS -->
+
+      <div
+        class="status-badge"
+        [ngClass]="{
+          'active-status': employee?.status === 'Active',
+          'leave-status': employee?.status === 'On Leave'
+        }">
+
+        <i
+          class="bi"
+          [ngClass]="{
+            'bi-check-circle-fill': employee?.status === 'Active',
+            'bi-calendar-x-fill': employee?.status === 'On Leave'
+          }">
+
+        </i>
+
+        {{ employee?.status }}
+
+      </div>
+
+    </div>
+
+    <!-- QUICK STATS -->
+
+    <div class="row g-4 mt-4">
+
+      <!-- EMAIL -->
+
+      <div class="col-lg-6">
+
+        <div class="detail-card">
+
+          <div class="icon-box blue">
+
+            <i class="bi bi-envelope-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h6>Email Address</h6>
+
+            <p>
+              {{ employee?.email }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- DEPARTMENT -->
+
+      <div class="col-lg-6">
+
+        <div class="detail-card">
+
+          <div class="icon-box purple">
+
+            <i class="bi bi-building-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h6>Department</h6>
+
+            <p>
+              {{ employee?.department || 'Unknown' }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ROLE -->
+
+      <div class="col-lg-6">
+
+        <div class="detail-card">
+
+          <div class="icon-box orange">
+
+            <i class="bi bi-person-workspace"></i>
+
+          </div>
+
+          <div>
+
+            <h6>Role</h6>
+
+            <p>
+              {{ employee?.role }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- EXPERIENCE -->
+
+      <div class="col-lg-6">
+
+        <div class="detail-card">
+
+          <div class="icon-box green">
+
+            <i class="bi bi-briefcase-fill"></i>
+
+          </div>
+
+          <div>
+
+            <h6>Experience</h6>
+
+            <p>
+              {{ employee?.experience }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PERFORMANCE -->
+
+      <div class="col-12">
+
+        <div class="performance-card">
+
+          <div class="performance-top">
+
+            <h5>
+              Employee Performance
+            </h5>
+
+            <span>
+              {{ employee?.performance }}%
+            </span>
+
+          </div>
+
+          <div class="progress custom-progress">
+
+            <div
+              class="progress-bar"
+              [style.width.%]="employee?.performance">
+
+            </div>
+
+          </div>
+
+          <!-- PERFORMANCE TEXT -->
+
+          <div class="performance-label">
+
+            <span *ngIf="employee?.performance >= 90">
+              Excellent Performance 
+            </span>
+
+            <span
+              *ngIf="employee?.performance >= 70 &&
+                     employee?.performance < 90">
+
+              Good Performance 
+            </span>
+
+            <span *ngIf="employee?.performance < 70">
+
+              Needs Improvement ⚠️
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,510 @@
+<div class="attendance-page container-fluid">
+
+  <!-- TOP NAVBAR -->
+
+  <div class="top-navbar">
+
+    <div>
+
+      <h1>
+        Attendance Dashboard
+      </h1>
+
+      <p>
+        Track employee attendance, working hours & live activity
+      </p>
+
+    </div>
+
+    <div class="top-actions">
+
+      <!-- LIVE DATE + TIME -->
+
+      <div class="date-box">
+
+        <i class="bi bi-calendar-event-fill"></i>
+
+        <span>
+          {{ currentDate }}
+        </span>
+
+      </div>
+
+      <!-- LIVE CLOCK -->
+
+      <div class="date-box">
+
+        <i class="bi bi-clock-fill"></i>
+
+        <span>
+          {{ currentTime }}
+        </span>
+
+      </div>
+
+      <!-- BUTTON -->
+
+      <button class="mark-btn"
+              (click)="openAttendanceModal()">
+
+        <i class="bi bi-plus-circle-fill"></i>
+
+        Mark Attendance
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- SUCCESS MESSAGE -->
+
+  <div class="success-alert"
+       *ngIf="attendanceMarked">
+
+    <i class="bi bi-check-circle-fill"></i>
+
+    Attendance Marked Successfully!
+
+  </div>
+
+  <!-- STATS -->
+
+  <div class="row g-4 mb-4">
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="attendance-card present-card">
+
+        <div>
+
+          <span>
+            Present Today
+          </span>
+
+          <h2>
+            220
+          </h2>
+
+          <small>
+            +12 from yesterday
+          </small>
+
+        </div>
+
+        <div class="card-icon">
+
+          <i class="bi bi-person-check-fill"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="attendance-card absent-card">
+
+        <div>
+
+          <span>
+            Absent
+          </span>
+
+          <h2>
+            12
+          </h2>
+
+          <small>
+            Needs follow-up
+          </small>
+
+        </div>
+
+        <div class="card-icon">
+
+          <i class="bi bi-person-x-fill"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="attendance-card leave-card">
+
+        <div>
+
+          <span>
+            On Leave
+          </span>
+
+          <h2>
+            8
+          </h2>
+
+          <small>
+            Approved leaves
+          </small>
+
+        </div>
+
+        <div class="card-icon">
+
+          <i class="bi bi-calendar2-check-fill"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+      <div class="attendance-card remote-card">
+
+        <div>
+
+          <span>
+            Remote Workers
+          </span>
+
+          <h2>
+            18
+          </h2>
+
+          <small>
+            Hybrid employees
+          </small>
+
+        </div>
+
+        <div class="card-icon">
+
+          <i class="bi bi-laptop-fill"></i>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- LIVE STATUS -->
+
+  <div class="live-status-card">
+
+    <div class="live-header">
+
+      <div>
+
+        <h3>
+          Live Office Activity
+        </h3>
+
+        <p>
+          Real-time employee office status
+        </p>
+
+      </div>
+
+      <div class="live-badge">
+
+        <span class="live-dot"></span>
+
+        LIVE
+
+      </div>
+
+    </div>
+
+    <div class="activity-grid">
+
+      <div class="activity-box">
+
+        <h4>
+          92%
+        </h4>
+
+        <span>
+          Productivity
+        </span>
+
+      </div>
+
+      <div class="activity-box">
+
+        <h4>
+          45
+        </h4>
+
+        <span>
+          In Meetings
+        </span>
+
+      </div>
+
+      <div class="activity-box">
+
+        <h4>
+          180
+        </h4>
+
+        <span>
+          Online
+        </span>
+
+      </div>
+
+      <div class="activity-box">
+
+        <h4>
+          15
+        </h4>
+
+        <span>
+          Late Check-ins
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- TABLE -->
+
+  <div class="attendance-table-card">
+
+    <div class="table-header">
+
+      <div>
+
+        <h3>
+          Today Attendance
+        </h3>
+
+        <p>
+          Employee attendance details & work progress
+        </p>
+
+      </div>
+
+      <div class="table-actions">
+
+        <div class="search-box">
+
+          <i class="bi bi-search"></i>
+
+          <input type="text"
+                 placeholder="Search employee">
+
+        </div>
+
+        <button class="export-btn">
+
+          <i class="bi bi-download"></i>
+
+          Export
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- TABLE -->
+
+    <div class="table-responsive">
+
+      <table class="table attendance-table align-middle">
+
+        <thead>
+
+          <tr>
+
+            <th>Employee</th>
+            <th>Department</th>
+            <th>Check In</th>
+            <th>Status</th>
+            <th>Working Hours</th>
+            <th>Performance</th>
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr>
+
+            <td>
+
+              <div class="employee-info">
+
+                <img src="https://i.pravatar.cc/100?img=12">
+
+                <div>
+
+                  <h6>
+                    Tamilmani
+                  </h6>
+
+                  <span>
+                    Angular Developer
+                  </span>
+
+                </div>
+
+              </div>
+
+            </td>
+
+            <td>
+
+              <span class="department development">
+
+                Development
+
+              </span>
+
+            </td>
+
+            <td>
+
+              09:02 AM
+
+            </td>
+
+            <td>
+
+              <span class="status present-status">
+
+                Present
+
+              </span>
+
+            </td>
+
+            <td>
+
+              {{ workingHours }}
+
+            </td>
+
+            <td>
+
+              <div class="progress progress-custom">
+
+                <div class="progress-bar"
+                     style="width:92%">
+
+                </div>
+
+              </div>
+
+            </td>
+
+            <td>
+
+              <div class="action-buttons">
+
+                <button class="action-btn view-btn">
+
+                  <i class="bi bi-eye-fill"></i>
+
+                </button>
+
+                <button class="action-btn edit-btn">
+
+                  <i class="bi bi-pencil-fill"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="attendance-modal"
+     *ngIf="showAttendanceModal">
+
+  <div class="attendance-modal-box">
+
+    <div class="modal-top">
+
+      <h3>
+        Mark Attendance
+      </h3>
+
+      <button class="close-btn"
+              (click)="closeAttendanceModal()">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <div class="attendance-user">
+
+        <img src="https://i.pravatar.cc/100?img=12">
+
+        <div>
+
+          <h5>
+            Tamilmani
+          </h5>
+
+          <span>
+            Angular Developer
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="checkin-box">
+
+        <h2>
+          {{ currentTime }}
+        </h2>
+
+        <p>
+          Current Check In Time
+        </p>
+
+      </div>
+
+      <button class="confirm-btn"
+              (click)="markAttendance()">
+
+        Confirm Attendance
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
