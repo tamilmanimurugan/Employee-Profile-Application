@@ -23,11 +23,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // Entity Framework Core — SQL Server Express
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        sql => sql.EnableRetryOnFailure(3)
-    )
+    options.UseSqlServer(connectionString, sql => sql.EnableRetryOnFailure(3))
 );
 
 // Dependency injection — Repository + Service
