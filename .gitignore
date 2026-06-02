@@ -10,6 +10,10 @@ api/**/obj/
 # Sensitive config — never commit production secrets
 api/**/appsettings.Production.json
 
+# Logs
+api/**/*.log
+api/**/*.err.log
+
 # OS / editor
 .DS_Store
 Thumbs.db
