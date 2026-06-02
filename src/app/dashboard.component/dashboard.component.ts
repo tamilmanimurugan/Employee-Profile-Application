@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EmployeeApiService } from '../services/employee-api.service';
+import { Employee } from '../services/employee.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,209 +21,40 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   searchText = '';
+  showModal  = false;
+  submitted  = false;
+  loading    = false;
 
-  showModal = false;
+  employees: Employee[] = [];
 
-  submitted = false;
-
-  employees: any[] = [];
-
-  newEmployee = {
-
-    name: '',
-    email: '',
-    department: '',
-    role: '',
-    status: 'Active',
-    experience: '',
-    performance: 80,
-    image: 'https://i.pravatar.cc/100'
-
-  };
+  // Real counts from API
+  totalCount      = 0;
+  activeCount     = 0;
+  onLeaveCount    = 0;
+  departmentsCount = 0;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private api: EmployeeApiService
   ) {}
 
-  ngOnInit() {
-
-    const savedEmployees =
-      localStorage.getItem('dashboardEmployees');
-
-    if (savedEmployees) {
-
-      this.employees =
-        JSON.parse(savedEmployees);
-
-    }
-
-    else {
-
-      this.employees = [
-
-        {
-          id: 1,
-          name: 'Tamilmani',
-          email: 'tamil@gmail.com',
-          department: 'Development',
-          role: 'Senior Angular Developer',
-          status: 'Active',
-          experience: '3+ Years',
-          performance: 90,
-          image: 'https://i.pravatar.cc/100?img=12'
-        },
-
-        {
-          id: 2,
-          name: 'Rahul',
-          email: 'rahul@gmail.com',
-          department: 'Backend',
-          role: '.NET API Developer',
-          status: 'Active',
-          experience: '5+ Years',
-          performance: 82,
-          image: 'https://i.pravatar.cc/100?img=18'
-        },
-
-        {
-          id: 3,
-          name: 'Priya',
-          email: 'priya@gmail.com',
-          department: 'UI / UX',
-          role: 'Product Designer',
-          status: 'On Leave',
-          experience: '2+ Years',
-          performance: 74,
-          image: 'https://i.pravatar.cc/100?img=15'
-        }
-
-      ];
-
-      this.saveEmployees();
-
-    }
-
-  }
-
-  saveEmployees() {
-
-    localStorage.setItem(
-
-      'dashboardEmployees',
-
-      JSON.stringify(this.employees)
-
-    );
-
-  }
-
-  openModal() {
-
-    this.showModal = true;
-
-    this.submitted = false;
-
-  }
-
-  closeModal() {
-
-    this.showModal = false;
-
-  }
-
-  addEmployee() {
-
-    this.submitted = true;
-
-    // Empty validation
-
-    if (
-
-      !this.newEmployee.name ||
-
-      !this.newEmployee.email ||
-
-      !this.newEmployee.department ||
-
-      !this.newEmployee.role ||
-
-      !this.newEmployee.experience
-
-    ) {
-
-      return;
-
-    }
-
-    // Email validation
-
-    const emailPattern =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (
-
-      !emailPattern.test(
-        this.newEmployee.email
-      )
-
-    ) {
-
-      alert(
-        'Enter valid email address'
-      );
-
-      return;
-
-    }
-
-    this.employees.push({
-
-      ...this.newEmployee,
-
-      id: this.employees.length + 1
-
+  ngOnInit(): void {
+    this.loading = true;
+    this.api.getAll().subscribe({
+      next: (data) => {
+        this.employees       = data;
+        this.totalCount      = data.length;
+        this.activeCount     = data.filter(e => e.status === 'Active').length;
+        this.onLeaveCount    = data.filter(e => e.status === 'On Leave').length;
+        this.departmentsCount = new Set(data.map(e => e.department)).size;
+        this.loading = false;
+      },
+      error: () => { this.loading = false; }
     });
-
-    this.saveEmployees();
-
-    this.newEmployee = {
-
-      name: '',
-      email: '',
-      department: '',
-      role: '',
-      status: 'Active',
-      experience: '',
-      performance: 80,
-      image: 'https://i.pravatar.cc/100'
-
-    };
-
-    this.submitted = false;
-
-    this.closeModal();
-
   }
 
-  deleteEmployee(index: number) {
-
-    this.employees.splice(index, 1);
-
-    this.saveEmployees();
-
-  }
-
-  viewProfile(emp: any) {
-
-    alert(
-
-      'Viewing Profile : ' +
-
-      emp.name
-
-    );
-
-  }
+  openModal()  { this.showModal = true;  this.submitted = false; }
+  closeModal() { this.showModal = false; }
 
   get filteredEmployees() {
 
