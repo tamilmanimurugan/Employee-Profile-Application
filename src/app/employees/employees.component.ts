@@ -142,23 +142,29 @@ export class EmployeesComponent implements OnInit {
     this.submitted = true;
     if (!this.isFormValid() || this.currentId === null) return;
 
+    // Optimistic update — apply changes to UI immediately and close modal
+    const original = this.employees.find(e => e.id === this.currentId);
+    this.employees = this.employees.map(e =>
+      e.id === this.currentId ? { ...e, ...this.employee } : e
+    );
+    this.closeModal();
+
     if (this.apiOnline) {
-      this.loading   = true;
-      this.saveError = '';
       this.api.update(this.currentId, this.employee).subscribe({
         next: (updated) => {
+          // Replace optimistic entry with full server response (includes updatedAtUtc etc.)
           this.employees = this.employees.map(e => e.id === updated.id ? updated : e);
-          this.loading = false;
-          this.closeModal();
         },
-        error: (err) => { this.saveError = err.message; this.loading = false; }
+        error: (err) => {
+          // Revert to original on failure
+          if (original) {
+            this.employees = this.employees.map(e => e.id === this.currentId ? original : e);
+          }
+          alert('Update failed: ' + err.message);
+        }
       });
     } else {
-      this.employees = this.employees.map(e =>
-        e.id === this.currentId ? { ...e, ...this.employee } : e
-      );
       this.saveLocalStorage();
-      this.closeModal();
     }
   }
 
