@@ -635,6 +635,10 @@
     align-items: flex-start;
   }
 
+  .employees-header h1{
+    font-size: 26px;
+  }
+
   .search-box {
     width: 100%;
   }
@@ -653,10 +657,57 @@
     justify-content: center;
   }
 
+  .employee-table-card{
+    padding: 18px;
+  }
+
   .modal-box {
     width: 100%;
     max-height: 88vh;
   }
+}
+
+@media (max-width: 480px) {
+
+  .employees-page {
+    padding: 10px;
+  }
+
+  .employees-header h1 {
+    font-size: 22px;
+  }
+
+  .stat-card {
+    padding: 18px;
+  }
+
+  .stat-card h2 {
+    font-size: 26px;
+  }
+
+  .stat-icon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .stat-icon i {
+    font-size: 22px;
+  }
+
+  .employee-table-card {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .employee-info img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .table-top h3 {
+    font-size: 18px;
+  }
+
 }
 
 @media print {

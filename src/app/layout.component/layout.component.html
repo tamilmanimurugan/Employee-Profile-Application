@@ -1,7 +1,13 @@
 <div class="app-layout">
 
+  <!-- MOBILE OVERLAY -->
+  <div class="sidebar-overlay"
+       [class.active]="sidebarOpen"
+       (click)="closeSidebar()">
+  </div>
+
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar" [class.sidebar-open]="sidebarOpen">
 
     <!-- LOGO -->
     <div class="logo-section">
@@ -114,6 +120,10 @@
     <header class="topbar">
 
       <div class="left-section">
+
+        <button class="hamburger-btn" (click)="toggleSidebar()">
+          <i class="bi bi-list"></i>
+        </button>
 
         <h2 class="logo-text">
           Employee Portal

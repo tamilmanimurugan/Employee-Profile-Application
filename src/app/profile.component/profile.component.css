@@ -327,9 +327,13 @@ textarea.form-control{
 
 @media(max-width:768px){
 
+  .cover-section{
+    height: 220px;
+  }
+
   .profile-card{
     padding: 25px;
-    margin-top: -70px;
+    margin-top: -60px;
   }
 
   .profile-top{
@@ -338,12 +342,69 @@ textarea.form-control{
   }
 
   .profile-img{
-    width: 140px;
-    height: 140px;
+    width: 130px;
+    height: 130px;
+  }
+
+  .profile-top h2{
+    font-size: 26px;
   }
 
   .edit-btn{
     width: 100%;
+  }
+
+  .info-card{
+    padding: 22px;
+  }
+
+  .about-box{
+    padding: 22px;
+  }
+
+}
+
+@media(max-width:480px){
+
+  .cover-section{
+    height: 180px;
+  }
+
+  .profile-card{
+    padding: 18px;
+    margin-top: -50px;
+    border-radius: 20px;
+  }
+
+  .profile-img{
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-top h2{
+    font-size: 22px;
+  }
+
+  .info-card{
+    padding: 16px;
+  }
+
+  .info-card i{
+    font-size: 26px;
+  }
+
+  .about-box{
+    padding: 16px;
+  }
+
+  .one{
+    width: 80px;
+    height: 80px;
+  }
+
+  .two{
+    width: 110px;
+    height: 110px;
   }
 
 }

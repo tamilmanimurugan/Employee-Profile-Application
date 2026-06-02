@@ -809,9 +809,51 @@ body{
   background:transparent !important;
 }
 
-/* MOBILE */
+/* HAMBURGER BUTTON — hidden by default on desktop */
+
+.hamburger-btn{
+  display:none;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:12px;
+  background:rgba(255,255,255,0.1);
+  color:#2563eb;
+  font-size:22px;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:.3s;
+  flex-shrink:0;
+}
+
+.hamburger-btn:hover{
+  background:#eff6ff;
+}
+
+/* SIDEBAR OVERLAY */
+
+.sidebar-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:998;
+  opacity:0;
+  transition:opacity .3s;
+}
+
+.sidebar-overlay.active{
+  opacity:1;
+}
+
+/* TABLET — icon-only sidebar */
 
 @media(max-width:992px){
+
+  .hamburger-btn{
+    display:flex;
+  }
 
   .sidebar{
 
@@ -851,32 +893,106 @@ body{
 
 }
 
+/* MOBILE — sidebar hidden, overlay on toggle */
+
 @media(max-width:768px){
+
+  .sidebar-overlay{
+    display:block;
+    pointer-events:none;
+  }
+
+  .sidebar-overlay.active{
+    pointer-events:all;
+  }
+
+  .sidebar{
+    width:260px;
+    transform:translateX(-100%);
+    transition:transform .3s ease;
+    z-index:999;
+    padding:25px 20px;
+  }
+
+  .sidebar.sidebar-open{
+    transform:translateX(0);
+  }
+
+  /* restore text labels when sidebar is open on mobile */
+  .sidebar.sidebar-open .logo-section div:last-child,
+  .sidebar.sidebar-open .profile-box h5,
+  .sidebar.sidebar-open .profile-box p,
+  .sidebar.sidebar-open .logout-btn span{
+    display:block;
+  }
+
+  .sidebar.sidebar-open .sidebar-menu a{
+    justify-content:flex-start;
+  }
+
+  .main-content{
+
+    margin-left:0;
+
+    width:100%;
+
+  }
 
   .topbar{
 
-    padding:15px;
+    padding:12px 15px;
 
-    flex-direction:column;
+  }
 
-    align-items:flex-start;
+  .left-section{
+    flex-direction:row;
+    align-items:center;
+    gap:12px;
+  }
 
-    gap:15px;
+  .logo-text{
 
+    font-size:20px;
+
+  }
+
+  .welcome-text{
+    display:none;
   }
 
   .top-right{
 
-    width:100%;
+    gap:10px;
 
-    justify-content:space-between;
+  }
 
+  .profile-img{
+    width:40px;
+    height:40px;
+  }
+
+  .notification-btn{
+    width:40px;
+    height:40px;
+    font-size:16px;
   }
 
   .page-content{
 
     padding:15px;
 
+  }
+
+}
+
+@media(max-width:480px){
+
+  .logo-text{
+    font-size:18px;
+  }
+
+  .page-content{
+    padding:12px 10px;
   }
 
 }

@@ -251,3 +251,37 @@ width:100%;
 }
 
 }
+
+@media(max-width:576px){
+
+.right-panel{
+padding:20px;
+}
+
+.login-card{
+padding:30px 24px;
+border-radius:20px;
+}
+
+.left-panel h1{
+font-size:38px;
+}
+
+}
+
+@media(max-width:380px){
+
+.login-card{
+padding:24px 16px;
+}
+
+.user-icon{
+width:72px;
+height:72px;
+}
+
+.user-icon i{
+font-size:32px;
+}
+
+}

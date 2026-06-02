@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service/auth.service';
 import {
 RouterOutlet,
 RouterLink,
+RouterLinkActive,
 Router
 } from '@angular/router';
 
@@ -16,7 +17,8 @@ standalone:true,
 
 imports:[
 RouterOutlet,
-RouterLink
+RouterLink,
+RouterLinkActive
 ],
 
 templateUrl:'./layout.component.html',
@@ -28,6 +30,7 @@ styleUrls:['./layout.component.css']
 export class LayoutComponent implements OnInit {
 
 darkMode=false;
+sidebarOpen=false;
 
 profileImage='https://i.pravatar.cc/100?img=12';
 
@@ -76,6 +79,14 @@ this.router.navigate([
 '/login'
 ]);
 
+}
+
+toggleSidebar(){
+this.sidebarOpen=!this.sidebarOpen;
+}
+
+closeSidebar(){
+this.sidebarOpen=false;
 }
 
 toggleTheme(){

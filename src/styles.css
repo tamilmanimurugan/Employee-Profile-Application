@@ -18,6 +18,18 @@ body {
   margin: 0;
   font-family: "Poppins", sans-serif;
   background: #f4f7fb;
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 /* ============================================================

@@ -269,3 +269,35 @@
     text-align: center;
   }
 }
+
+@media (max-width: 480px) {
+
+  .employee-details-page {
+    padding: 15px 10px;
+  }
+
+  .employee-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .page-title {
+    font-size: 20px;
+  }
+
+  .profile-image {
+    width: 90px;
+    height: 90px;
+  }
+
+  .profile-section h1 {
+    font-size: 20px;
+  }
+
+  .icon-box {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+}

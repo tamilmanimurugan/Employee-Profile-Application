@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ],
 
-  templateUrl: './attendance.component.html',
+  templateUrl: './attendance.html',
   styleUrls: ['./attendance.component.css']
 })
 
