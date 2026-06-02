@@ -269,9 +269,11 @@
 
         @if (editMode && currentCreatedAt) {
           <div class="mb-3">
-            <label>Created Date</label>
-            <input type="text" class="form-control" [value]="currentCreatedAt | date:'dd MMM yyyy'" readonly
-              style="background:rgba(99,102,241,0.08);color:#94a3b8;cursor:not-allowed;border-color:rgba(99,102,241,0.2);" />
+            <label style="color:#94a3b8;font-size:13px;">Created Date</label>
+            <div style="padding:10px 14px;border-radius:10px;background:rgba(99,102,241,0.08);color:#818cf8;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;">
+              <i class="bi bi-calendar-check"></i>
+              {{ currentCreatedAt | date:'dd MMM yyyy' }}
+            </div>
           </div>
         }
 
