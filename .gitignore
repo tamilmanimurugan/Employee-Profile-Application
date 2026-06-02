@@ -7,6 +7,10 @@ dist/
 api/**/bin/
 api/**/obj/
 
+# TypeScript compiled output
+out-tsc/
+dist/
+
 # Sensitive config — never commit production secrets
 api/**/appsettings.Production.json
 
