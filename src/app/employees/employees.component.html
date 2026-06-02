@@ -109,6 +109,7 @@
               <th>Experience</th>
               <th>Status</th>
               <th>Performance</th>
+              <th>Created Date</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -141,6 +142,7 @@
                     <div class="progress-bar" [style.width.%]="emp.performance"></div>
                   </div>
                 </td>
+                <td>{{ emp.createdAtUtc ? (emp.createdAtUtc | date:'dd MMM yyyy') : '-' }}</td>
                 <td>
                   <div class="table-actions">
                     <button class="action-btn view"   (click)="viewEmployee(emp)">  <i class="bi bi-eye-fill"></i>    </button>
