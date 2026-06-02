@@ -1,13 +1,7 @@
 <div class="app-layout">
 
-  <!-- MOBILE OVERLAY -->
-  <div class="sidebar-overlay"
-       [class.active]="sidebarOpen"
-       (click)="closeSidebar()">
-  </div>
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" [class.sidebar-open]="sidebarOpen">
+  <!-- SIDEBAR (desktop + tablet only) -->
+  <aside class="sidebar">
 
     <!-- LOGO -->
     <div class="logo-section">
@@ -121,10 +115,6 @@
 
       <div class="left-section">
 
-        <button class="hamburger-btn" (click)="toggleSidebar()">
-          <i class="bi bi-list"></i>
-        </button>
-
         <h2 class="logo-text">
           Employee Portal
         </h2>
@@ -164,5 +154,35 @@
     </div>
 
   </div>
+
+  <!-- BOTTOM NAV (mobile only) -->
+  <nav class="bottom-nav">
+
+    <a routerLink="/dashboard" routerLinkActive="bottom-active">
+      <i class="bi bi-grid-1x2-fill"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <a routerLink="/employees" routerLinkActive="bottom-active">
+      <i class="bi bi-people-fill"></i>
+      <span>Employees</span>
+    </a>
+
+    <a routerLink="/attendance" routerLinkActive="bottom-active">
+      <i class="bi bi-calendar-check-fill"></i>
+      <span>Attendance</span>
+    </a>
+
+    <a routerLink="/profile" routerLinkActive="bottom-active">
+      <i class="bi bi-person-fill"></i>
+      <span>Profile</span>
+    </a>
+
+    <a routerLink="/settings" routerLinkActive="bottom-active">
+      <i class="bi bi-gear-fill"></i>
+      <span>More</span>
+    </a>
+
+  </nav>
 
 </div>
