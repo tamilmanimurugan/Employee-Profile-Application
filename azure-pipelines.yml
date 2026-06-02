@@ -97,7 +97,6 @@ stages:
         deploymentMethod:   'auto'
         appSettings: >
           -ASPNETCORE_ENVIRONMENT Production
-          -DB_CONNECTION_STRING "$(AZURE_SQL_CONNECTION_STRING)"
 
 # ============================================================
 # STAGE 2 — Build & Deploy Angular Web
