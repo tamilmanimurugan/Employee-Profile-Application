@@ -222,6 +222,8 @@
             <option>HR Manager</option><option>Support Engineer</option>
             <option>Frontend Developer</option><option>Marketing Lead</option>
             <option>Accountant</option><option>Security Analyst</option>
+            <option>Automation Engineer</option><option>React Developer</option>
+            <option>Java Developer</option><option>DevOps Engineer</option>
           </select>
           @if (submitted && !employee.role) {
             <small class="text-danger">Role required</small>
@@ -262,6 +264,14 @@
         @if (employee.image) {
           <div class="image-preview">
             <img [src]="employee.image" alt="preview" />
+          </div>
+        }
+
+        @if (editMode && currentCreatedAt) {
+          <div class="mb-3">
+            <label>Created Date</label>
+            <input type="text" class="form-control" [value]="currentCreatedAt | date:'dd MMM yyyy'" readonly
+              style="background:rgba(99,102,241,0.08);color:#94a3b8;cursor:not-allowed;border-color:rgba(99,102,241,0.2);" />
           </div>
         }
 

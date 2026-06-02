@@ -30,6 +30,7 @@ export class EmployeesComponent implements OnInit {
   saveError   = '';      // error shown inside the modal
   statusMsg   = '';      // shown in the UI header
   currentId:  number | null = null;
+  currentCreatedAt: string | undefined = undefined;
   nextLocalId = 1000;
 
   employee: CreateEmployeePayload = this.emptyForm();
@@ -124,10 +125,11 @@ export class EmployeesComponent implements OnInit {
   // ── Edit ───────────────────────────────────────────────────────────────────
 
   editEmployee(emp: Employee): void {
-    this.editMode  = true;
-    this.submitted = false;
-    this.currentId = emp.id ?? null;
-    this.saveError = '';
+    this.editMode       = true;
+    this.submitted      = false;
+    this.currentId      = emp.id ?? null;
+    this.currentCreatedAt = emp.createdAtUtc;
+    this.saveError      = '';
     this.employee  = {
       name: emp.name, email: emp.email, department: emp.department,
       role: emp.role, experience: emp.experience, status: emp.status,
