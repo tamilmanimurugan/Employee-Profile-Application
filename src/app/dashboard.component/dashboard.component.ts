@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { EmployeeApiService } from '../services/employee-api.service';
 import { Employee } from '../services/employee.model';
 
@@ -11,7 +11,8 @@ import { Employee } from '../services/employee.model';
 
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
 
   templateUrl: './dashboard.component.html',

@@ -21,7 +21,7 @@
 
           <button
             class="hero-btn"
-            (click)="openModal()">
+            routerLink="/employees">
 
             <i class="bi bi-plus-circle"></i>
 
@@ -246,7 +246,7 @@
 
                     <button
                       class="icon-btn delete-btn"
-                      (click)="deleteEmployee(i)">
+                      routerLink="/employees">
 
                       <i class="bi bi-trash-fill"></i>
 
@@ -272,109 +272,3 @@
 
 </div>
 
-<!-- MODAL -->
-
-<div
-  class="custom-modal"
-  *ngIf="showModal">
-
-  <div class="modal-box">
-
-    <div class="modal-header-custom">
-
-      <h3>
-        Add Employee
-      </h3>
-
-      <button
-        class="close-btn"
-        (click)="closeModal()">
-
-        ✕
-
-      </button>
-
-    </div>
-
-    <div class="modal-body-custom">
-
-      <div class="mb-3">
-
-        <label>Name</label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="newEmployee.name">
-
-      </div>
-
-      <div class="mb-3">
-
-        <label>Email</label>
-
-        <input
-          type="email"
-          class="form-control"
-          [(ngModel)]="newEmployee.email">
-
-      </div>
-
-      <div class="mb-3">
-
-        <label>Department</label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="newEmployee.department">
-
-      </div>
-
-      <div class="mb-3">
-
-        <label>Role</label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="newEmployee.role">
-
-      </div>
-
-      <div class="mb-3">
-
-        <label>Experience</label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="newEmployee.experience">
-
-      </div>
-
-      <div class="modal-footer-custom">
-
-        <button
-          class="cancel-btn"
-          (click)="closeModal()">
-
-          Cancel
-
-        </button>
-
-        <button
-          class="save-btn"
-          (click)="addEmployee()">
-
-          Add Employee
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
