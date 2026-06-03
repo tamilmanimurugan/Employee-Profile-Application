@@ -9,6 +9,8 @@ import { EmployeeApiService } from '../services/employee-api.service';
 import { Employee, CreateEmployeePayload } from '../services/employee.model';
 
 const LS_KEY = 'employees';
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const NAME_MAX_LENGTH = 100;
 
 @Component({
   selector: 'app-employees',
@@ -24,7 +26,8 @@ export class EmployeesComponent implements OnInit {
   submitted   = false;
   showModal   = false;
   editMode    = false;
-  loading     = false;
+  loading     = false;   // true while fetching list data (skeleton)
+  saving      = false;   // true while add/update API call in progress
   apiOnline   = false;   // true when API responded
   apiError    = '';
   saveError   = '';      // error shown inside the modal
@@ -102,16 +105,16 @@ export class EmployeesComponent implements OnInit {
     }
 
     if (this.apiOnline) {
-      this.loading   = true;
+      this.saving    = true;
       this.saveError = '';
       this.api.create(this.employee).subscribe({
         next: (created) => {
           this.employees = [...this.employees, created]
             .sort((a, b) => a.name.localeCompare(b.name));
-          this.loading = false;
+          this.saving = false;
           this.closeModal();
         },
-        error: (err) => { this.saveError = err.message; this.loading = false; }
+        error: (err) => { this.saveError = err.message; this.saving = false; }
       });
     } else {
       // Offline fallback — save to localStorage only
@@ -213,6 +216,12 @@ export class EmployeesComponent implements OnInit {
     );
   }
 
+  get nameRequired():  boolean { return this.submitted && !this.employee.name?.trim(); }
+  get nameTooLong():   boolean { return this.submitted && !!this.employee.name?.trim() && this.employee.name.trim().length > NAME_MAX_LENGTH; }
+  get nameCharCount(): number  { return this.employee.name?.length ?? 0; }
+  get emailRequired(): boolean { return this.submitted && !this.employee.email?.trim(); }
+  get emailInvalid():  boolean { return this.submitted && !!this.employee.email?.trim() && !EMAIL_REGEX.test(this.employee.email.trim()); }
+
   get activeEmployeesCount():  number { return this.employees.filter(e => e.status === 'Active').length; }
   get onLeaveEmployeesCount(): number { return this.employees.filter(e => e.status === 'On Leave').length; }
   get departmentsCount():      number { return new Set(this.employees.map(e => e.department)).size; }
@@ -259,11 +268,10 @@ export class EmployeesComponent implements OnInit {
 
   private isFormValid(): boolean {
     return !!(
-      this.employee.name?.trim()       &&
-      this.employee.email?.trim()      &&
-      this.employee.department?.trim() &&
-      this.employee.role?.trim()       &&
-      this.employee.experience?.trim()
+      this.employee.name?.trim()                         &&
+      this.employee.name.trim().length <= 100            &&
+      this.employee.email?.trim()                        &&
+      EMAIL_REGEX.test(this.employee.email.trim())
     );
   }
 
