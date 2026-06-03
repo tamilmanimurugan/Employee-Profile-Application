@@ -1,10 +1,13 @@
 .dashboard-container{
   min-height: 100vh;
   background: #f4f7fb;
+  overflow-x: hidden;
 }
 
 .main-content{
   padding: 30px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* HERO */
@@ -23,6 +26,8 @@
 
 .hero-banner img{
   width: 240px;
+  max-width: 100%;
+  flex-shrink: 0;
 }
 
 .hero-banner h1{
