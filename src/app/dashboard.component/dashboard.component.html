@@ -129,11 +129,11 @@
               <tr>
 
                 <th>Employee</th>
-                <th>Department</th>
-                <th>Role</th>
+                <th class="hide-mobile">Department</th>
+                <th class="hide-mobile">Role</th>
                 <th>Status</th>
-                <th>Experience</th>
-                <th>Performance</th>
+                <th class="hide-mobile">Experience</th>
+                <th class="hide-mobile">Performance</th>
                 <th>Action</th>
 
               </tr>
@@ -175,7 +175,7 @@
 
                 </td>
 
-                <td>
+                <td class="hide-mobile">
 
                   <span class="department-badge dev">
 
@@ -185,7 +185,7 @@
 
                 </td>
 
-                <td>
+                <td class="hide-mobile">
 
                   {{ emp.role }}
 
@@ -204,13 +204,13 @@
 
                 </td>
 
-                <td>
+                <td class="hide-mobile">
 
                   {{ emp.experience }}
 
                 </td>
 
-                <td>
+                <td class="hide-mobile">
 
                   <div class="progress progress-custom">
 
@@ -219,7 +219,7 @@
                       [style.width.%]="emp.performance">
 
                       {{ emp.performance }}%
- 
+
                     </div>
 
                   </div>
