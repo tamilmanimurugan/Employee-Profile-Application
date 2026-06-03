@@ -73,54 +73,26 @@
 
       </div>
 
-      <!-- DIRECTORY -->
-
-      <div class="employee-directory-card">
-
-        <div class="directory-header">
-
+      <!-- EMPLOYEE DIRECTORY — same table structure as employees page -->
+      <div class="employee-table-card">
+        <div class="table-top">
           <div>
-
-            <h2 class="directory-title">
-              Employee Directory
-            </h2>
-
-            <p class="directory-subtitle">
-              Manage employees and organization profiles
-            </p>
-
+            <h3>Employee Directory</h3>
+            <p>Manage employees and organization profiles</p>
           </div>
-
           <div class="header-actions">
-
             <div class="search-box">
-
               <i class="bi bi-search"></i>
-
-              <input
-                type="text"
-                placeholder="Search employee..."
-                [(ngModel)]="searchText">
-
+              <input type="text" placeholder="Search employee..." [(ngModel)]="searchText">
             </div>
-
-            <button
-              class="add-btn"
-              (click)="openModal()">
-
-              <i class="bi bi-plus-circle"></i>
-
-              Add Employee
-
+            <button class="add-btn" (click)="openModal()">
+              <i class="bi bi-plus-circle"></i> Add Employee
             </button>
-
           </div>
-
         </div>
 
-        <!-- TABLE — all columns, horizontal scroll on mobile -->
         <div class="table-responsive">
-          <table class="table custom-table align-middle">
+          <table class="table align-middle employee-table">
             <thead>
               <tr>
                 <th>Employee</th>
@@ -136,40 +108,36 @@
               @for (emp of filteredEmployees; track emp.id ?? emp.email) {
                 <tr>
                   <td>
-                    <div class="employee-profile">
-                      <div class="employee-image">
-                        <img [src]="emp.image">
-                        <span [class.online-dot]="emp.status === 'Active'"
-                              [class.leave-dot]="emp.status === 'On Leave'"></span>
-                      </div>
+                    <div class="employee-info">
+                      <img [src]="emp.image" alt="employee" />
                       <div>
                         <h6>{{ emp.name }}</h6>
-                        <p>{{ emp.email }}</p>
+                        <span>{{ emp.email }}</span>
                       </div>
                     </div>
                   </td>
-                  <td><span class="department-badge dev">{{ emp.department }}</span></td>
+                  <td><span class="department">{{ emp.department }}</span></td>
                   <td>{{ emp.role }}</td>
-                  <td>{{ emp.experience }}</td>
                   <td>
-                    <span class="status-badge"
-                          [class.active]="emp.status === 'Active'"
-                          [class.leave]="emp.status === 'On Leave'">
+                    <div class="experience-badge">
+                      <i class="bi bi-briefcase-fill"></i> {{ emp.experience }}
+                    </div>
+                  </td>
+                  <td>
+                    <span class="status" [ngClass]="{ active: emp.status === 'Active', leave: emp.status === 'On Leave' }">
                       {{ emp.status }}
                     </span>
                   </td>
                   <td>
-                    <div class="progress progress-custom">
-                      <div class="progress-bar" [style.width.%]="emp.performance">
-                        {{ emp.performance }}%
-                      </div>
+                    <div class="progress progress-bar-custom">
+                      <div class="progress-bar" [style.width.%]="emp.performance"></div>
                     </div>
                   </td>
                   <td>
-                    <div class="action-buttons">
-                      <button class="icon-btn view-btn" routerLink="/employees"><i class="bi bi-eye-fill"></i></button>
-                      <button class="icon-btn edit-btn" routerLink="/employees"><i class="bi bi-pencil-fill"></i></button>
-                      <button class="icon-btn delete-btn" routerLink="/employees"><i class="bi bi-trash-fill"></i></button>
+                    <div class="table-actions">
+                      <button class="action-btn view" routerLink="/employees"><i class="bi bi-eye-fill"></i></button>
+                      <button class="action-btn edit" routerLink="/employees"><i class="bi bi-pencil-fill"></i></button>
+                      <button class="action-btn delete" routerLink="/employees"><i class="bi bi-trash-fill"></i></button>
                     </div>
                   </td>
                 </tr>
@@ -177,7 +145,6 @@
             </tbody>
           </table>
         </div>
-
       </div>
 
     </div>

@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { EmployeeApiService } from '../services/employee-api.service';
 import { Employee } from '../services/employee.model';
-
 @Component({
   selector: 'app-dashboard',
   standalone: true,
