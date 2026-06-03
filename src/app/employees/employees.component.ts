@@ -268,12 +268,9 @@ export class EmployeesComponent implements OnInit {
   }
 
   private pickUniqueAvatar(): string {
-    const used = this.employees
-      .map(e => { const m = e.image?.match(/img=(\d+)/); return m ? +m[1] : -1; })
-      .filter(n => n > 0);
-    let n: number, tries = 0;
-    do { n = Math.floor(Math.random() * 70) + 1; tries++; }
-    while (used.includes(n) && tries < 100);
-    return `https://i.pravatar.cc/100?img=${n}`;
+    const name  = encodeURIComponent(this.employee.name.trim() || 'Employee');
+    const colors = ['2563eb','7c3aed','059669','ea580c','db2777','0891b2'];
+    const bg    = colors[Math.floor(Math.random() * colors.length)];
+    return `https://ui-avatars.com/api/?name=${name}&background=${bg}&color=fff&size=128&bold=true&rounded=true`;
   }
 }
