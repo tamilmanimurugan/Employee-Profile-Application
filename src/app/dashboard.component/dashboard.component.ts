@@ -43,14 +43,24 @@ export class DashboardComponent implements OnInit {
     this.loading = true;
     this.api.getAll().subscribe({
       next: (data) => {
-        this.employees       = data;
-        this.totalCount      = data.length;
-        this.activeCount     = data.filter(e => e.status === 'Active').length;
-        this.onLeaveCount    = data.filter(e => e.status === 'On Leave').length;
+        this.employees        = data;
+        this.totalCount       = data.length;
+        this.activeCount      = data.filter(e => e.status === 'Active').length;
+        this.onLeaveCount     = data.filter(e => e.status === 'On Leave').length;
         this.departmentsCount = new Set(data.map(e => e.department)).size;
         this.loading = false;
       },
-      error: () => { this.loading = false; }
+      error: () => {
+        // API offline — fall back to localStorage so dashboard isn't blank
+        const raw = localStorage.getItem('employees');
+        const local: Employee[] = raw ? JSON.parse(raw) : [];
+        this.employees        = local;
+        this.totalCount       = local.length;
+        this.activeCount      = local.filter(e => e.status === 'Active').length;
+        this.onLeaveCount     = local.filter(e => e.status === 'On Leave').length;
+        this.departmentsCount = new Set(local.map(e => e.department)).size;
+        this.loading = false;
+      }
     });
   }
 
