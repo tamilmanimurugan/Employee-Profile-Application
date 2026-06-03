@@ -622,7 +622,43 @@
   font-size: 13px;
   font-weight: 600;
   display: block;
-  margin-top: 5px;
+  margin-top: 4px;
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
+}
+
+.required-star {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+.optional-label {
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.field-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 20px;
+  margin-top: 4px;
+}
+
+.char-count {
+  color: #94a3b8;
+  font-size: 12px;
+  margin-left: auto;
+}
+
+.char-over {
+  color: #ef4444;
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
