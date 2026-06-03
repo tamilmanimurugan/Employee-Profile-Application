@@ -1,13 +1,10 @@
 .dashboard-container{
   min-height: 100vh;
   background: #f4f7fb;
-  overflow-x: hidden;
 }
 
 .main-content{
   padding: 30px;
-  max-width: 100%;
-  overflow-x: hidden;
 }
 
 /* HERO */
@@ -423,48 +420,7 @@
 
 }
 
-/* MOBILE CARD LIST — hidden on desktop */
-.mobile-emp-list { display: none; }
-.desktop-table   { display: block; }
-
 @media(max-width:768px){
-
-  .desktop-table   { display: none; }
-  .mobile-emp-list { display: block; }
-
-  .mobile-emp-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .mobile-emp-info {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .mobile-emp-info img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(255,255,255,0.15);
-  }
-
-  .mobile-emp-info h6 {
-    margin: 0 0 2px 0;
-    font-weight: 700;
-    font-size: 15px;
-  }
-
-  .mobile-emp-info p {
-    margin: 0;
-    font-size: 12px;
-    color: #94a3b8;
-  }
 
   .main-content{
     padding: 15px;

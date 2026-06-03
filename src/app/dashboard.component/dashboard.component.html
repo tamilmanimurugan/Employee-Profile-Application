@@ -118,88 +118,64 @@
 
         </div>
 
-        <!-- TABLE (desktop only) -->
-        <div class="table-responsive desktop-table">
+        <!-- TABLE — all columns, horizontal scroll on mobile -->
+        <div class="table-responsive">
           <table class="table custom-table align-middle">
             <thead>
               <tr>
                 <th>Employee</th>
                 <th>Department</th>
                 <th>Role</th>
-                <th>Status</th>
                 <th>Experience</th>
+                <th>Status</th>
                 <th>Performance</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               @for (emp of filteredEmployees; track emp.id ?? emp.email) {
-              <tr>
-                <td>
-                  <div class="employee-profile">
-                    <div class="employee-image">
-                      <img [src]="emp.image">
-                      <span [class.online-dot]="emp.status === 'Active'"
-                            [class.leave-dot]="emp.status === 'On Leave'"></span>
+                <tr>
+                  <td>
+                    <div class="employee-profile">
+                      <div class="employee-image">
+                        <img [src]="emp.image">
+                        <span [class.online-dot]="emp.status === 'Active'"
+                              [class.leave-dot]="emp.status === 'On Leave'"></span>
+                      </div>
+                      <div>
+                        <h6>{{ emp.name }}</h6>
+                        <p>{{ emp.email }}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h6>{{ emp.name }}</h6>
-                      <p>{{ emp.email }}</p>
+                  </td>
+                  <td><span class="department-badge dev">{{ emp.department }}</span></td>
+                  <td>{{ emp.role }}</td>
+                  <td>{{ emp.experience }}</td>
+                  <td>
+                    <span class="status-badge"
+                          [class.active]="emp.status === 'Active'"
+                          [class.leave]="emp.status === 'On Leave'">
+                      {{ emp.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="progress progress-custom">
+                      <div class="progress-bar" [style.width.%]="emp.performance">
+                        {{ emp.performance }}%
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td><span class="department-badge dev">{{ emp.department }}</span></td>
-                <td>{{ emp.role }}</td>
-                <td>
-                  <span class="status-badge"
-                        [class.active]="emp.status === 'Active'"
-                        [class.leave]="emp.status === 'On Leave'">
-                    {{ emp.status }}
-                  </span>
-                </td>
-                <td>{{ emp.experience }}</td>
-                <td>
-                  <div class="progress progress-custom">
-                    <div class="progress-bar" [style.width.%]="emp.performance">
-                      {{ emp.performance }}%
+                  </td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="icon-btn view-btn" routerLink="/employees"><i class="bi bi-eye-fill"></i></button>
+                      <button class="icon-btn edit-btn" routerLink="/employees"><i class="bi bi-pencil-fill"></i></button>
+                      <button class="icon-btn delete-btn" routerLink="/employees"><i class="bi bi-trash-fill"></i></button>
                     </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="action-buttons">
-                    <button class="icon-btn view-btn"><i class="bi bi-eye-fill"></i></button>
-                    <button class="icon-btn edit-btn"><i class="bi bi-pencil-fill"></i></button>
-                    <button class="icon-btn delete-btn" routerLink="/employees"><i class="bi bi-trash-fill"></i></button>
-                  </div>
-                </td>
-              </tr>
+                  </td>
+                </tr>
               }
             </tbody>
           </table>
-        </div>
-
-        <!-- MOBILE CARD LIST -->
-        <div class="mobile-emp-list">
-          @for (emp of filteredEmployees; track emp.id ?? emp.email) {
-          <div class="mobile-emp-card">
-            <div class="mobile-emp-info">
-              <div class="employee-image">
-                <img [src]="emp.image">
-                <span [class.online-dot]="emp.status === 'Active'"
-                      [class.leave-dot]="emp.status === 'On Leave'"></span>
-              </div>
-              <div>
-                <h6>{{ emp.name }}</h6>
-                <p>{{ emp.email }}</p>
-              </div>
-            </div>
-            <span class="status-badge"
-                  [class.active]="emp.status === 'Active'"
-                  [class.leave]="emp.status === 'On Leave'">
-              {{ emp.status }}
-            </span>
-          </div>
-          }
         </div>
 
       </div>
