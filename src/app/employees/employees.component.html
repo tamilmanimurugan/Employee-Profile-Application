@@ -11,7 +11,7 @@
         <input type="text" placeholder="Search employees..." [(ngModel)]="searchText" />
       </div>
 
-      <button class="add-employee-btn" (click)="openAddModal()">
+      <button class="add-employee-btn" (click)="openAddModal()" data-testid="open-add-modal">
         <i class="bi bi-plus-circle-fill"></i> Add Employee
       </button>
       <button class="add-employee-btn" (click)="downloadEmployeePDF()">
@@ -171,51 +171,67 @@
       <div class="modal-body-custom">
 
         <div class="mb-3">
-          <label>Name</label>
-          <input type="text" class="form-control" [(ngModel)]="employee.name" list="nameList" name="name" />
+          <label>Name <span class="required-star">*</span></label>
+          <input
+            type="text"
+            class="form-control"
+            [class.input-error]="nameRequired || nameTooLong"
+            [(ngModel)]="employee.name"
+            list="nameList"
+            name="name"
+            maxlength="110"
+            data-testid="employee-name" />
           <datalist id="nameList">
             <option value="Tamilmani"></option><option value="Rahul"></option>
             <option value="Priya"></option><option value="Karthika"></option>
             <option value="Sneha"></option><option value="Arun"></option>
             <option value="Divya"></option><option value="Vijay"></option>
           </datalist>
-          @if (submitted && !employee.name) {
-            <small class="error-text">Name is required</small>
-          }
+          <div class="field-meta">
+            @if (nameRequired) {
+              <small class="error-text" data-testid="name-required-error">Name is required</small>
+            } @else if (nameTooLong) {
+              <small class="error-text" data-testid="name-length-error">Name must not exceed 100 characters</small>
+            }
+            <small class="char-count" [class.char-over]="nameCharCount > 100">{{ nameCharCount }}/100</small>
+          </div>
         </div>
 
         <div class="mb-3">
-          <label>Email</label>
-          <input type="email" class="form-control" [(ngModel)]="employee.email" list="emailList" name="email" />
+          <label>Email <span class="required-star">*</span></label>
+          <input
+            type="email"
+            class="form-control"
+            [class.input-error]="emailRequired || emailInvalid"
+            [(ngModel)]="employee.email"
+            list="emailList"
+            name="email"
+            data-testid="employee-email" />
           <datalist id="emailList">
             <option value="tamil@gmail.com"></option><option value="rahul@gmail.com"></option>
             <option value="priya@gmail.com"></option><option value="karthika@gmail.com"></option>
             <option value="sneha@gmail.com"></option><option value="arun@gmail.com"></option>
           </datalist>
-          @if (submitted && !employee.email) {
-            <small class="error-text">Email is required</small>
-          }
-          @if (submitted && employee.email && !employee.email.match('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$')) {
-            <small class="error-text">Enter valid email</small>
+          @if (emailRequired) {
+            <small class="error-text" data-testid="email-required-error">Email is required</small>
+          } @else if (emailInvalid) {
+            <small class="error-text" data-testid="email-format-error">Please enter a valid email address (e.g. name&#64;example.com)</small>
           }
         </div>
 
         <div class="mb-3">
-          <label>Department</label>
-          <select class="form-control" [(ngModel)]="employee.department" [class.border-danger]="submitted && !employee.department">
+          <label>Department <span class="optional-label">(optional)</span></label>
+          <select class="form-control" [(ngModel)]="employee.department" name="department">
             <option value="">Select Department</option>
             <option>Development</option><option>Backend</option><option>UI/UX</option>
             <option>Testing</option><option>HR</option><option>Support</option>
             <option>Finance</option><option>Marketing</option><option>Security</option>
           </select>
-          @if (submitted && !employee.department) {
-            <small class="text-danger">Department required</small>
-          }
         </div>
 
         <div class="mb-3">
-          <label>Role</label>
-          <select class="form-control" [(ngModel)]="employee.role" [class.border-danger]="submitted && !employee.role">
+          <label>Role <span class="optional-label">(optional)</span></label>
+          <select class="form-control" [(ngModel)]="employee.role" name="role">
             <option value="">Select Role</option>
             <option>Angular Developer</option><option>.NET Developer</option>
             <option>UI Designer</option><option>QA Engineer</option>
@@ -225,22 +241,16 @@
             <option>Automation Engineer</option><option>React Developer</option>
             <option>Java Developer</option><option>DevOps Engineer</option>
           </select>
-          @if (submitted && !employee.role) {
-            <small class="text-danger">Role required</small>
-          }
         </div>
 
         <div class="mb-3">
-          <label>Experience</label>
-          <select class="form-control" [(ngModel)]="employee.experience" [class.border-danger]="submitted && !employee.experience">
+          <label>Experience <span class="optional-label">(optional)</span></label>
+          <select class="form-control" [(ngModel)]="employee.experience" name="experience">
             <option value="">Select Experience</option>
             <option>1 Year</option><option>2 Years</option><option>3 Years</option>
             <option>4 Years</option><option>5 Years</option><option>6 Years</option>
             <option>7 Years</option><option>8+ Years</option>
           </select>
-          @if (submitted && !employee.experience) {
-            <small class="text-danger">Experience required</small>
-          }
         </div>
 
         <div class="mb-3">
@@ -282,15 +292,15 @@
         }
 
         <div class="modal-footer-custom">
-          <button class="cancel-btn" (click)="closeModal()" [disabled]="loading">Cancel</button>
+          <button class="cancel-btn" (click)="closeModal()" [disabled]="saving">Cancel</button>
           @if (!editMode) {
-            <button class="save-btn" (click)="addEmployee()" [disabled]="loading">
-              {{ loading ? 'Saving...' : 'Add Employee' }}
+            <button class="save-btn" (click)="addEmployee()" [disabled]="saving" data-testid="submit-add-employee">
+              {{ saving ? 'Saving...' : 'Add Employee' }}
             </button>
           }
           @if (editMode) {
-            <button class="save-btn" (click)="updateEmployee()" [disabled]="loading">
-              {{ loading ? 'Updating...' : 'Update Employee' }}
+            <button class="save-btn" (click)="updateEmployee()" [disabled]="saving">
+              {{ saving ? 'Updating...' : 'Update Employee' }}
             </button>
           }
         </div>
