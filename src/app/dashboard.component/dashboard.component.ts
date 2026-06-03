@@ -49,6 +49,10 @@ export class DashboardComponent implements OnInit {
         this.onLeaveCount     = data.filter(e => e.status === 'On Leave').length;
         this.departmentsCount = new Set(data.map(e => e.department)).size;
         this.loading = false;
+        // Mirror to localStorage so dashboard stays populated when API goes offline
+        if (data.length > 0) {
+          localStorage.setItem('employees', JSON.stringify(data));
+        }
       },
       error: () => {
         // API offline — fall back to localStorage so dashboard isn't blank

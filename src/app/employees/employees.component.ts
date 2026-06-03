@@ -58,8 +58,10 @@ export class EmployeesComponent implements OnInit {
         this.loading   = false;
         this.statusMsg = '';
 
-        // Clear stale localStorage so old data doesn't cause confusion
-        localStorage.removeItem(LS_KEY);
+        // Mirror API data to localStorage so dashboard works when API is offline
+        if (data.length > 0) {
+          localStorage.setItem(LS_KEY, JSON.stringify(data));
+        }
       },
       error: (err) => {
         this.apiOnline = false;
