@@ -464,6 +464,44 @@ label{
   }
 
 }
+
+@media(max-width:480px){
+
+  .hero-content h1{
+    font-size: 30px;
+  }
+
+  .hero-content p{
+    font-size: 15px;
+  }
+
+  .hero-buttons{
+    flex-direction: column;
+  }
+
+  .hero-btn{
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-image{
+    display: none;
+  }
+
+  .glass-card{
+    padding: 18px;
+  }
+
+  .info-item{
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .map-card iframe{
+    height: 260px;
+  }
+
+}
 /* =========================================
    ✨ GLOBAL SMOOTH ANIMATION LAYER
 ========================================= */

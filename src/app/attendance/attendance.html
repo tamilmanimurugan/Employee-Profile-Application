@@ -1,0 +1,54 @@
+<div class="container mt-5">
+
+  <div class="card shadow border-0 rounded-4">
+
+    <div class="card-body">
+
+      <h2 class="fw-bold mb-4">
+        Attendance Overview 🕒
+      </h2>
+
+      <table class="table table-hover">
+
+        <thead class="table-dark">
+
+          <tr>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let item of attendanceList">
+
+            <td>{{ item.date }}</td>
+
+            <td>
+
+              <span
+                class="badge"
+
+                [ngClass]="{
+                  'bg-success': item.status === 'Present',
+                  'bg-danger': item.status === 'Absent'
+                }">
+
+                {{ item.status }}
+
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

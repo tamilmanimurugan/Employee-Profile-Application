@@ -17,6 +17,8 @@ export class EmployeeApiService {
   getAll(): Observable<Employee[]> {
     if (!this.cache$) {
       this.cache$ = this.http.get<Employee[]>(API_BASE).pipe(
+        // Clear the cached observable on error so the next subscriber retries fresh
+        tap({ error: () => { this.cache$ = null; } }),
         shareReplay(1),
         catchError(this.handleError)
       );

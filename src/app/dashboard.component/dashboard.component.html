@@ -21,7 +21,7 @@
 
           <button
             class="hero-btn"
-            (click)="openModal()">
+            routerLink="/employees">
 
             <i class="bi bi-plus-circle"></i>
 
@@ -40,361 +40,111 @@
       <div class="stats-grid">
 
         <div class="stat-card blue">
-
           <div>
-
             <span>Total Employees</span>
-
-            <!-- <h2>{{ employees.length }}</h2> -->
-            <h2>150</h2>
+            <h2>{{ totalCount }}</h2>
           </div>
-
           <i class="bi bi-people-fill"></i>
-
         </div>
 
         <div class="stat-card green">
-
           <div>
-
-            <span>Departments</span>
-
-            <h2>12</h2>
-
+            <span>Active Employees</span>
+            <h2>{{ activeCount }}</h2>
           </div>
-
-          <i class="bi bi-diagram-3-fill"></i>
-
+          <i class="bi bi-person-check-fill"></i>
         </div>
 
         <div class="stat-card orange">
-
           <div>
-
-            <span>Projects</span>
-
-            <h2>18</h2>
-
+            <span>On Leave</span>
+            <h2>{{ onLeaveCount }}</h2>
           </div>
-
-          <i class="bi bi-briefcase-fill"></i>
-
+          <i class="bi bi-calendar-event-fill"></i>
         </div>
 
         <div class="stat-card purple">
-
           <div>
-
-            <span>Attendance</span>
-
-            <h2>92%</h2>
-
+            <span>Departments</span>
+            <h2>{{ departmentsCount }}</h2>
           </div>
-
-          <i class="bi bi-calendar-check-fill"></i>
-
+          <i class="bi bi-building-fill"></i>
         </div>
 
       </div>
 
-      <!-- DIRECTORY -->
-
-      <div class="employee-directory-card">
-
-        <div class="directory-header">
-
+      <!-- EMPLOYEE DIRECTORY — same table structure as employees page -->
+      <div class="employee-table-card">
+        <div class="table-top">
           <div>
-
-            <h2 class="directory-title">
-              Employee Directory
-            </h2>
-
-            <p class="directory-subtitle">
-              Manage employees and organization profiles
-            </p>
-
+            <h3>Employee Directory</h3>
+            <p>Manage employees and organization profiles</p>
           </div>
-
           <div class="header-actions">
-
             <div class="search-box">
-
               <i class="bi bi-search"></i>
-
-              <input
-                type="text"
-                placeholder="Search employee..."
-                [(ngModel)]="searchText">
-
+              <input type="text" placeholder="Search employee..." [(ngModel)]="searchText">
             </div>
-
-            <button
-              class="add-btn"
-              (click)="openModal()">
-
-              <i class="bi bi-plus-circle"></i>
-
-              Add Employee
-
+            <button class="add-btn" (click)="openModal()">
+              <i class="bi bi-plus-circle"></i> Add Employee
             </button>
-
           </div>
-
         </div>
 
-        <!-- TABLE -->
-
         <div class="table-responsive">
-
-          <table class="table custom-table align-middle">
-
+          <table class="table align-middle employee-table">
             <thead>
-
               <tr>
-
                 <th>Employee</th>
                 <th>Department</th>
                 <th>Role</th>
-                <th>Status</th>
                 <th>Experience</th>
+                <th>Status</th>
                 <th>Performance</th>
                 <th>Action</th>
-
               </tr>
-
             </thead>
-
             <tbody>
-
-              <tr *ngFor="let emp of filteredEmployees; let i = index">
-
-                <td>
-
-                  <div class="employee-profile">
-
-                    <div class="employee-image">
-
-                      <img [src]="emp.image">
-
-                      <span
-                        [class.online-dot]="emp.status === 'Active'"
-                        [class.leave-dot]="emp.status === 'On Leave'">
-                      </span>
-
+              @for (emp of filteredEmployees; track emp.id ?? emp.email) {
+                <tr>
+                  <td>
+                    <div class="employee-info">
+                      <img [src]="emp.image" alt="employee" />
+                      <div>
+                        <h6>{{ emp.name }}</h6>
+                        <span>{{ emp.email }}</span>
+                      </div>
                     </div>
-
-                    <div>
-
-                      <h6>
-                        {{ emp.name }}
-                      </h6>
-
-                      <p>
-                        {{ emp.email }}
-                      </p>
-
+                  </td>
+                  <td><span class="department">{{ emp.department }}</span></td>
+                  <td>{{ emp.role }}</td>
+                  <td>
+                    <div class="experience-badge">
+                      <i class="bi bi-briefcase-fill"></i> {{ emp.experience }}
                     </div>
-
-                  </div>
-
-                </td>
-
-                <td>
-
-                  <span class="department-badge dev">
-
-                    {{ emp.department }}
-
-                  </span>
-
-                </td>
-
-                <td>
-
-                  {{ emp.role }}
-
-                </td>
-
-                <td>
-
-                  <span
-                    class="status-badge"
-                    [class.active]="emp.status === 'Active'"
-                    [class.leave]="emp.status === 'On Leave'">
-
-                    {{ emp.status }}
-
-                  </span>
-
-                </td>
-
-                <td>
-
-                  {{ emp.experience }}
-
-                </td>
-
-                <td>
-
-                  <div class="progress progress-custom">
-
-                    <div
-                      class="progress-bar"
-                      [style.width.%]="emp.performance">
-
-                      {{ emp.performance }}%
- 
+                  </td>
+                  <td>
+                    <span class="status" [ngClass]="{ active: emp.status === 'Active', leave: emp.status === 'On Leave' }">
+                      {{ emp.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="progress progress-bar-custom">
+                      <div class="progress-bar" [style.width.%]="emp.performance"></div>
                     </div>
-
-                  </div>
-
-                </td>
-
-                <td>
-
-                  <div class="action-buttons">
-
-                    <button
-                      class="icon-btn view-btn">
-
-                      <i class="bi bi-eye-fill"></i>
-
-                    </button>
-
-                    <button
-                      class="icon-btn edit-btn">
-
-                      <i class="bi bi-pencil-fill"></i>
-
-                    </button>
-
-                    <button
-                      class="icon-btn delete-btn"
-                      (click)="deleteEmployee(i)">
-
-                      <i class="bi bi-trash-fill"></i>
-
-                    </button>
-
-                  </div>
-
-                </td>
-
-              </tr>
-
+                  </td>
+                  <td>
+                    <div class="table-actions">
+                      <button class="action-btn view" routerLink="/employees"><i class="bi bi-eye-fill"></i></button>
+                      <button class="action-btn edit" routerLink="/employees"><i class="bi bi-pencil-fill"></i></button>
+                      <button class="action-btn delete" routerLink="/employees"><i class="bi bi-trash-fill"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              }
             </tbody>
-
           </table>
-
         </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
-<!-- MODAL -->
-
-<div
-  class="custom-modal"
-  *ngIf="showModal">
-
-  <div class="modal-box">
-
-    <div class="modal-header-custom">
-
-      <h3>
-        Add Employee
-      </h3>
-
-      <button
-        class="close-btn"
-        (click)="closeModal()">
-
-        ✕
-
-      </button>
-
-    </div>
-
-    <div class="modal-body-custom">
-
-      <div class="mb-3">
-
-        <label>Name</label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="newEmployee.name">
-
-      </div>
-
-      <div class="mb-3">
-
-        <label>Email</label>
-
-        <input
-          type="email"
-          class="form-control"
-          [(ngModel)]="newEmployee.email">
-
-      </div>
-
-      <div class="mb-3">
-
-        <label>Department</label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="newEmployee.department">
-
-      </div>
-
-      <div class="mb-3">
-
-        <label>Role</label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="newEmployee.role">
-
-      </div>
-
-      <div class="mb-3">
-
-        <label>Experience</label>
-
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="newEmployee.experience">
-
-      </div>
-
-      <div class="modal-footer-custom">
-
-        <button
-          class="cancel-btn"
-          (click)="closeModal()">
-
-          Cancel
-
-        </button>
-
-        <button
-          class="save-btn"
-          (click)="addEmployee()">
-
-          Add Employee
-
-        </button>
-
       </div>
 
     </div>

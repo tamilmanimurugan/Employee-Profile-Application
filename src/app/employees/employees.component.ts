@@ -9,6 +9,8 @@ import { EmployeeApiService } from '../services/employee-api.service';
 import { Employee, CreateEmployeePayload } from '../services/employee.model';
 
 const LS_KEY = 'employees';
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const NAME_MAX_LENGTH = 100;
 
 @Component({
   selector: 'app-employees',
@@ -24,12 +26,14 @@ export class EmployeesComponent implements OnInit {
   submitted   = false;
   showModal   = false;
   editMode    = false;
-  loading     = false;
+  loading     = false;   // true while fetching list data (skeleton)
+  saving      = false;   // true while add/update API call in progress
   apiOnline   = false;   // true when API responded
   apiError    = '';
   saveError   = '';      // error shown inside the modal
   statusMsg   = '';      // shown in the UI header
   currentId:  number | null = null;
+  currentCreatedAt: string | undefined = undefined;
   nextLocalId = 1000;
 
   employee: CreateEmployeePayload = this.emptyForm();
@@ -54,8 +58,10 @@ export class EmployeesComponent implements OnInit {
         this.loading   = false;
         this.statusMsg = '';
 
-        // Clear stale localStorage so old data doesn't cause confusion
-        localStorage.removeItem(LS_KEY);
+        // Mirror API data to localStorage so dashboard works when API is offline
+        if (data.length > 0) {
+          localStorage.setItem(LS_KEY, JSON.stringify(data));
+        }
       },
       error: (err) => {
         this.apiOnline = false;
@@ -101,16 +107,16 @@ export class EmployeesComponent implements OnInit {
     }
 
     if (this.apiOnline) {
-      this.loading   = true;
+      this.saving    = true;
       this.saveError = '';
       this.api.create(this.employee).subscribe({
         next: (created) => {
           this.employees = [...this.employees, created]
             .sort((a, b) => a.name.localeCompare(b.name));
-          this.loading = false;
+          this.saving = false;
           this.closeModal();
         },
-        error: (err) => { this.saveError = err.message; this.loading = false; }
+        error: (err) => { this.saveError = err.message; this.saving = false; }
       });
     } else {
       // Offline fallback — save to localStorage only
@@ -124,10 +130,11 @@ export class EmployeesComponent implements OnInit {
   // ── Edit ───────────────────────────────────────────────────────────────────
 
   editEmployee(emp: Employee): void {
-    this.editMode  = true;
-    this.submitted = false;
-    this.currentId = emp.id ?? null;
-    this.saveError = '';
+    this.editMode       = true;
+    this.submitted      = false;
+    this.currentId      = emp.id ?? null;
+    this.currentCreatedAt = emp.createdAtUtc;
+    this.saveError      = '';
     this.employee  = {
       name: emp.name, email: emp.email, department: emp.department,
       role: emp.role, experience: emp.experience, status: emp.status,
@@ -140,23 +147,29 @@ export class EmployeesComponent implements OnInit {
     this.submitted = true;
     if (!this.isFormValid() || this.currentId === null) return;
 
+    // Optimistic update — apply changes to UI immediately and close modal
+    const original = this.employees.find(e => e.id === this.currentId);
+    this.employees = this.employees.map(e =>
+      e.id === this.currentId ? { ...e, ...this.employee } : e
+    );
+    this.closeModal();
+
     if (this.apiOnline) {
-      this.loading   = true;
-      this.saveError = '';
       this.api.update(this.currentId, this.employee).subscribe({
         next: (updated) => {
+          // Replace optimistic entry with full server response (includes updatedAtUtc etc.)
           this.employees = this.employees.map(e => e.id === updated.id ? updated : e);
-          this.loading = false;
-          this.closeModal();
         },
-        error: (err) => { this.saveError = err.message; this.loading = false; }
+        error: (err) => {
+          // Revert to original on failure
+          if (original) {
+            this.employees = this.employees.map(e => e.id === this.currentId ? original : e);
+          }
+          alert('Update failed: ' + err.message);
+        }
       });
     } else {
-      this.employees = this.employees.map(e =>
-        e.id === this.currentId ? { ...e, ...this.employee } : e
-      );
       this.saveLocalStorage();
-      this.closeModal();
     }
   }
 
@@ -205,6 +218,12 @@ export class EmployeesComponent implements OnInit {
     );
   }
 
+  get nameRequired():  boolean { return this.submitted && !this.employee.name?.trim(); }
+  get nameTooLong():   boolean { return this.submitted && !!this.employee.name?.trim() && this.employee.name.trim().length > NAME_MAX_LENGTH; }
+  get nameCharCount(): number  { return this.employee.name?.length ?? 0; }
+  get emailRequired(): boolean { return this.submitted && !this.employee.email?.trim(); }
+  get emailInvalid():  boolean { return this.submitted && !!this.employee.email?.trim() && !EMAIL_REGEX.test(this.employee.email.trim()); }
+
   get activeEmployeesCount():  number { return this.employees.filter(e => e.status === 'Active').length; }
   get onLeaveEmployeesCount(): number { return this.employees.filter(e => e.status === 'On Leave').length; }
   get departmentsCount():      number { return new Set(this.employees.map(e => e.department)).size; }
@@ -251,21 +270,17 @@ export class EmployeesComponent implements OnInit {
 
   private isFormValid(): boolean {
     return !!(
-      this.employee.name?.trim()       &&
-      this.employee.email?.trim()      &&
-      this.employee.department?.trim() &&
-      this.employee.role?.trim()       &&
-      this.employee.experience?.trim()
+      this.employee.name?.trim()                         &&
+      this.employee.name.trim().length <= 100            &&
+      this.employee.email?.trim()                        &&
+      EMAIL_REGEX.test(this.employee.email.trim())
     );
   }
 
   private pickUniqueAvatar(): string {
-    const used = this.employees
-      .map(e => { const m = e.image?.match(/img=(\d+)/); return m ? +m[1] : -1; })
-      .filter(n => n > 0);
-    let n: number, tries = 0;
-    do { n = Math.floor(Math.random() * 70) + 1; tries++; }
-    while (used.includes(n) && tries < 100);
-    return `https://i.pravatar.cc/100?img=${n}`;
+    const name  = encodeURIComponent(this.employee.name.trim() || 'Employee');
+    const colors = ['2563eb','7c3aed','059669','ea580c','db2777','0891b2'];
+    const bg    = colors[Math.floor(Math.random() * colors.length)];
+    return `https://ui-avatars.com/api/?name=${name}&background=${bg}&color=fff&size=128&bold=true&rounded=true`;
   }
 }

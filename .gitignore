@@ -9,8 +9,20 @@ test-results/
 api/**/bin/
 api/**/obj/
 
+# TypeScript compiled output
+out-tsc/
+dist/
+
+# Playwright test artifacts
+test-results/
+playwright-report/
+
 # Sensitive config — never commit production secrets
 api/**/appsettings.Production.json
+
+# Logs
+api/**/*.log
+api/**/*.err.log
 
 # OS / editor
 .DS_Store

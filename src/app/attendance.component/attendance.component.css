@@ -756,6 +756,153 @@
    MOBILE
 ========================================= */
 
+/* =========================================
+   LIVE TIME GLOW
+========================================= */
+
+.date-box{
+  animation: glowPulse 2s infinite;
+}
+
+@keyframes glowPulse{
+  0%  { box-shadow: 0 0 0 rgba(37,99,235,0); }
+  50% { box-shadow: 0 0 20px rgba(37,99,235,0.25); }
+  100%{ box-shadow: 0 0 0 rgba(37,99,235,0); }
+}
+
+/* MARKED BUTTON STATES */
+
+.mark-btn:active{
+  transform: scale(.96);
+}
+
+.mark-btn.marked{
+  background: linear-gradient(135deg,#10b981,#059669);
+}
+
+/* =========================================
+   SUCCESS ALERT
+========================================= */
+
+.success-alert{
+  background: #dcfce7;
+  color: #15803d;
+  padding: 16px 20px;
+  border-radius: 16px;
+  margin-bottom: 25px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeSuccess .4s ease;
+}
+
+@keyframes fadeSuccess{
+  from{ opacity: 0; transform: translateY(-20px); }
+  to  { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   ATTENDANCE MODAL
+========================================= */
+
+.attendance-modal{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 16px;
+  animation: fadeModal .3s ease;
+}
+
+@keyframes fadeModal{
+  from{ opacity: 0; }
+  to  { opacity: 1; }
+}
+
+.attendance-modal-box{
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  animation: popup .4s ease;
+}
+
+@keyframes popup{
+  from{ opacity: 0; transform: scale(.7); }
+  to  { opacity: 1; transform: scale(1); }
+}
+
+.modal-top{
+  background: linear-gradient(135deg,#2563eb,#4f46e5);
+  padding: 20px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn{
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 20px;
+}
+
+.modal-body{
+  padding: 30px;
+}
+
+.attendance-user{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.attendance-user img{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.checkin-box{
+  background: #eff6ff;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.checkin-box h2{
+  font-size: 32px;
+  font-weight: 800;
+  color: #2563eb;
+}
+
+.confirm-btn{
+  width: 100%;
+  border: none;
+  padding: 15px;
+  border-radius: 16px;
+  background: linear-gradient(135deg,#2563eb,#4f46e5);
+  color: white;
+  font-weight: 700;
+  transition: .3s;
+}
+
+.confirm-btn:hover{
+  transform: translateY(-3px);
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
 @media(max-width:768px){
 
   .attendance-page{
@@ -764,18 +911,35 @@
 
   .top-navbar{
     padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .top-navbar h1{
     font-size: 28px;
   }
 
+  .top-actions{
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .mark-btn{
+    width: 100%;
+  }
+
   .attendance-table-card{
     padding: 20px;
   }
 
+  .table-header{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .table-actions{
     width: 100%;
+    flex-direction: column;
   }
 
   .search-box{
@@ -786,244 +950,35 @@
     width: 100%;
   }
 
-  .mark-btn{
+  .export-btn{
     width: 100%;
-  }
-/* LIVE TIME EFFECT */
-
-.date-box{
-
-  animation: glowPulse 2s infinite;
-
-}
-
-@keyframes glowPulse{
-
-  0%{
-    box-shadow: 0 0 0 rgba(37,99,235,0);
-  }
-
-  50%{
-    box-shadow: 0 0 20px rgba(37,99,235,0.25);
-  }
-
-  100%{
-    box-shadow: 0 0 0 rgba(37,99,235,0);
+    justify-content: center;
   }
 
 }
 
-/* MARKED BUTTON */
+@media(max-width:480px){
 
-.mark-btn:active{
-
-  transform: scale(.96);
-
-}
-
-/* SUCCESS STATE */
-
-.mark-btn.marked{
-
-  background: linear-gradient(135deg,#10b981,#059669);
-
-}
-/* SUCCESS ALERT */
-
-.success-alert{
-
-  background: #dcfce7;
-
-  color: #15803d;
-
-  padding: 16px 20px;
-
-  border-radius: 16px;
-
-  margin-bottom: 25px;
-
-  font-weight: 700;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  animation: fadeSuccess .4s ease;
-}
-
-@keyframes fadeSuccess{
-
-  from{
-    opacity: 0;
-    transform: translateY(-20px);
+  .attendance-page{
+    padding: 12px 10px;
   }
 
-  to{
-    opacity: 1;
-    transform: translateY(0);
+  .top-navbar h1{
+    font-size: 22px;
   }
 
-}
-
-/* MODAL */
-
-.attendance-modal{
-
-  position: fixed;
-
-  inset: 0;
-
-  background: rgba(0,0,0,.5);
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-  z-index: 9999;
-
-  animation: fadeModal .3s ease;
-}
-
-@keyframes fadeModal{
-
-  from{
-    opacity: 0;
+  .attendance-card h2{
+    font-size: 28px;
   }
 
-  to{
-    opacity: 1;
+  .modal-body{
+    padding: 20px;
   }
 
-}
-
-.attendance-modal-box{
-
-  width: 420px;
-
-  background: white;
-
-  border-radius: 24px;
-
-  overflow: hidden;
-
-  animation: popup .4s ease;
-}
-
-@keyframes popup{
-
-  from{
-    opacity: 0;
-    transform: scale(.7);
+  .checkin-box h2{
+    font-size: 26px;
   }
 
-  to{
-    opacity: 1;
-    transform: scale(1);
-  }
-
-}
-
-.modal-top{
-
-  background: linear-gradient(135deg,#2563eb,#4f46e5);
-
-  padding: 20px;
-
-  color: white;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-}
-
-.close-btn{
-
-  border: none;
-
-  background: transparent;
-
-  color: white;
-
-  font-size: 20px;
-}
-
-.modal-body{
-
-  padding: 30px;
-}
-
-.attendance-user{
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 15px;
-
-  margin-bottom: 25px;
-}
-
-.attendance-user img{
-
-  width: 70px;
-
-  height: 70px;
-
-  border-radius: 50%;
-}
-
-.checkin-box{
-
-  background: #eff6ff;
-
-  padding: 25px;
-
-  border-radius: 20px;
-
-  text-align: center;
-
-  margin-bottom: 25px;
-}
-
-.checkin-box h2{
-
-  font-size: 32px;
-
-  font-weight: 800;
-
-  color: #2563eb;
-}
-
-.confirm-btn{
-
-  width: 100%;
-
-  border: none;
-
-  padding: 15px;
-
-  border-radius: 16px;
-
-  background: linear-gradient(135deg,#2563eb,#4f46e5);
-
-  color: white;
-
-  font-weight: 700;
-
-  transition: .3s;
-}
-
-.confirm-btn:hover{
-
-  transform: translateY(-3px);
-
-}
 }
 
 /* ============================================================
