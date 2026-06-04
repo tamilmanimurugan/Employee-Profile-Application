@@ -11,6 +11,30 @@ TODO: Guide users through getting your code up and running on their own system. 
 # Build and Test
 TODO: Describe and show how to build your code and run the tests. 
 
+## End-to-end tests
+
+The repository includes Playwright end-to-end tests for the hosted login and logout flow.
+
+Set the admin test password as an environment variable before running the tests. Do not commit the password.
+
+```powershell
+$env:E2E_ADMIN_PASSWORD = "<admin-test-password>"
+npm run e2e
+```
+
+Optional environment variables:
+
+```powershell
+$env:E2E_BASE_URL = "https://employeeprofileweb-f3f9a0a7hzd9f7cm.southindia-01.azurewebsites.net"
+$env:E2E_ADMIN_EMAIL = "admin@gmail.com"
+```
+
+The tests cover:
+
+- Login with the admin test account and redirect to `/dashboard`.
+- Dashboard content checks after login.
+- Logout and redirect back to `/login`.
+
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 
 
