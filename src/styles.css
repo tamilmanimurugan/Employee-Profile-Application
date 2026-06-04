@@ -454,3 +454,19 @@ body.dark-theme .performance-top span {
 body.dark-theme .performance-label {
   color: #94a3b8 !important;
 }
+
+/* ============================================================
+   MOBILE — remove Bootstrap container-fluid side padding
+============================================================ */
+
+@media (max-width: 768px) {
+  .container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Remove Bootstrap row negative margins on mobile */
+  .row {
+    --bs-gutter-x: 0.5rem;
+  }
+}

@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   showModal  = false;
   submitted  = false;
   loading    = false;
+  today      = new Date();
 
   employees: Employee[] = [];
 

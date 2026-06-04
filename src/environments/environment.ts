@@ -1,5 +1,4 @@
-// Local development — API runs at localhost:5000
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5000/api'
+  apiUrl: 'https://employeeprofileapi-aag2cvghejagbhgp.southindia-01.azurewebsites.net/api'
 };

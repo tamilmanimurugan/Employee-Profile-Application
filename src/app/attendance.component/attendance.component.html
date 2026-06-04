@@ -1,8 +1,136 @@
 <div class="attendance-page container-fluid">
 
+  <!-- ═══════════════ MOBILE VIEW ═══════════════ -->
+  <div class="mobile-attendance">
+
+    <!-- Header -->
+    <div class="mob-att-header">
+      <div>
+        <p class="mob-att-sub">Today's Overview</p>
+        <h2 class="mob-att-title">Attendance</h2>
+        <p class="mob-att-date">{{ currentDate }}</p>
+      </div>
+      <button class="mob-mark-btn" (click)="openAttendanceModal()">
+        <i class="bi bi-plus-lg"></i>
+        Mark
+      </button>
+    </div>
+
+    <!-- Success alert -->
+    <div class="success-alert" *ngIf="attendanceMarked">
+      <i class="bi bi-check-circle-fill"></i> Attendance Marked Successfully!
+    </div>
+
+    <!-- Stat rows (real data) -->
+    <div class="mob-att-stats">
+      <div class="mob-att-stat present">
+        <div class="mob-att-icon"><i class="bi bi-person-check-fill"></i></div>
+        <div class="mob-att-info"><span>Total Employees</span><h3>{{ totalCount }}</h3></div>
+        <small>All staff</small>
+      </div>
+      <div class="mob-att-stat present">
+        <div class="mob-att-icon"><i class="bi bi-check-circle-fill"></i></div>
+        <div class="mob-att-info"><span>Active</span><h3>{{ activeCount }}</h3></div>
+        <small>Working today</small>
+      </div>
+      <div class="mob-att-stat leave">
+        <div class="mob-att-icon"><i class="bi bi-calendar2-check-fill"></i></div>
+        <div class="mob-att-info"><span>On Leave</span><h3>{{ leaveCount }}</h3></div>
+        <small>Approved leaves</small>
+      </div>
+    </div>
+
+    <!-- Live Activity -->
+    <div class="mob-live-section">
+      <div class="mob-live-title">
+        <h4>Live Activity</h4>
+        <div class="live-badge"><span class="live-dot"></span>LIVE</div>
+      </div>
+      <div class="mob-activity-grid">
+        <div class="mob-activity-box">
+          <h4>92%</h4><span>Productivity</span>
+        </div>
+        <div class="mob-activity-box">
+          <h4>45</h4><span>In Meetings</span>
+        </div>
+        <div class="mob-activity-box">
+          <h4>180</h4><span>Online</span>
+        </div>
+        <div class="mob-activity-box">
+          <h4>15</h4><span>Late Check-ins</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Employees List -->
+    <h4 class="mob-list-title">
+      <i class="bi bi-check-circle-fill" style="color:#10b981"></i>
+      Active Employees
+      <span class="mob-list-count">{{ activeCount }}</span>
+    </h4>
+
+    @if (loading) {
+      <div class="mob-att-loading">
+        @for (i of [1,2,3]; track i) {
+          <div class="mob-att-skeleton"></div>
+        }
+      </div>
+    } @else {
+      <div class="mob-emp-list">
+        @for (emp of activeList; track emp.id) {
+          <div class="mob-emp-item">
+            <img [src]="emp.image" class="mob-emp-img" />
+            <div class="mob-emp-info">
+              <strong>{{ emp.name }}</strong>
+              <span>{{ emp.role }}</span>
+              <span class="mob-emp-dept">{{ emp.department }}</span>
+            </div>
+            <div class="mob-emp-right">
+              <span class="mob-emp-status active">Active</span>
+              <div class="mob-emp-perf-bar">
+                <div class="mob-emp-perf-fill" [style.width.%]="emp.performance"></div>
+              </div>
+              <small>{{ emp.performance }}%</small>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- On Leave Employees List -->
+    @if (leaveCount > 0) {
+      <h4 class="mob-list-title" style="margin-top:18px">
+        <i class="bi bi-calendar2-check-fill" style="color:#f59e0b"></i>
+        On Leave
+        <span class="mob-list-count leave">{{ leaveCount }}</span>
+      </h4>
+      <div class="mob-emp-list">
+        @for (emp of leaveList; track emp.id) {
+          <div class="mob-emp-item">
+            <img [src]="emp.image" class="mob-emp-img" />
+            <div class="mob-emp-info">
+              <strong>{{ emp.name }}</strong>
+              <span>{{ emp.role }}</span>
+              <span class="mob-emp-dept">{{ emp.department }}</span>
+            </div>
+            <div class="mob-emp-right">
+              <span class="mob-emp-status leave">On Leave</span>
+              <div class="mob-emp-perf-bar">
+                <div class="mob-emp-perf-fill leave" [style.width.%]="emp.performance"></div>
+              </div>
+              <small>{{ emp.performance }}%</small>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+  <!-- ═══════════════ END MOBILE VIEW ═══════════════ -->
+
   <!-- TOP NAVBAR -->
 
-  <div class="top-navbar">
+  <div class="top-navbar desktop-only">
 
     <div>
 
@@ -68,66 +196,32 @@
 
   </div>
 
-  <!-- STATS -->
+  <!-- STATS (desktop only) -->
 
-  <div class="row g-4 mb-4">
+  <div class="row g-2 mb-3 desktop-only">
 
     <div class="col-lg-3 col-md-6">
 
       <div class="attendance-card present-card">
-
         <div>
-
-          <span>
-            Present Today
-          </span>
-
-          <h2>
-            220
-          </h2>
-
-          <small>
-            +12 from yesterday
-          </small>
-
+          <span>Total Employees</span>
+          <h2>{{ totalCount }}</h2>
+          <small>All staff</small>
         </div>
-
-        <div class="card-icon">
-
-          <i class="bi bi-person-check-fill"></i>
-
-        </div>
-
+        <div class="card-icon"><i class="bi bi-people-fill"></i></div>
       </div>
 
     </div>
 
     <div class="col-lg-3 col-md-6">
 
-      <div class="attendance-card absent-card">
-
+      <div class="attendance-card present-card">
         <div>
-
-          <span>
-            Absent
-          </span>
-
-          <h2>
-            12
-          </h2>
-
-          <small>
-            Needs follow-up
-          </small>
-
+          <span>Active</span>
+          <h2>{{ activeCount }}</h2>
+          <small>Working today</small>
         </div>
-
-        <div class="card-icon">
-
-          <i class="bi bi-person-x-fill"></i>
-
-        </div>
-
+        <div class="card-icon"><i class="bi bi-person-check-fill"></i></div>
       </div>
 
     </div>
@@ -135,68 +229,34 @@
     <div class="col-lg-3 col-md-6">
 
       <div class="attendance-card leave-card">
-
         <div>
-
-          <span>
-            On Leave
-          </span>
-
-          <h2>
-            8
-          </h2>
-
-          <small>
-            Approved leaves
-          </small>
-
+          <span>On Leave</span>
+          <h2>{{ leaveCount }}</h2>
+          <small>Approved leaves</small>
         </div>
-
-        <div class="card-icon">
-
-          <i class="bi bi-calendar2-check-fill"></i>
-
-        </div>
-
+        <div class="card-icon"><i class="bi bi-calendar2-check-fill"></i></div>
       </div>
 
     </div>
 
     <div class="col-lg-3 col-md-6">
 
-      <div class="attendance-card remote-card">
-
+      <div class="attendance-card absent-card">
         <div>
-
-          <span>
-            Remote Workers
-          </span>
-
-          <h2>
-            18
-          </h2>
-
-          <small>
-            Hybrid employees
-          </small>
-
+          <span>Absent</span>
+          <h2>{{ absentCount }}</h2>
+          <small>Needs follow-up</small>
         </div>
-
-        <div class="card-icon">
-
-          <i class="bi bi-laptop-fill"></i>
-
-        </div>
-
+        <div class="card-icon"><i class="bi bi-person-x-fill"></i></div>
       </div>
 
     </div>
 
   </div>
 
-  <!-- LIVE STATUS -->
+  <!-- LIVE STATUS (desktop only) -->
 
-  <div class="live-status-card">
+  <div class="live-status-card desktop-only">
 
     <div class="live-header">
 
@@ -276,9 +336,9 @@
 
   </div>
 
-  <!-- TABLE -->
+  <!-- TABLE (desktop only) -->
 
-  <div class="attendance-table-card">
+  <div class="attendance-table-card desktop-only">
 
     <div class="table-header">
 
