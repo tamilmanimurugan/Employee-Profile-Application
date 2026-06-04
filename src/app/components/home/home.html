@@ -1,0 +1,52 @@
+Set-Content -Encoding UTF8 src\app\components\home\home.html @'
+<div class="home-wrap">
+  <div class="section-header">
+    <h2>Overview</h2>
+    <p>Live snapshot of your workforce.</p>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading...</div>
+
+  <div class="dashboard-grid" *ngIf="!loading">
+    <div class="card">
+      <h2>Total Employees</h2>
+      <p>{{ totalEmployees }}</p>
+    </div>
+    <div class="card">
+      <h2>Active</h2>
+      <p>{{ activeEmployees }}</p>
+    </div>
+    <div class="card">
+      <h2>Departments</h2>
+      <p>{{ departments }}</p>
+    </div>
+    <div class="card">
+      <h2>Avg Salary</h2>
+      <p>Rs. {{ avgSalary | number }}</p>
+    </div>
+  </div>
+
+  <div class="recent-section" *ngIf="!loading && employees.length">
+    <h3>Recent Employees</h3>
+    <table class="emp-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Department</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of employees.slice(0, 5)">
+          <td>{{ e.name }}</td>
+          <td>{{ e.role }}</td>
+          <td>{{ e.department }}</td>
+          <td><span class="badge" [class.active]="e.status === 'Active'">{{ e.status }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <a routerLink="/employees" class="view-all">View all employees</a>
+  </div>
+</div>
+'@
