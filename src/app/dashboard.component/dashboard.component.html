@@ -4,8 +4,7 @@
 
     <div class="main-content">
 
-      <!-- HERO -->
-
+      <!-- HERO (desktop/tablet only) -->
       <div class="hero-banner">
 
         <div>
@@ -35,40 +34,106 @@
 
       </div>
 
-      <!-- STATS -->
-
+      <!-- STATS (desktop/tablet) -->
       <div class="stats-grid">
-
         <div class="stat-card blue">
-          <div>
-            <span>Total Employees</span>
-            <h2>{{ totalCount }}</h2>
-          </div>
+          <div><span>Total Employees</span><h2>{{ totalCount }}</h2></div>
           <i class="bi bi-people-fill"></i>
         </div>
-
         <div class="stat-card green">
-          <div>
-            <span>Active Employees</span>
-            <h2>{{ activeCount }}</h2>
-          </div>
+          <div><span>Active Employees</span><h2>{{ activeCount }}</h2></div>
           <i class="bi bi-person-check-fill"></i>
         </div>
-
         <div class="stat-card orange">
-          <div>
-            <span>On Leave</span>
-            <h2>{{ onLeaveCount }}</h2>
-          </div>
+          <div><span>On Leave</span><h2>{{ onLeaveCount }}</h2></div>
           <i class="bi bi-calendar-event-fill"></i>
         </div>
-
         <div class="stat-card purple">
-          <div>
-            <span>Departments</span>
-            <h2>{{ departmentsCount }}</h2>
-          </div>
+          <div><span>Departments</span><h2>{{ departmentsCount }}</h2></div>
           <i class="bi bi-building-fill"></i>
+        </div>
+      </div>
+
+      <!-- MOBILE DASHBOARD (shown only on mobile) -->
+      <div class="mobile-dashboard">
+
+        <!-- Greeting -->
+        <div class="mob-greeting">
+          <div>
+            <p class="mob-greet-sub">Welcome back,</p>
+            <h2 class="mob-greet-name">Tamilmani 👋</h2>
+            <p class="mob-greet-date">{{ today | date:'EEEE, d MMMM yyyy' }}</p>
+          </div>
+          <button class="mob-add-btn" routerLink="/employees">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+        </div>
+
+        <!-- Horizontal stat cards -->
+        <div class="mob-stats">
+
+          <div class="mob-stat blue">
+            <div class="mob-stat-icon"><i class="bi bi-people-fill"></i></div>
+            <div class="mob-stat-info">
+              <span>Total Employees</span>
+              <h3>{{ totalCount }}</h3>
+            </div>
+            <i class="bi bi-chevron-right mob-stat-arrow"></i>
+          </div>
+
+          <div class="mob-stat green">
+            <div class="mob-stat-icon"><i class="bi bi-person-check-fill"></i></div>
+            <div class="mob-stat-info">
+              <span>Active Employees</span>
+              <h3>{{ activeCount }}</h3>
+            </div>
+            <i class="bi bi-chevron-right mob-stat-arrow"></i>
+          </div>
+
+          <div class="mob-stat orange">
+            <div class="mob-stat-icon"><i class="bi bi-calendar-event-fill"></i></div>
+            <div class="mob-stat-info">
+              <span>On Leave</span>
+              <h3>{{ onLeaveCount }}</h3>
+            </div>
+            <i class="bi bi-chevron-right mob-stat-arrow"></i>
+          </div>
+
+          <div class="mob-stat purple">
+            <div class="mob-stat-icon"><i class="bi bi-building-fill"></i></div>
+            <div class="mob-stat-info">
+              <span>Departments</span>
+              <h3>{{ departmentsCount }}</h3>
+            </div>
+            <i class="bi bi-chevron-right mob-stat-arrow"></i>
+          </div>
+
+        </div>
+
+        <!-- Quick Actions -->
+        <h4 class="mob-section-title">Quick Actions</h4>
+        <div class="mob-quick-actions">
+
+          <a routerLink="/employees" class="mob-qa-card">
+            <div class="mob-qa-icon blue"><i class="bi bi-people-fill"></i></div>
+            <span>Employees</span>
+          </a>
+
+          <a routerLink="/attendance" class="mob-qa-card">
+            <div class="mob-qa-icon green"><i class="bi bi-calendar-check-fill"></i></div>
+            <span>Attendance</span>
+          </a>
+
+          <a routerLink="/profile" class="mob-qa-card">
+            <div class="mob-qa-icon purple"><i class="bi bi-person-fill"></i></div>
+            <span>Profile</span>
+          </a>
+
+          <a routerLink="/settings" class="mob-qa-card">
+            <div class="mob-qa-icon orange"><i class="bi bi-gear-fill"></i></div>
+            <span>Settings</span>
+          </a>
+
         </div>
 
       </div>

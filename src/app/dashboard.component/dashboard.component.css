@@ -418,80 +418,188 @@
 
 }
 
+/* ============================================================
+   MOBILE DASHBOARD — hidden on desktop/tablet
+============================================================ */
+
+.mobile-dashboard {
+  display: none;
+}
+
 @media(max-width:768px){
 
   .main-content{
-    padding: 15px;
+    padding: 0;
   }
 
-  .hero-banner{
-    flex-direction: column;
-    padding: 28px;
-    text-align: center;
-    gap: 20px;
+  /* Hide desktop elements on mobile */
+  .hero-banner,
+  .stats-grid,
+  .employee-directory-card {
+    display: none;
   }
 
-  .hero-banner h1{
-    font-size: 26px;
-    margin-bottom: 10px;
+  /* Show mobile dashboard */
+  .mobile-dashboard {
+    display: block;
+    padding: 16px;
   }
 
-  .hero-banner p{
-    width: 100%;
-    font-size: 14px;
+  /* --- Greeting --- */
+  .mob-greeting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    border-radius: 20px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    color: white;
   }
 
-  .hero-banner img{
-    width: 140px;
-    order: -1;
+  .mob-greet-sub {
+    font-size: 13px;
+    opacity: 0.85;
+    margin: 0;
   }
 
-  .hero-btn{
-    padding: 12px 22px;
-    font-size: 14px;
+  .mob-greet-name {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 2px 0 4px;
   }
 
-  .stats-grid{
-    grid-template-columns: repeat(2,1fr);
-    gap: 14px;
-    margin-top: 20px;
+  .mob-greet-date {
+    font-size: 11px;
+    opacity: 0.75;
+    margin: 0;
   }
 
-  .stat-card{
-    padding: 20px;
-  }
-
-  .stat-card h2{
-    font-size: 28px;
-  }
-
-  .stat-card i{
-    font-size: 32px;
-  }
-
-  .employee-directory-card{
-    padding: 20px;
-  }
-
-  .directory-title{
-    font-size: 22px;
-  }
-
-  .header-actions{
-    width: 100%;
-    flex-direction: column;
-  }
-
-  .search-box{
-    width: 100%;
-    min-width: unset;
-  }
-
-  .add-btn{
-    width: 100%;
+  .mob-add-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 12px;
+    cursor: pointer;
+    flex-shrink: 0;
   }
+
+  /* --- Stat rows --- */
+  .mob-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .mob-stat {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  .mob-stat-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .mob-stat.blue  .mob-stat-icon { background: linear-gradient(135deg,#2563eb,#3b82f6); }
+  .mob-stat.green .mob-stat-icon { background: linear-gradient(135deg,#059669,#10b981); }
+  .mob-stat.orange .mob-stat-icon { background: linear-gradient(135deg,#ea580c,#f97316); }
+  .mob-stat.purple .mob-stat-icon { background: linear-gradient(135deg,#7c3aed,#8b5cf6); }
+
+  .mob-stat-info {
+    flex: 1;
+  }
+
+  .mob-stat-info span {
+    font-size: 12px;
+    color: #6b7280;
+    display: block;
+  }
+
+  .mob-stat-info h3 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #111827;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .mob-stat-arrow {
+    color: #d1d5db;
+    font-size: 14px;
+  }
+
+  /* --- Quick Actions --- */
+  .mob-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 12px;
+  }
+
+  .mob-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .mob-qa-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    background: white;
+    border-radius: 16px;
+    padding: 14px 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: .2s;
+  }
+
+  .mob-qa-card:active {
+    transform: scale(0.95);
+  }
+
+  .mob-qa-card span {
+    font-size: 11px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .mob-qa-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: white;
+  }
+
+  .mob-qa-icon.blue   { background: linear-gradient(135deg,#2563eb,#3b82f6); }
+  .mob-qa-icon.green  { background: linear-gradient(135deg,#059669,#10b981); }
+  .mob-qa-icon.purple { background: linear-gradient(135deg,#7c3aed,#8b5cf6); }
+  .mob-qa-icon.orange { background: linear-gradient(135deg,#ea580c,#f97316); }
 
   .modal-box{
     width: 95vw;
@@ -502,21 +610,30 @@
 
 @media(max-width:480px){
 
-  .stats-grid{
-    grid-template-columns: 1fr;
-    gap: 12px;
+  .mob-greeting {
+    padding: 16px;
   }
 
-  .hero-banner{
-    padding: 20px;
+  .mob-greet-name {
+    font-size: 18px;
   }
 
-  .hero-banner h1{
-    font-size: 22px;
+  .mob-stat-info h3 {
+    font-size: 20px;
   }
 
-  .stat-card h2{
-    font-size: 26px;
+  .mob-quick-actions {
+    gap: 8px;
+  }
+
+  .mob-qa-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .mob-qa-card span {
+    font-size: 10px;
   }
 
   .directory-header{
@@ -532,6 +649,34 @@
 
 :host-context(body.dark-theme) .dashboard-container{
   background: #0f172a !important;
+}
+
+:host-context(body.dark-theme) .mob-stat {
+  background: #1e293b !important;
+}
+
+:host-context(body.dark-theme) .mob-stat-info span {
+  color: #94a3b8 !important;
+}
+
+:host-context(body.dark-theme) .mob-stat-info h3 {
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .mob-stat-arrow {
+  color: #475569 !important;
+}
+
+:host-context(body.dark-theme) .mob-section-title {
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .mob-qa-card {
+  background: #1e293b !important;
+}
+
+:host-context(body.dark-theme) .mob-qa-card span {
+  color: #cbd5e1 !important;
 }
 
 :host-context(body.dark-theme) .employee-directory-card{

@@ -903,83 +903,320 @@
    MOBILE
 ========================================= */
 
+.mobile-attendance { display: none; }
+
 @media(max-width:768px){
 
-  .attendance-page{
-    padding: 15px;
+  .attendance-page{ padding: 0; }
+  .desktop-only   { display: none !important; }
+  .mobile-attendance { display: block; padding: 14px; }
+
+  /* Header */
+  .mob-att-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg,#2563eb,#4f46e5);
+    border-radius: 20px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    color: white;
+  }
+  .mob-att-sub   { font-size:12px; opacity:.8; margin:0; }
+  .mob-att-title { font-size:20px; font-weight:800; margin:2px 0 4px; }
+  .mob-att-date  { font-size:11px; opacity:.75; margin:0; }
+
+  .mob-mark-btn{
+    background: rgba(255,255,255,.2);
+    border: 2px solid rgba(255,255,255,.35);
+    color: white;
+    border-radius: 14px;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
   }
 
-  .top-navbar{
-    padding: 20px;
+  /* Stat rows */
+  .mob-att-stats{
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
   }
 
-  .top-navbar h1{
-    font-size: 28px;
+  .mob-att-stat{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: white;
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
   }
 
-  .top-actions{
-    width: 100%;
-    flex-wrap: wrap;
+  .mob-att-icon{
+    width: 46px; height: 46px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: white; flex-shrink: 0;
+  }
+  .mob-att-stat.present .mob-att-icon { background: linear-gradient(135deg,#10b981,#059669); }
+  .mob-att-stat.absent  .mob-att-icon { background: linear-gradient(135deg,#ef4444,#dc2626); }
+  .mob-att-stat.leave   .mob-att-icon { background: linear-gradient(135deg,#f59e0b,#d97706); }
+  .mob-att-stat.remote  .mob-att-icon { background: linear-gradient(135deg,#6366f1,#4f46e5); }
+
+  .mob-att-info { flex: 1; }
+  .mob-att-info span { font-size:12px; color:#6b7280; display:block; }
+  .mob-att-info h3   { font-size:22px; font-weight:800; color:#111827; margin:0; }
+
+  .mob-att-stat small { font-size:11px; color:#9ca3af; white-space:nowrap; }
+
+  /* Live Activity */
+  .mob-live-section{
+    background: white;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
   }
 
-  .mark-btn{
-    width: 100%;
+  .mob-live-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
   }
 
-  .attendance-table-card{
-    padding: 20px;
+  .mob-live-title h4 { font-size:15px; font-weight:800; margin:0; color:#111827; }
+
+  .mob-activity-grid{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
   }
 
-  .table-header{
+  .mob-activity-box{
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .mob-activity-box h4 { font-size:22px; font-weight:800; color:#2563eb; margin:0 0 4px; }
+  .mob-activity-box span { font-size:12px; color:#6b7280; }
+
+  /* My Attendance */
+  .mob-my-attendance{
+    background: white;
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
+  }
+
+  .mob-my-att-user{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .mob-my-att-user img {
+    width: 46px; height: 46px;
+    border-radius: 50%; object-fit: cover;
+  }
+
+  .mob-my-att-user h5 { font-size:15px; font-weight:700; margin:0 0 2px; color:#111827; }
+  .mob-my-att-user span { font-size:12px; color:#6b7280; }
+
+  .mob-my-att-details{
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    gap: 12px;
   }
 
-  .table-actions{
-    width: 100%;
-    flex-direction: column;
+  .mob-att-detail-item{
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
-  .search-box{
-    width: 100%;
+  .mob-att-detail-item i {
+    width: 36px; height: 36px;
+    background: #eff6ff;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #2563eb; font-size: 15px; flex-shrink: 0;
   }
 
-  .search-box input{
-    width: 100%;
-  }
-
-  .export-btn{
-    width: 100%;
-    justify-content: center;
-  }
+  .mob-att-detail-item span   { font-size:12px; color:#6b7280; display:block; }
+  .mob-att-detail-item strong { font-size:14px; font-weight:700; color:#111827; }
 
 }
+
+  /* Employee list */
+  .mob-list-title{
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+    margin: 16px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mob-list-count{
+    margin-left: auto;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .mob-list-count.leave{
+    background: #fef3c7;
+    color: #b45309;
+  }
+
+  .mob-emp-list{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mob-emp-item{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+  }
+
+  .mob-emp-img{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+    flex-shrink: 0;
+  }
+
+  .mob-emp-info{
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mob-emp-info strong{
+    font-size: 13px;
+    font-weight: 700;
+    color: #111827;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mob-emp-info span{
+    font-size: 11px;
+    color: #6b7280;
+    display: block;
+  }
+
+  .mob-emp-dept{
+    font-size: 11px !important;
+    color: #4338ca !important;
+    background: #eef2ff;
+    border-radius: 20px;
+    padding: 1px 8px;
+    display: inline-block !important;
+    margin-top: 2px;
+  }
+
+  .mob-emp-right{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .mob-emp-status{
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .mob-emp-status.active{ background:#dcfce7; color:#15803d; }
+  .mob-emp-status.leave { background:#fef3c7; color:#b45309; }
+
+  .mob-emp-perf-bar{
+    width: 60px;
+    height: 5px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .mob-emp-perf-fill{
+    height: 100%;
+    background: linear-gradient(135deg,#2563eb,#4f46e5);
+    border-radius: 10px;
+  }
+
+  .mob-emp-perf-fill.leave{
+    background: linear-gradient(135deg,#f59e0b,#d97706);
+  }
+
+  .mob-emp-right small{
+    font-size: 11px;
+    color: #9ca3af;
+  }
+
+  /* Skeleton */
+  .mob-att-loading{ display:flex; flex-direction:column; gap:8px; }
+
+  .mob-att-skeleton{
+    height: 68px;
+    border-radius: 14px;
+    background: linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 50%,#e5e7eb 75%);
+    background-size: 600px 100%;
+    animation: shimmer 1.4s infinite linear;
+  }
+
+  @keyframes shimmer{
+    0%  { background-position: -600px 0; }
+    100%{ background-position:  600px 0; }
+  }
 
 @media(max-width:480px){
-
-  .attendance-page{
-    padding: 12px 10px;
-  }
-
-  .top-navbar h1{
-    font-size: 22px;
-  }
-
-  .attendance-card h2{
-    font-size: 28px;
-  }
-
-  .modal-body{
-    padding: 20px;
-  }
-
-  .checkin-box h2{
-    font-size: 26px;
-  }
-
+  .mob-att-title { font-size:18px; }
+  .mob-att-info h3 { font-size:20px; }
+  .mob-activity-box h4 { font-size:20px; }
 }
+
+/* Dark mode - employee list */
+:host-context(body.dark-theme) .mob-emp-item{ background:#1e293b !important; }
+:host-context(body.dark-theme) .mob-emp-info strong{ color:#f1f5f9 !important; }
+:host-context(body.dark-theme) .mob-emp-info span  { color:#94a3b8 !important; }
+:host-context(body.dark-theme) .mob-emp-img{ border-color:#334155 !important; }
+:host-context(body.dark-theme) .mob-list-title{ color:#f1f5f9 !important; }
+:host-context(body.dark-theme) .mob-live-section,
+:host-context(body.dark-theme) .mob-my-attendance{ background:#1e293b !important; }
+:host-context(body.dark-theme) .mob-activity-box{ background:#263044 !important; }
+:host-context(body.dark-theme) .mob-att-stat{ background:#1e293b !important; }
+:host-context(body.dark-theme) .mob-att-info h3  { color:#f1f5f9 !important; }
+:host-context(body.dark-theme) .mob-att-info span{ color:#94a3b8 !important; }
 
 /* ============================================================
    DARK MODE
