@@ -8,6 +8,8 @@ test-results/
 # .NET build output
 api/**/bin/
 api/**/obj/
+obj/
+bin/
 
 # TypeScript compiled output
 out-tsc/
