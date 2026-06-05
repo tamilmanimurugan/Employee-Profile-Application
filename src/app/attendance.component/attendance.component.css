@@ -186,6 +186,16 @@
 
 }
 
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes fadeUp{
 
   from{
@@ -921,6 +931,7 @@
     padding: 18px 20px;
     margin-bottom: 14px;
     color: white;
+    animation: slideDown 0.6s ease;
   }
   .mob-att-sub   { font-size:12px; opacity:.8; margin:0; }
   .mob-att-title { font-size:20px; font-weight:800; margin:2px 0 4px; }
@@ -957,7 +968,12 @@
     border-radius: 16px;
     padding: 14px 16px;
     box-shadow: 0 2px 10px rgba(0,0,0,.05);
+    animation: slideUp 0.5s ease both;
   }
+
+  .mob-att-stat:nth-child(1){ animation-delay: 0.1s; }
+  .mob-att-stat:nth-child(2){ animation-delay: 0.2s; }
+  .mob-att-stat:nth-child(3){ animation-delay: 0.3s; }
 
   .mob-att-icon{
     width: 46px; height: 46px;
@@ -1127,6 +1143,7 @@
     border-radius: 14px;
     padding: 12px 14px;
     box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    animation: rowFade 0.5s ease both;
   }
 
   .mob-emp-img{
@@ -1232,6 +1249,48 @@
   .mob-activity-box h4 { font-size:20px; }
 }
 
+/* Dark mode - mobile attendance */
+:host-context(body.dark-theme) .mob-live-title h4{
+  color: #f1f5f9 !important;
+}
+
+:host-context(body.dark-theme) .mob-list-count{
+  background: rgba(16,185,129,0.2) !important;
+  color: #6ee7b7 !important;
+}
+
+:host-context(body.dark-theme) .mob-list-count.leave{
+  background: rgba(245,158,11,0.2) !important;
+  color: #fcd34d !important;
+}
+
+:host-context(body.dark-theme) .mob-emp-status.active{
+  background: rgba(16,185,129,0.2) !important;
+  color: #6ee7b7 !important;
+}
+
+:host-context(body.dark-theme) .mob-emp-status.leave{
+  background: rgba(245,158,11,0.2) !important;
+  color: #fcd34d !important;
+}
+
+:host-context(body.dark-theme) .mob-emp-dept{
+  background: rgba(99,102,241,0.2) !important;
+  color: #a5b4fc !important;
+}
+
+:host-context(body.dark-theme) .mob-emp-right small{
+  color: #64748b !important;
+}
+
+:host-context(body.dark-theme) .mob-att-stat small{
+  color: #64748b !important;
+}
+
+:host-context(body.dark-theme) .mob-emp-perf-bar{
+  background: #334155 !important;
+}
+
 /* Dark mode - employee list */
 :host-context(body.dark-theme) .mob-emp-item{ background:#1e293b !important; }
 :host-context(body.dark-theme) .mob-emp-info strong{ color:#f1f5f9 !important; }
@@ -1244,6 +1303,22 @@
 :host-context(body.dark-theme) .mob-att-stat{ background:#1e293b !important; }
 :host-context(body.dark-theme) .mob-att-info h3  { color:#f1f5f9 !important; }
 :host-context(body.dark-theme) .mob-att-info span{ color:#94a3b8 !important; }
+
+/* Accordion toggle — dark mode */
+:host-context(body.dark-theme) .mob-list-toggle {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+:host-context(body.dark-theme) .mob-list-toggle:active {
+  background: #263044 !important;
+}
+:host-context(body.dark-theme) .mob-list-left,
+:host-context(body.dark-theme) .mob-list-title {
+  color: #f1f5f9 !important;
+}
+:host-context(body.dark-theme) .mob-toggle-icon {
+  color: #94a3b8 !important;
+}
 
 /* ============================================================
    DARK MODE

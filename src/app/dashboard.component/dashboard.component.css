@@ -439,6 +439,16 @@
   color: white;
 }
 
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes popup{
 
   from{
@@ -525,6 +535,7 @@
     padding: 18px 20px;
     margin-bottom: 16px;
     color: white;
+    animation: slideDown 0.6s ease;
   }
 
   .mob-greet-sub {
@@ -576,7 +587,13 @@
     border-radius: 16px;
     padding: 14px 16px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    animation: slideUp 0.5s ease both;
   }
+
+  .mob-stat:nth-child(1) { animation-delay: 0.1s; }
+  .mob-stat:nth-child(2) { animation-delay: 0.2s; }
+  .mob-stat:nth-child(3) { animation-delay: 0.3s; }
+  .mob-stat:nth-child(4) { animation-delay: 0.4s; }
 
   .mob-stat-icon {
     width: 46px;
@@ -624,12 +641,14 @@
     font-weight: 700;
     color: #111827;
     margin-bottom: 12px;
+    animation: slideDown 0.5s ease 0.4s both;
   }
 
   .mob-quick-actions {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    animation: slideUp 0.5s ease 0.5s both;
   }
 
   .mob-qa-card {
@@ -643,7 +662,13 @@
     padding: 14px 8px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     transition: .2s;
+    animation: fadeUp 0.4s ease both;
   }
+
+  .mob-qa-card:nth-child(1) { animation-delay: 0.5s; }
+  .mob-qa-card:nth-child(2) { animation-delay: 0.6s; }
+  .mob-qa-card:nth-child(3) { animation-delay: 0.7s; }
+  .mob-qa-card:nth-child(4) { animation-delay: 0.8s; }
 
   .mob-qa-card:active {
     transform: scale(0.95);

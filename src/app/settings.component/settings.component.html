@@ -93,10 +93,30 @@
 
     </div>
 
+    <!-- Contact section -->
+    <p class="mob-set-section-label">SUPPORT</p>
+    <div class="mob-set-list">
+
+      <a class="mob-set-item mob-set-nav" routerLink="/contact" style="text-decoration:none;">
+        <div class="mob-set-item-left">
+          <div class="mob-set-icon teal"><i class="bi bi-envelope-fill"></i></div>
+          <div><strong>Contact Us</strong><span>Get help & support</span></div>
+        </div>
+        <i class="bi bi-chevron-right mob-set-arrow"></i>
+      </a>
+
+    </div>
+
     <!-- Save button -->
     <button class="mob-set-save" (click)="saveSettings()">
       <i class="bi bi-check-circle-fill"></i>
       Save Changes
+    </button>
+
+    <!-- Logout button -->
+    <button class="mob-set-logout" (click)="logout()">
+      <i class="bi bi-box-arrow-right"></i>
+      Logout
     </button>
 
   </div>

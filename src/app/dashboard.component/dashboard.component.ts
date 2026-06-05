@@ -40,32 +40,40 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loading = true;
+    // Show cached data immediately — no skeleton wait
+    const raw = localStorage.getItem('employees');
+    if (raw) {
+      const local: Employee[] = JSON.parse(raw);
+      this.setData(local);
+      this.loading = false;
+    } else {
+      this.loading = true;
+    }
+
+    // Fetch fresh from API in background
     this.api.getAll().subscribe({
       next: (data) => {
-        this.employees        = data;
-        this.totalCount       = data.length;
-        this.activeCount      = data.filter(e => e.status === 'Active').length;
-        this.onLeaveCount     = data.filter(e => e.status === 'On Leave').length;
-        this.departmentsCount = new Set(data.map(e => e.department)).size;
+        this.setData(data);
         this.loading = false;
-        // Mirror to localStorage so dashboard stays populated when API goes offline
         if (data.length > 0) {
           localStorage.setItem('employees', JSON.stringify(data));
         }
       },
       error: () => {
-        // API offline — fall back to localStorage so dashboard isn't blank
-        const raw = localStorage.getItem('employees');
-        const local: Employee[] = raw ? JSON.parse(raw) : [];
-        this.employees        = local;
-        this.totalCount       = local.length;
-        this.activeCount      = local.filter(e => e.status === 'Active').length;
-        this.onLeaveCount     = local.filter(e => e.status === 'On Leave').length;
-        this.departmentsCount = new Set(local.map(e => e.department)).size;
+        if (!raw) {
+          this.setData([]);
+        }
         this.loading = false;
       }
     });
+  }
+
+  private setData(data: Employee[]): void {
+    this.employees        = data;
+    this.totalCount       = data.length;
+    this.activeCount      = data.filter(e => e.status === 'Active').length;
+    this.onLeaveCount     = data.filter(e => e.status === 'On Leave').length;
+    this.departmentsCount = new Set(data.map(e => e.department)).size;
   }
 
   openModal()  { this.showModal = true;  this.submitted = false; }

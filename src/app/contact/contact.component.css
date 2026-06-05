@@ -437,9 +437,29 @@ label{
 
 }
 
+/* MOBILE BACK ICON — hidden on desktop */
+.mob-back-icon { display: none; }
+
 /* MOBILE */
 
 @media(max-width:768px){
+
+  .mob-back-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    color: #2563eb;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+  }
+
 
   .contact-page{
     padding: 15px;

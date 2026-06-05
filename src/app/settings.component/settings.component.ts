@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
-
 import { FormsModule } from '@angular/forms';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
@@ -115,6 +115,13 @@ export class SettingsComponent implements OnInit {
 
     }
 
+  }
+
+  constructor(private router: Router) {}
+
+  logout(): void {
+    localStorage.removeItem('isLoggedIn');
+    this.router.navigate(['/login']);
   }
 
   saveSettings() {

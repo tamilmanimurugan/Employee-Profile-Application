@@ -37,15 +37,27 @@ export class AttendanceComponent implements OnInit {
     this.updateDateTime();
     setInterval(() => this.updateDateTime(), 1000);
 
+    // Show cached data immediately — no skeleton wait
+    const raw = localStorage.getItem('employees');
+    if (raw) {
+      this.setData(JSON.parse(raw));
+      this.loading = false;
+    }
+
+    // Fetch fresh from API in background
     this.api.getAll().subscribe({
       next: (data) => {
-        this.employees  = data;
-        this.activeList = data.filter(e => e.status === 'Active');
-        this.leaveList  = data.filter(e => e.status === 'On Leave');
-        this.loading    = false;
+        this.setData(data);
+        this.loading = false;
       },
       error: () => { this.loading = false; }
     });
+  }
+
+  private setData(data: Employee[]): void {
+    this.employees  = data;
+    this.activeList = data.filter(e => e.status === 'Active');
+    this.leaveList  = data.filter(e => e.status === 'On Leave');
   }
 
   updateDateTime() {
