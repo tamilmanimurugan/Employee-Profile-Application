@@ -4,7 +4,8 @@ import {
 from '@angular/core';
 
 import {
-  provideRouter
+  provideRouter,
+  withInMemoryScrolling
 }
 from '@angular/router';
 
@@ -29,7 +30,7 @@ ApplicationConfig = {
 
   providers: [
 
-    provideRouter(routes),
+    provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top' })),
 
     provideHttpClient(),
 

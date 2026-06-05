@@ -6,63 +6,81 @@
     </div>
 
     <div class="header-right">
-      <div class="search-box">
+      <div class="search-box desktop-search">
         <i class="bi bi-search"></i>
         <input type="text" placeholder="Search employees..." [(ngModel)]="searchText" />
       </div>
 
-      <button class="add-employee-btn" (click)="openAddModal()" data-testid="open-add-modal">
+      <button class="add-employee-btn btn-add-primary" (click)="openAddModal()" data-testid="open-add-modal">
         <i class="bi bi-plus-circle-fill"></i> Add Employee
       </button>
-      <button class="add-employee-btn" (click)="downloadEmployeePDF()">
-        <i class="bi bi-file-earmark-pdf-fill"></i> PDF
-      </button>
-      <button class="add-employee-btn" (click)="printEmployees()">
-        <i class="bi bi-printer-fill"></i> Print
-      </button>
-      <button class="add-employee-btn" (click)="exportExcel()">
-        <i class="bi bi-file-earmark-excel-fill"></i> Export Excel
-      </button>
+
+      <!-- Export buttons (desktop: shown, mobile: hidden via CSS) -->
+      <div class="export-btn-group header-export">
+        <button class="add-employee-btn btn-export" (click)="downloadEmployeePDF()">
+          <i class="bi bi-file-earmark-pdf-fill"></i> PDF
+        </button>
+        <button class="add-employee-btn btn-export" (click)="printEmployees()">
+          <i class="bi bi-printer-fill"></i> Print
+        </button>
+        <button class="add-employee-btn btn-export" (click)="exportExcel()">
+          <i class="bi bi-file-earmark-excel-fill"></i> Export Excel
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- API / offline status banner -->
+  <!-- SQL banner (desktop: shown, mobile: hidden via CSS) -->
   @if (apiOnline) {
-    <div style="background:rgba(16,185,129,0.15);border:1px solid #10b981;color:#10b981;padding:10px 18px;border-radius:12px;margin-bottom:20px;font-weight:600;display:flex;align-items:center;gap:8px;">
+    <div class="api-banner">
       <i class="bi bi-cloud-check-fill"></i> Connected to SQL Server — all changes save to the database
     </div>
   } @else if (statusMsg) {
-    <div style="background:rgba(245,158,11,0.15);border:1px solid #f59e0b;color:#b45309;padding:10px 18px;border-radius:12px;margin-bottom:20px;font-weight:600;display:flex;align-items:center;gap:8px;">
+    <div class="api-banner offline">
       <i class="bi bi-exclamation-triangle-fill"></i> {{ statusMsg }} — start the API to save to database
     </div>
   }
 
+  <!-- Mobile only: compact status chip -->
+  <div class="mobile-status-row">
+    <div class="api-status-chip" [class.online]="apiOnline" [class.offline]="!apiOnline">
+      <i class="bi" [class.bi-cloud-check-fill]="apiOnline" [class.bi-exclamation-triangle-fill]="!apiOnline"></i>
+      <span>{{ apiOnline ? 'Connected' : 'Offline' }}</span>
+    </div>
+  </div>
+
   <!-- Stat cards -->
-  <div class="row g-4 mb-4">
-    <div class="col-lg-3 col-md-6">
+  <div class="row g-2 mb-3">
+    <div class="col-6 col-lg-3">
       <div class="stat-card blue">
-        <div><h6>Total Employees</h6><h2>{{ employees.length }}</h2></div>
+        <div><h6>Total</h6><h2>{{ employees.length }}</h2></div>
         <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+    <div class="col-6 col-lg-3">
       <div class="stat-card green">
-        <div><h6>Active Employees</h6><h2>{{ activeEmployeesCount }}</h2></div>
+        <div><h6>Active</h6><h2>{{ activeEmployeesCount }}</h2></div>
         <div class="stat-icon"><i class="bi bi-person-check-fill"></i></div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+    <div class="col-6 col-lg-3">
       <div class="stat-card orange">
         <div><h6>On Leave</h6><h2>{{ onLeaveEmployeesCount }}</h2></div>
         <div class="stat-icon"><i class="bi bi-calendar-event-fill"></i></div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6">
+    <div class="col-6 col-lg-3">
       <div class="stat-card purple">
-        <div><h6>Departments</h6><h2>{{ departmentsCount }}</h2></div>
+        <div><h6>Depts</h6><h2>{{ departmentsCount }}</h2></div>
         <div class="stat-icon"><i class="bi bi-building-fill"></i></div>
       </div>
     </div>
+  </div>
+
+  <!-- Mobile-only search (above employee list) -->
+  <div class="search-box mobile-search">
+    <i class="bi bi-search"></i>
+    <input type="text" placeholder="Search employees..." [(ngModel)]="searchText" />
   </div>
 
   <!-- Employee table -->
@@ -71,6 +89,21 @@
       <div>
         <h3>Employee Directory</h3>
         <p>Latest employee records</p>
+      </div>
+      <!-- Mobile: export buttons in table-top -->
+      <div class="mobile-export-group">
+        <button class="mob-exp-btn" (click)="downloadEmployeePDF()">
+          <div class="mob-exp-icon"><i class="bi bi-file-earmark-pdf-fill"></i></div>
+          <span>PDF</span>
+        </button>
+        <button class="mob-exp-btn" (click)="printEmployees()">
+          <div class="mob-exp-icon"><i class="bi bi-printer-fill"></i></div>
+          <span>Print</span>
+        </button>
+        <button class="mob-exp-btn" (click)="exportExcel()">
+          <div class="mob-exp-icon"><i class="bi bi-file-earmark-excel-fill"></i></div>
+          <span>Excel</span>
+        </button>
       </div>
     </div>
 
@@ -99,7 +132,9 @@
     } @else if (apiError) {
       <p style="text-align:center;padding:20px;color:#ef4444;">⚠ {{ apiError }}</p>
     } @else {
-      <div class="table-responsive">
+
+      <!-- Desktop/Tablet: table view -->
+      <div class="table-responsive desktop-table">
         <table class="table align-middle employee-table">
           <thead>
             <tr>
@@ -155,6 +190,50 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Mobile: card view -->
+      <div class="mobile-cards">
+        @for (emp of filteredEmployees; track emp.id) {
+          <div class="emp-card">
+            <div class="emp-card-top">
+              <img [src]="emp.image" alt="employee" class="emp-card-img" />
+              <div class="emp-card-info">
+                <h6 class="emp-card-name">{{ emp.name }}</h6>
+                <span class="emp-card-email">{{ emp.email }}</span>
+                <div class="emp-card-badges">
+                  <span class="department">{{ emp.department }}</span>
+                  <span class="status" [ngClass]="{ active: emp.status === 'Active', leave: emp.status === 'On Leave' }">{{ emp.status }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="emp-card-meta">
+              <div class="emp-card-meta-item">
+                <i class="bi bi-briefcase-fill"></i>
+                <span>{{ emp.role }}</span>
+              </div>
+              <div class="emp-card-meta-item">
+                <i class="bi bi-clock-fill"></i>
+                <span>{{ emp.experience }}</span>
+              </div>
+            </div>
+            <div class="emp-card-perf">
+              <div class="emp-card-perf-label">
+                <span>Performance</span>
+                <span class="emp-card-perf-val">{{ emp.performance }}%</span>
+              </div>
+              <div class="progress progress-bar-custom">
+                <div class="progress-bar" [style.width.%]="emp.performance"></div>
+              </div>
+            </div>
+            <div class="emp-card-actions">
+              <button class="action-btn view"   (click)="viewEmployee(emp)"><i class="bi bi-eye-fill"></i> View</button>
+              <button class="action-btn edit"   (click)="editEmployee(emp)"><i class="bi bi-pencil-fill"></i> Edit</button>
+              <button class="action-btn delete" (click)="deleteEmployee(emp)"><i class="bi bi-trash-fill"></i> Delete</button>
+            </div>
+          </div>
+        }
+      </div>
+
     }
   </div>
 </div>

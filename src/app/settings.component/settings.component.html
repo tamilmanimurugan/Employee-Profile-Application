@@ -1,8 +1,130 @@
 <div class="settings-page container-fluid">
 
-  <!-- TOP BAR -->
+  <!-- ═══════════════ MOBILE SETTINGS ═══════════════ -->
+  <div class="mobile-settings">
 
-  <div class="top-navbar">
+    <!-- Profile card -->
+    <div class="mob-set-profile">
+      <img src="https://i.pravatar.cc/200?img=12" class="mob-set-avatar" />
+      <div class="mob-set-profile-info">
+        <h3>{{ profile.fullName }}</h3>
+        <span>{{ profile.designation }}</span>
+        <span class="mob-set-dept">{{ profile.department }}</span>
+      </div>
+    </div>
+
+    <!-- Preferences section -->
+    <p class="mob-set-section-label">PREFERENCES</p>
+    <div class="mob-set-list">
+
+      <div class="mob-set-item">
+        <div class="mob-set-item-left">
+          <div class="mob-set-icon dark"><i class="bi bi-moon-fill"></i></div>
+          <div>
+            <strong>Dark Mode</strong>
+            <span>Enable dark theme</span>
+          </div>
+        </div>
+        <div class="form-check form-switch mb-0">
+          <input class="form-check-input" type="checkbox" [checked]="darkMode" (change)="toggleTheme()">
+        </div>
+      </div>
+
+      <div class="mob-set-item">
+        <div class="mob-set-item-left">
+          <div class="mob-set-icon blue"><i class="bi bi-envelope-fill"></i></div>
+          <div>
+            <strong>Email Notifications</strong>
+            <span>Important updates by email</span>
+          </div>
+        </div>
+        <div class="form-check form-switch mb-0">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="notifications.emailNotifications">
+        </div>
+      </div>
+
+      <div class="mob-set-item">
+        <div class="mob-set-item-left">
+          <div class="mob-set-icon green"><i class="bi bi-calendar-check-fill"></i></div>
+          <div>
+            <strong>Attendance Alerts</strong>
+            <span>Reminders &amp; updates</span>
+          </div>
+        </div>
+        <div class="form-check form-switch mb-0">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="notifications.attendanceAlerts">
+        </div>
+      </div>
+
+      <div class="mob-set-item">
+        <div class="mob-set-item-left">
+          <div class="mob-set-icon orange"><i class="bi bi-phone-fill"></i></div>
+          <div>
+            <strong>Push Notifications</strong>
+            <span>Browser push alerts</span>
+          </div>
+        </div>
+        <div class="form-check form-switch mb-0">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="notifications.pushNotifications">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Account section -->
+    <p class="mob-set-section-label">ACCOUNT</p>
+    <div class="mob-set-list">
+
+      <div class="mob-set-item mob-set-nav">
+        <div class="mob-set-item-left">
+          <div class="mob-set-icon purple"><i class="bi bi-person-fill"></i></div>
+          <div><strong>Profile Information</strong><span>Update personal details</span></div>
+        </div>
+        <i class="bi bi-chevron-right mob-set-arrow"></i>
+      </div>
+
+      <div class="mob-set-item mob-set-nav">
+        <div class="mob-set-item-left">
+          <div class="mob-set-icon red"><i class="bi bi-shield-lock-fill"></i></div>
+          <div><strong>Security Settings</strong><span>Password &amp; 2FA</span></div>
+        </div>
+        <i class="bi bi-chevron-right mob-set-arrow"></i>
+      </div>
+
+    </div>
+
+    <!-- Contact section -->
+    <p class="mob-set-section-label">SUPPORT</p>
+    <div class="mob-set-list">
+
+      <a class="mob-set-item mob-set-nav" routerLink="/contact" style="text-decoration:none;">
+        <div class="mob-set-item-left">
+          <div class="mob-set-icon teal"><i class="bi bi-envelope-fill"></i></div>
+          <div><strong>Contact Us</strong><span>Get help & support</span></div>
+        </div>
+        <i class="bi bi-chevron-right mob-set-arrow"></i>
+      </a>
+
+    </div>
+
+    <!-- Save button -->
+    <button class="mob-set-save" (click)="saveSettings()">
+      <i class="bi bi-check-circle-fill"></i>
+      Save Changes
+    </button>
+
+    <!-- Logout button -->
+    <button class="mob-set-logout" (click)="logout()">
+      <i class="bi bi-box-arrow-right"></i>
+      Logout
+    </button>
+
+  </div>
+  <!-- ═══════════════ END MOBILE SETTINGS ═══════════════ -->
+
+  <!-- TOP BAR (desktop only) -->
+
+  <div class="top-navbar desktop-only">
 
     <div class="welcome-section">
 
@@ -37,9 +159,9 @@
     </div>
 
   </div>
-<!-- THEME SETTINGS -->
+<!-- THEME SETTINGS (desktop only) -->
 
-<div class="settings-card">
+<div class="settings-card desktop-only">
 
   <div class="notification-item">
 
@@ -68,9 +190,9 @@
   </div>
 
 </div>
-  <!-- QUICK CARDS -->
+  <!-- QUICK CARDS (desktop only) -->
 
-  <div class="row g-4 mb-4">
+  <div class="row g-4 mb-4 desktop-only">
 
     <div class="col-lg-3 col-md-6">
 
@@ -134,9 +256,9 @@
 
   </div>
 
-  <!-- PROFILE SETTINGS -->
+  <!-- PROFILE SETTINGS (desktop only) -->
 
-  <div class="settings-card">
+  <div class="settings-card desktop-only">
 
     <div class="card-header-custom">
 
@@ -244,9 +366,9 @@
 
   </div>
 
-  <!-- SECURITY -->
+  <!-- SECURITY (desktop only) -->
 
-  <div class="settings-card">
+  <div class="settings-card desktop-only">
 
     <div class="card-header-custom">
 
@@ -317,9 +439,9 @@
 
   </div>
 
-  <!-- NOTIFICATIONS -->
+  <!-- NOTIFICATIONS (desktop only) -->
 
-  <div class="settings-card">
+  <div class="settings-card desktop-only">
 
     <div class="card-header-custom">
 
@@ -439,9 +561,9 @@
 
   </div>
 
-  <!-- SAVE -->
+  <!-- SAVE (desktop only) -->
 
-  <div class="save-section">
+  <div class="save-section desktop-only">
 
     <button class="discard-btn">
       Discard
