@@ -506,7 +506,7 @@
   .hero-banner,
   .stats-grid,
   .employee-directory-card {
-    display: none;
+    display: none !important;
   }
 
   /* Show mobile dashboard */

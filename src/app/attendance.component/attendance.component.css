@@ -1071,6 +1071,33 @@
     gap: 8px;
   }
 
+  .mob-list-toggle {
+    cursor: pointer;
+    justify-content: space-between;
+    background: #f8fafc;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin: 8px 0;
+    user-select: none;
+  }
+
+  .mob-list-toggle:active {
+    background: #eff6ff;
+  }
+
+  .mob-list-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mob-toggle-icon {
+    font-size: 14px;
+    color: #64748b;
+    transition: 0.2s;
+  }
+
   .mob-list-count{
     margin-left: auto;
     background: #dcfce7;

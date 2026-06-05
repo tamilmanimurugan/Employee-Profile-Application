@@ -19,6 +19,8 @@ export class AttendanceComponent implements OnInit {
   showAttendanceModal = false;
   attendanceMarked    = false;
   loading             = true;
+  showActiveList      = false;
+  showLeaveList       = false;
 
   employees:   Employee[] = [];
   activeList:  Employee[] = [];

@@ -62,67 +62,77 @@
       </div>
     </div>
 
-    <!-- Active Employees List -->
-    <h4 class="mob-list-title">
-      <i class="bi bi-check-circle-fill" style="color:#10b981"></i>
-      Active Employees
-      <span class="mob-list-count">{{ activeCount }}</span>
+    <!-- Active Employees List (accordion) -->
+    <h4 class="mob-list-title mob-list-toggle" (click)="showActiveList = !showActiveList">
+      <div class="mob-list-left">
+        <i class="bi bi-check-circle-fill" style="color:#10b981"></i>
+        Active Employees
+        <span class="mob-list-count">{{ activeCount }}</span>
+      </div>
+      <i class="bi mob-toggle-icon" [class.bi-chevron-down]="!showActiveList" [class.bi-chevron-up]="showActiveList"></i>
     </h4>
 
-    @if (loading) {
-      <div class="mob-att-loading">
-        @for (i of [1,2,3]; track i) {
-          <div class="mob-att-skeleton"></div>
-        }
-      </div>
-    } @else {
-      <div class="mob-emp-list">
-        @for (emp of activeList; track emp.id) {
-          <div class="mob-emp-item">
-            <img [src]="emp.image" class="mob-emp-img" />
-            <div class="mob-emp-info">
-              <strong>{{ emp.name }}</strong>
-              <span>{{ emp.role }}</span>
-              <span class="mob-emp-dept">{{ emp.department }}</span>
-            </div>
-            <div class="mob-emp-right">
-              <span class="mob-emp-status active">Active</span>
-              <div class="mob-emp-perf-bar">
-                <div class="mob-emp-perf-fill" [style.width.%]="emp.performance"></div>
+    @if (showActiveList) {
+      @if (loading) {
+        <div class="mob-att-loading">
+          @for (i of [1,2,3]; track i) {
+            <div class="mob-att-skeleton"></div>
+          }
+        </div>
+      } @else {
+        <div class="mob-emp-list">
+          @for (emp of activeList; track emp.id) {
+            <div class="mob-emp-item">
+              <img [src]="emp.image" class="mob-emp-img" />
+              <div class="mob-emp-info">
+                <strong>{{ emp.name }}</strong>
+                <span>{{ emp.role }}</span>
+                <span class="mob-emp-dept">{{ emp.department }}</span>
               </div>
-              <small>{{ emp.performance }}%</small>
+              <div class="mob-emp-right">
+                <span class="mob-emp-status active">Active</span>
+                <div class="mob-emp-perf-bar">
+                  <div class="mob-emp-perf-fill" [style.width.%]="emp.performance"></div>
+                </div>
+                <small>{{ emp.performance }}%</small>
+              </div>
             </div>
-          </div>
-        }
-      </div>
+          }
+        </div>
+      }
     }
 
-    <!-- On Leave Employees List -->
+    <!-- On Leave Employees List (accordion) -->
     @if (leaveCount > 0) {
-      <h4 class="mob-list-title" style="margin-top:18px">
-        <i class="bi bi-calendar2-check-fill" style="color:#f59e0b"></i>
-        On Leave
-        <span class="mob-list-count leave">{{ leaveCount }}</span>
+      <h4 class="mob-list-title mob-list-toggle" style="margin-top:12px" (click)="showLeaveList = !showLeaveList">
+        <div class="mob-list-left">
+          <i class="bi bi-calendar2-check-fill" style="color:#f59e0b"></i>
+          On Leave
+          <span class="mob-list-count leave">{{ leaveCount }}</span>
+        </div>
+        <i class="bi mob-toggle-icon" [class.bi-chevron-down]="!showLeaveList" [class.bi-chevron-up]="showLeaveList"></i>
       </h4>
-      <div class="mob-emp-list">
-        @for (emp of leaveList; track emp.id) {
-          <div class="mob-emp-item">
-            <img [src]="emp.image" class="mob-emp-img" />
-            <div class="mob-emp-info">
-              <strong>{{ emp.name }}</strong>
-              <span>{{ emp.role }}</span>
-              <span class="mob-emp-dept">{{ emp.department }}</span>
-            </div>
-            <div class="mob-emp-right">
-              <span class="mob-emp-status leave">On Leave</span>
-              <div class="mob-emp-perf-bar">
-                <div class="mob-emp-perf-fill leave" [style.width.%]="emp.performance"></div>
+      @if (showLeaveList) {
+        <div class="mob-emp-list">
+          @for (emp of leaveList; track emp.id) {
+            <div class="mob-emp-item">
+              <img [src]="emp.image" class="mob-emp-img" />
+              <div class="mob-emp-info">
+                <strong>{{ emp.name }}</strong>
+                <span>{{ emp.role }}</span>
+                <span class="mob-emp-dept">{{ emp.department }}</span>
               </div>
-              <small>{{ emp.performance }}%</small>
+              <div class="mob-emp-right">
+                <span class="mob-emp-status leave">On Leave</span>
+                <div class="mob-emp-perf-bar">
+                  <div class="mob-emp-perf-fill leave" [style.width.%]="emp.performance"></div>
+                </div>
+                <small>{{ emp.performance }}%</small>
+              </div>
             </div>
-          </div>
-        }
-      </div>
+          }
+        </div>
+      }
     }
 
   </div>

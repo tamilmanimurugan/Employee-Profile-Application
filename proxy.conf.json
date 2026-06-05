@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://employeeprofileapi-aag2cvghejagbhgp.southindia-01.azurewebsites.net",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
