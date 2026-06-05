@@ -2,6 +2,8 @@
 node_modules/
 dist/
 .angular/
+playwright-report/
+test-results/
 
 # .NET build output
 api/**/bin/

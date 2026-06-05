@@ -48,9 +48,18 @@ export class EmployeesComponent implements OnInit {
   // ── Load employees — API first, localStorage only if API is truly offline ──
 
   private loadEmployees(): void {
-    this.loading  = true;
     this.apiError = '';
 
+    // Show cached data immediately — no skeleton wait
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      this.employees = JSON.parse(raw);
+      this.loading   = false;
+    } else {
+      this.loading   = true;
+    }
+
+    // Fetch fresh from API in background
     this.api.getAll().subscribe({
       next: (data) => {
         this.employees = data;
@@ -58,17 +67,18 @@ export class EmployeesComponent implements OnInit {
         this.loading   = false;
         this.statusMsg = '';
 
-        // Clear stale localStorage so old data doesn't cause confusion
-        localStorage.removeItem(LS_KEY);
+        if (data.length > 0) {
+          localStorage.setItem(LS_KEY, JSON.stringify(data));
+        }
       },
       error: (err) => {
         this.apiOnline = false;
         this.loading   = false;
         this.statusMsg = 'API offline — using local data';
 
-        // Only fall back to localStorage when API is genuinely unreachable
-        const raw = localStorage.getItem(LS_KEY);
-        this.employees = raw ? JSON.parse(raw) : [];
+        if (!raw) {
+          this.employees = [];
+        }
         const max = Math.max(0, ...this.employees.map(e => e.id ?? 0));
         this.nextLocalId = max + 1;
 
@@ -109,12 +119,14 @@ export class EmployeesComponent implements OnInit {
       this.saveError = '';
       this.api.create(this.employee).subscribe({
         next: (created) => {
-          this.employees = [...this.employees, created]
-            .sort((a, b) => a.name.localeCompare(b.name));
           this.saving = false;
           this.closeModal();
+          const emp = { ...this.employee, id: created?.id ?? this.nextLocalId++ };
+          this.employees = [...this.employees, emp]
+            .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+          localStorage.setItem(LS_KEY, JSON.stringify(this.employees));
         },
-        error: (err) => { this.saveError = err.message; this.saving = false; }
+        error: (err) => { this.saveError = err.message || 'Save failed'; this.saving = false; }
       });
     } else {
       // Offline fallback — save to localStorage only

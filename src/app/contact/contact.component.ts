@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -18,6 +19,10 @@ export class ContactComponent {
   isSending = false;
 
   showToast = false;
+
+  constructor(private location: Location) {}
+
+  goBack(): void { this.location.back(); }
 
   formData = {
 

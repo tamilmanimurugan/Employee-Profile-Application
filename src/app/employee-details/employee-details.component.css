@@ -2,9 +2,14 @@
 
 .employee-details-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
   padding: 30px 20px;
   overflow-y: auto;
+}
+
+/* Dark mode */
+:host-context(body.dark-theme) .employee-details-page {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
 }
 
 /* TOP BAR */
@@ -21,8 +26,10 @@
 .page-title {
   font-size: 30px;
   font-weight: 800;
-  color: #f1f5f9;
+  color: #111827;
 }
+
+:host-context(body.dark-theme) .page-title { color: #f1f5f9; }
 
 /* CLOSE BUTTON */
 
@@ -51,13 +58,19 @@
 .employee-card {
   max-width: 1000px;
   margin: auto;
-  background: rgba(30, 41, 59, 0.95);
+  background: white;
   backdrop-filter: blur(14px);
   border-radius: 30px;
   padding: 30px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(99, 102, 241, 0.15);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.15);
   animation: fadeUp .7s ease;
+}
+
+:host-context(body.dark-theme) .employee-card {
+  background: rgba(30, 41, 59, 0.95);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(99, 102, 241, 0.15);
 }
 
 @keyframes fadeUp {
@@ -100,15 +113,18 @@
 .profile-section h1 {
   font-size: 30px;
   font-weight: 800;
-  color: #f1f5f9;
+  color: #111827;
   margin-bottom: 8px;
 }
 
 .role-text {
   font-size: 17px;
-  color: #94a3b8;
+  color: #6b7280;
   margin-bottom: 18px;
 }
+
+:host-context(body.dark-theme) .profile-section h1 { color: #f1f5f9; }
+:host-context(body.dark-theme) .role-text            { color: #94a3b8; }
 
 /* STATUS */
 
@@ -135,26 +151,26 @@
 /* DETAIL CARDS */
 
 .detail-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: #f8faff;
   border-radius: 22px;
   padding: 18px;
   display: flex;
   align-items: center;
   gap: 16px;
-  border: 1px solid rgba(99, 102, 241, 0.15);
+  border: 1px solid #e2e8f0;
   transition: .3s;
   height: 100%;
 }
 
 .detail-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+  border-color: rgba(37, 99, 235, 0.3);
 }
 
 .detail-card h6 {
   font-size: 13px;
-  color: #94a3b8;
+  color: #6b7280;
   margin-bottom: 5px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -163,9 +179,13 @@
 .detail-card p {
   font-size: 16px;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #111827;
   margin: 0;
 }
+
+:host-context(body.dark-theme) .detail-card       { background: rgba(15,23,42,0.6) !important; border-color: rgba(99,102,241,0.15) !important; }
+:host-context(body.dark-theme) .detail-card h6    { color: #94a3b8 !important; }
+:host-context(body.dark-theme) .detail-card p     { color: #f1f5f9 !important; }
 
 /* ICON BOXES */
 
@@ -189,10 +209,10 @@
 /* PERFORMANCE */
 
 .performance-card {
-  background: rgba(15, 23, 42, 0.6);
+  background: #f8faff;
   border-radius: 24px;
   padding: 25px;
-  border: 1px solid rgba(99, 102, 241, 0.15);
+  border: 1px solid #e2e8f0;
 }
 
 .performance-top {
@@ -205,21 +225,26 @@
 .performance-top h5 {
   margin: 0;
   font-weight: 800;
-  color: #f1f5f9;
+  color: #111827;
 }
 
 .performance-top span {
   font-size: 18px;
   font-weight: 800;
-  color: #818cf8;
+  color: #2563eb;
 }
 
 .performance-label {
   margin-top: 10px;
   font-size: 14px;
   font-weight: 600;
-  color: #94a3b8;
+  color: #6b7280;
 }
+
+:host-context(body.dark-theme) .performance-card     { background: rgba(15,23,42,0.6) !important; border-color: rgba(99,102,241,0.15) !important; }
+:host-context(body.dark-theme) .performance-top h5   { color: #f1f5f9 !important; }
+:host-context(body.dark-theme) .performance-top span { color: #818cf8 !important; }
+:host-context(body.dark-theme) .performance-label    { color: #94a3b8 !important; }
 
 /* PROGRESS */
 
