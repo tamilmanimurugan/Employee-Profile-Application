@@ -26,8 +26,8 @@ public class AppDbContext : DbContext
             entity.Property(e => e.Image).HasMaxLength(1000);
 
             // Map to the exact column names already in your SQL Server table
-            entity.Property(e => e.CreatedAtUtc).HasColumnName("CreatedAtUtc");
-            entity.Property(e => e.UpdatedAtUtc).HasColumnName("UpdatedAtUtc");
+            entity.Property(e => e.CreatedAtUtc).HasColumnName("CreatedAt");
+            entity.Property(e => e.UpdatedAtUtc).HasColumnName("UpdatedAt");
         });
     }
 }
