@@ -29,3 +29,10 @@ api/**/*.err.log
 Thumbs.db
 .vscode/
 *.user
+
+# TypeScript compiler output
+out-tsc/
+
+# Playwright test artifacts
+playwright-report/
+test-results/
