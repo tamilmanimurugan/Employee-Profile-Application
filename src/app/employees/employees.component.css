@@ -682,6 +682,50 @@
   gap: 15px;
 }
 
+/* Desktop SQL banner */
+.api-banner {
+  background: rgba(16,185,129,0.15);
+  border: 1px solid #10b981;
+  color: #10b981;
+  padding: 10px 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.api-banner.offline {
+  background: rgba(245,158,11,0.15);
+  border-color: #f59e0b;
+  color: #b45309;
+}
+
+/* Mobile status chip — hidden on desktop */
+.mobile-status-row { display: none; }
+
+/* Mobile export in table-top — hidden on desktop */
+.mobile-export       { display: none !important; }
+.mobile-export-group { display: none; }
+
+/* Stop spinning on export button icons */
+.btn-export i { animation: none !important; }
+
+/* Mobile compact chip */
+.api-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.api-status-chip.online { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.4); color: #059669; }
+.api-status-chip.offline { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.4); color: #b45309; }
+.api-status-chip i { animation: none !important; }
+
 @media (max-width: 768px) {
   .employees-page {
     padding: 12px;
@@ -750,24 +794,63 @@
     font-size: 14px;
   }
 
-  /* Export group: 3 buttons in one row */
-  .export-btn-group {
+  /* Mobile only: hide desktop elements */
+  .header-export     { display: none !important; }
+  .api-banner        { display: none !important; }
+
+  /* Mobile only: show these */
+  .mobile-status-row {
     display: flex;
-    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .mobile-status-row .api-status-chip {
     width: 100%;
-  }
-
-  .btn-export {
-    flex: 1;
     justify-content: center;
-    padding: 7px 4px !important;
-    font-size: 11px !important;
-    gap: 4px !important;
-    border-radius: 10px !important;
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 13px;
   }
 
-  .btn-export i {
-    font-size: 13px !important;
+  /* Mobile export group */
+  .mobile-export-group {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .mob-exp-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .mob-exp-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mob-exp-icon i {
+    font-size: 13px;
+    color: white;
+    animation: none !important;
+    line-height: 1;
+  }
+
+  .mob-exp-btn span {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
   }
 
   .btn-add-primary {
@@ -776,27 +859,28 @@
   }
 
   .stat-card {
-    padding: 14px 16px;
-    border-radius: 18px;
+    padding: 10px 14px;
+    border-radius: 16px;
   }
 
   .stat-card h6 {
-    font-size: 12px;
-    margin-bottom: 4px;
+    font-size: 11px;
+    margin-bottom: 2px;
   }
 
   .stat-card h2 {
-    font-size: 26px;
+    font-size: 22px;
+    margin: 0;
   }
 
   .stat-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 14px;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
   }
 
   .stat-icon i {
-    font-size: 20px;
+    font-size: 17px;
   }
 
   .employee-table-card {
@@ -977,11 +1061,12 @@
   }
 
   .table-top h3 {
-    font-size: 16px;
+    font-size: 14px;
+    white-space: nowrap;
   }
 
   .table-top p {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .add-employee-btn {

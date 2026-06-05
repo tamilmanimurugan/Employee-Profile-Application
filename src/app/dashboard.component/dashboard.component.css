@@ -607,8 +607,8 @@
     flex-shrink: 0;
   }
 
-  .mob-stat.blue  .mob-stat-icon { background: linear-gradient(135deg,#2563eb,#3b82f6); }
-  .mob-stat.green .mob-stat-icon { background: linear-gradient(135deg,#059669,#10b981); }
+  .mob-stat.blue   .mob-stat-icon { background: linear-gradient(135deg,#2563eb,#3b82f6); }
+  .mob-stat.green  .mob-stat-icon { background: linear-gradient(135deg,#059669,#10b981); }
   .mob-stat.orange .mob-stat-icon { background: linear-gradient(135deg,#ea580c,#f97316); }
   .mob-stat.purple .mob-stat-icon { background: linear-gradient(135deg,#7c3aed,#8b5cf6); }
 
