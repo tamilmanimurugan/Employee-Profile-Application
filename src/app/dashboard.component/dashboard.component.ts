@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
     this.totalCount       = data.length;
     this.activeCount      = data.filter(e => e.status === 'Active').length;
     this.onLeaveCount     = data.filter(e => e.status === 'On Leave').length;
-    this.departmentsCount = new Set(data.map(e => e.department)).size;
+    this.departmentsCount = new Set(data.map(e => e.department?.trim()).filter(Boolean)).size;
   }
 
   openModal()  { this.showModal = true;  this.submitted = false; }
