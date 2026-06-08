@@ -121,6 +121,7 @@ export class SettingsComponent implements OnInit {
 
   logout(): void {
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 
