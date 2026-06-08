@@ -33,15 +33,14 @@ stages:
     - script: npm install
       displayName: 'npm install'
 
-    - script: |
-        echo "=== Versions ==="
-        node --version
-        npm --version
-        ./node_modules/.bin/ng version || true
-        echo "=== Building ==="
-        ./node_modules/.bin/ng build --configuration production 2>&1
-        echo "=== Exit code: $? ==="
+    - script: ./node_modules/.bin/ng build --configuration production
       displayName: 'ng build (production)'
+
+    - script: |
+        echo "=== dist output ==="
+        find dist -maxdepth 3 | sort
+      displayName: 'Show dist structure'
+      condition: succeeded()
 
     - task: PublishBuildArtifacts@1
       displayName: 'Upload Web artifact'
