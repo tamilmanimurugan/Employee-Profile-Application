@@ -57,6 +57,48 @@
   flex-wrap: wrap;
 }
 
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  background: white;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.filter-select:focus {
+  border-color: #2563eb;
+}
+
+.filter-clear-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #f87171;
+  background: #fff5f5;
+  color: #ef4444;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.filter-clear-btn:hover {
+  background: #fee2e2;
+}
+
 .search-box {
   background: white;
   padding: 12px 18px;
