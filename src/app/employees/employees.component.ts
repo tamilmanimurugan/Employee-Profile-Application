@@ -127,7 +127,7 @@ export class EmployeesComponent implements OnInit {
 
     // Optimistic add — close modal and show employee instantly
     const tempId  = -(Date.now());
-    const tempEmp: Employee = { ...payload, id: tempId };
+    const tempEmp: Employee = { ...payload, id: tempId, createdAtUtc: new Date().toISOString() };
     this.employees = [...this.employees, tempEmp]
       .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
     this.closeModal();
