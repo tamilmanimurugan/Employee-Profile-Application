@@ -6,6 +6,19 @@ import { test, expect } from '@playwright/test';
 test.describe('Add Employee Form Validation', () => {
 
   test.beforeEach(async ({ page }) => {
+    // Mock POST /api/employees so tests never write real data to the database
+    await page.route('**/api/employees', async (route) => {
+      if (route.request().method() === 'POST') {
+        await route.fulfill({
+          status: 201,
+          contentType: 'application/json',
+          body: JSON.stringify({ id: 99999, name: 'Test', email: 'test@test.com', status: 'Active' })
+        });
+      } else {
+        await route.continue();
+      }
+    });
+
     // Inject auth token before Angular loads so the route guard passes
     await page.addInitScript(() => {
       localStorage.setItem('token', 'test-token');
