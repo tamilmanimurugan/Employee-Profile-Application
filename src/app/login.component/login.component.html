@@ -108,13 +108,25 @@
 
       </div>
 
+      <!-- ERROR MESSAGE -->
+      @if (errorMessage) {
+        <div class="error-message">
+          <i class="bi bi-exclamation-circle-fill"></i>
+          {{ errorMessage }}
+        </div>
+      }
+
       <!-- LOGIN BUTTON -->
 
-      <button class="login-btn" (click)="login()">
+      <button class="login-btn" (click)="login()" [disabled]="isLoading">
 
-        <i class="bi bi-box-arrow-in-right"></i>
-
-        Login
+        @if (isLoading) {
+          <span class="spinner"></span>
+          Signing in...
+        } @else {
+          <i class="bi bi-box-arrow-in-right"></i>
+          Login
+        }
 
       </button>
 
