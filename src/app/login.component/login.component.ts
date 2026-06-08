@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
       } else {
         this.isLoading = false;
         this.errorMessage = 'Invalid email or password. Please try again.';
+        this.cdr.detectChanges();
       }
     }, 800);
   }

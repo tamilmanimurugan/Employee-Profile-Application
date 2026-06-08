@@ -55,44 +55,51 @@ test.describe('Authentication', () => {
 
   // ── Invalid login ─────────────────────────────────────────────────────────
 
-  test('wrong password shows alert dialog', async ({ page }) => {
+  test('wrong password shows inline error message', async ({ page }) => {
     await page.goto('/login');
-    page.once('dialog', async dialog => {
-      expect(dialog.message()).toContain('Invalid');
-      await dialog.dismiss();
-    });
     await page.locator('input[placeholder="Enter email"]').fill('admin@gmail.com');
     await page.locator('input[placeholder="Enter password"]').fill('wrongpassword');
     await page.locator('button.login-btn').click();
+    await expect(page.locator('.error-message')).toBeVisible({ timeout: 5000 });
   });
 
-  test('wrong email shows alert dialog', async ({ page }) => {
+  test('wrong email shows inline error message', async ({ page }) => {
     await page.goto('/login');
-    page.once('dialog', async dialog => {
-      expect(dialog.message()).toContain('Invalid');
-      await dialog.dismiss();
-    });
     await page.locator('input[placeholder="Enter email"]').fill('wrong@gmail.com');
     await page.locator('input[placeholder="Enter password"]').fill('1234');
     await page.locator('button.login-btn').click();
+    await expect(page.locator('.error-message')).toBeVisible({ timeout: 5000 });
   });
 
-  test('empty fields shows alert dialog', async ({ page }) => {
+  test('empty fields shows inline error message', async ({ page }) => {
     await page.goto('/login');
-    page.once('dialog', async dialog => {
-      await dialog.dismiss();
-    });
     await page.locator('button.login-btn').click();
+    await expect(page.locator('.error-message')).toBeVisible({ timeout: 5000 });
   });
 
   test('wrong credentials stay on login page', async ({ page }) => {
     await page.goto('/login');
-    page.once('dialog', async dialog => { await dialog.dismiss(); });
     await page.locator('input[placeholder="Enter email"]').fill('bad@test.com');
     await page.locator('input[placeholder="Enter password"]').fill('bad');
     await page.locator('button.login-btn').click();
-    await page.waitForTimeout(500);
+    await expect(page.locator('.error-message')).toBeVisible({ timeout: 5000 });
     await expect(page).toHaveURL(/login/);
+  });
+
+  test('login button shows loading state while authenticating', async ({ page }) => {
+    await page.goto('/login');
+    await page.locator('input[placeholder="Enter email"]').fill('admin@gmail.com');
+    await page.locator('input[placeholder="Enter password"]').fill('1234');
+    await page.locator('button.login-btn').click();
+    await expect(page.locator('button.login-btn')).toContainText('Signing in', { timeout: 2000 });
+  });
+
+  // ── Authenticated user redirect ───────────────────────────────────────────
+
+  test('authenticated user visiting /login is redirected to /dashboard', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('token', 'employee-token'));
+    await page.goto('/login');
+    await expect(page).toHaveURL(/dashboard/, { timeout: 10000 });
   });
 
   // ── Auth guard redirect ───────────────────────────────────────────────────
