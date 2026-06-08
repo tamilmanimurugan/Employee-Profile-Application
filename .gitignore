@@ -8,6 +8,8 @@ test-results/
 # .NET build output
 api/**/bin/
 api/**/obj/
+obj/
+bin/
 
 # TypeScript compiled output
 out-tsc/
@@ -29,3 +31,10 @@ api/**/*.err.log
 Thumbs.db
 .vscode/
 *.user
+
+# TypeScript compiler output
+out-tsc/
+
+# Playwright test artifacts
+playwright-report/
+test-results/

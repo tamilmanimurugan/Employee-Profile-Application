@@ -1,0 +1,252 @@
+<div class="auth-root">
+
+  <!-- LEFT PANEL -->
+  <div class="auth-left">
+    <div class="left-inner">
+
+      <!-- LOGO -->
+      <div class="logo-wrap">
+        <div class="logo-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="12" fill="white" fill-opacity="0.15"/>
+            <circle cx="20" cy="14" r="6" fill="white"/>
+            <path d="M6 36 Q6 26 20 26 Q34 26 34 36" fill="white"/>
+            <circle cx="33" cy="8" r="4" fill="#22d3ee"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-name">EmployeeApp</div>
+          <div class="logo-tag">Workforce Studio</div>
+        </div>
+      </div>
+
+      <!-- HERO TEXT -->
+      <div class="hero-text">
+        <h1>Manage your<br/><span class="hero-accent">workforce</span><br/>effortlessly.</h1>
+        <p>A professional platform for HR teams to track, manage and grow their talent with real-time insights.</p>
+      </div>
+
+      <!-- FEATURE PILLS -->
+      <div class="feature-list">
+        <div class="feat">
+          <div class="feat-icon">&#128202;</div>
+          <span>Live analytics dashboard</span>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">&#128274;</div>
+          <span>Role-based secure access</span>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">&#128196;</div>
+          <span>Export to Excel, CSV & PDF</span>
+        </div>
+        <div class="feat">
+          <div class="feat-icon">&#127970;</div>
+          <span>Department-wise management</span>
+        </div>
+      </div>
+
+      <!-- DECORATIVE BLOBS -->
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="auth-right">
+    <div class="form-card">
+
+      <!-- TAB SWITCHER -->
+      <div class="tab-bar">
+        <button class="tab-btn" [class.tab-active]="mode === 'login'" (click)="switchMode('login')">
+          Sign In
+        </button>
+        <button class="tab-btn" [class.tab-active]="mode === 'register'" (click)="switchMode('register')">
+          Create Account
+        </button>
+        <div class="tab-indicator" [class.slide-right]="mode === 'register'"></div>
+      </div>
+
+      <!-- ===== LOGIN FORM ===== -->
+      <div class="form-body" *ngIf="mode === 'login'">
+        <div class="form-intro">
+          <h2>Welcome back</h2>
+          <p>Sign in to your EmployeeApp account</p>
+        </div>
+
+        <div class="field-group">
+          <label>Email Address <span class="req">*</span></label>
+          <div class="input-wrap" [class.inp-error]="loginErrors.email">
+            <span class="inp-icon">&#64;</span>
+            <input type="email" [(ngModel)]="login.email" placeholder="you@company.com"
+              (input)="loginErrors.email = ''" />
+          </div>
+          <span class="err-msg" *ngIf="loginErrors.email">{{ loginErrors.email }}</span>
+        </div>
+
+        <div class="field-group">
+          <label>Password <span class="req">*</span></label>
+          <div class="input-wrap" [class.inp-error]="loginErrors.password">
+            <span class="inp-icon">&#128274;</span>
+            <input [type]="showLoginPass ? 'text' : 'password'" [(ngModel)]="login.password"
+              placeholder="Enter your password" (input)="loginErrors.password = ''" />
+            <button class="eye-btn" (click)="showLoginPass = !showLoginPass" type="button">
+              {{ showLoginPass ? '&#128065;' : '&#128064;' }}
+            </button>
+          </div>
+          <span class="err-msg" *ngIf="loginErrors.password">{{ loginErrors.password }}</span>
+        </div>
+
+        <div class="login-opts">
+          <label class="remember-me">
+            <input type="checkbox" [(ngModel)]="login.remember" />
+            <span class="cb-mark"></span>
+            Remember me
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button class="submit-btn" (click)="submitLogin()" [disabled]="submitting">
+          <span *ngIf="!submitting">Sign In &#8594;</span>
+          <span *ngIf="submitting" class="btn-loading">
+            <span class="btn-spinner"></span> Signing in...
+          </span>
+        </button>
+
+        <div class="divider"><span>or continue with</span></div>
+
+        <div class="social-row">
+          <button class="social-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Google
+          </button>
+          <button class="social-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </button>
+        </div>
+
+        <p class="switch-text">
+          Don't have an account?
+          <button class="switch-link" (click)="switchMode('register')">Create one free</button>
+        </p>
+      </div>
+
+      <!-- ===== REGISTER FORM ===== -->
+      <div class="form-body" *ngIf="mode === 'register'">
+        <div class="form-intro">
+          <h2>Create account</h2>
+          <p>Join EmployeeApp and start managing your team</p>
+        </div>
+
+        <div class="field-group">
+          <label>Full Name <span class="req">*</span></label>
+          <div class="input-wrap" [class.inp-error]="registerErrors.name">
+            <span class="inp-icon">&#128100;</span>
+            <input type="text" [(ngModel)]="register.name" placeholder="e.g. Priya Sharma"
+              (input)="registerErrors.name = ''" />
+          </div>
+          <span class="err-msg" *ngIf="registerErrors.name">{{ registerErrors.name }}</span>
+        </div>
+
+        <div class="field-group">
+          <label>Email Address <span class="req">*</span></label>
+          <div class="input-wrap" [class.inp-error]="registerErrors.email">
+            <span class="inp-icon">&#64;</span>
+            <input type="email" [(ngModel)]="register.email" placeholder="you@company.com"
+              (input)="registerErrors.email = ''" />
+          </div>
+          <span class="err-msg" *ngIf="registerErrors.email">{{ registerErrors.email }}</span>
+        </div>
+
+        <div class="two-col">
+          <div class="field-group">
+            <label>Password <span class="req">*</span></label>
+            <div class="input-wrap" [class.inp-error]="registerErrors.password">
+              <span class="inp-icon">&#128274;</span>
+              <input [type]="showRegPass ? 'text' : 'password'" [(ngModel)]="register.password"
+                placeholder="Min 8 chars" (input)="registerErrors.password = ''" />
+              <button class="eye-btn" (click)="showRegPass = !showRegPass" type="button">
+                {{ showRegPass ? '&#128065;' : '&#128064;' }}
+              </button>
+            </div>
+            <span class="err-msg" *ngIf="registerErrors.password">{{ registerErrors.password }}</span>
+
+            <!-- STRENGTH METER -->
+            <div class="strength-wrap" *ngIf="register.password">
+              <div class="strength-bars">
+                <div class="sbar" [style.background]="getStrength().level >= 1 ? getStrength().color : '#e2e8f0'"></div>
+                <div class="sbar" [style.background]="getStrength().level >= 2 ? getStrength().color : '#e2e8f0'"></div>
+                <div class="sbar" [style.background]="getStrength().level >= 3 ? getStrength().color : '#e2e8f0'"></div>
+                <div class="sbar" [style.background]="getStrength().level >= 4 ? getStrength().color : '#e2e8f0'"></div>
+              </div>
+              <span class="strength-label" [style.color]="getStrength().color">{{ getStrength().label }}</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Confirm Password <span class="req">*</span></label>
+            <div class="input-wrap" [class.inp-error]="registerErrors.confirm">
+              <span class="inp-icon">&#128275;</span>
+              <input [type]="showConfirmPass ? 'text' : 'password'" [(ngModel)]="register.confirm"
+                placeholder="Repeat password" (input)="registerErrors.confirm = ''" />
+              <button class="eye-btn" (click)="showConfirmPass = !showConfirmPass" type="button">
+                {{ showConfirmPass ? '&#128065;' : '&#128064;' }}
+              </button>
+            </div>
+            <span class="err-msg" *ngIf="registerErrors.confirm">{{ registerErrors.confirm }}</span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Your Role</label>
+          <div class="role-grid">
+            <label class="role-opt" [class.role-selected]="register.role === 'Admin'">
+              <input type="radio" [(ngModel)]="register.role" value="Admin" name="role" />
+              <span class="role-icon">&#128084;</span>
+              <span>Admin</span>
+            </label>
+            <label class="role-opt" [class.role-selected]="register.role === 'HR'">
+              <input type="radio" [(ngModel)]="register.role" value="HR" name="role" />
+              <span class="role-icon">&#128101;</span>
+              <span>HR Manager</span>
+            </label>
+            <label class="role-opt" [class.role-selected]="register.role === 'Viewer'">
+              <input type="radio" [(ngModel)]="register.role" value="Viewer" name="role" />
+              <span class="role-icon">&#128065;</span>
+              <span>Viewer</span>
+            </label>
+          </div>
+        </div>
+
+        <label class="terms-check" [class.terms-err]="registerErrors.agree">
+          <input type="checkbox" [(ngModel)]="register.agree" (change)="registerErrors.agree = ''" />
+          <span class="cb-mark"></span>
+          <span>I agree to the <a href="#" class="terms-link">Terms of Service</a> and <a href="#" class="terms-link">Privacy Policy</a></span>
+        </label>
+        <span class="err-msg" *ngIf="registerErrors.agree">{{ registerErrors.agree }}</span>
+
+        <button class="submit-btn" (click)="submitRegister()" [disabled]="submitting">
+          <span *ngIf="!submitting">Create Account &#8594;</span>
+          <span *ngIf="submitting" class="btn-loading">
+            <span class="btn-spinner"></span> Creating account...
+          </span>
+        </button>
+
+        <p class="switch-text">
+          Already have an account?
+          <button class="switch-link" (click)="switchMode('login')">Sign in</button>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="auth-toast" *ngIf="toast" [class.toast-error]="toastType === 'error'">
+    <span>{{ toastType === 'success' ? '&#10003;' : '&#10005;' }}</span>
+    {{ toast }}
+  </div>
+
+</div>

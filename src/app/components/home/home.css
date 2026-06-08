@@ -1,0 +1,21 @@
+.home-wrap { display: flex; flex-direction: column; gap: 32px; }
+
+.section-header h2 { margin: 0; font-size: 1.5rem; font-weight: 800; color: #1d4ed8; }
+.section-header p  { margin: 4px 0 0; color: #475569; }
+
+.loading { color: #64748b; font-size: 1rem; padding: 2rem 0; }
+
+.card-icon { font-size: 1.8rem; margin-bottom: 10px; }
+
+.recent-section h3 { margin: 0 0 16px; font-size: 1.1rem; font-weight: 700; color: #1d4ed8; }
+
+.emp-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.emp-table th { text-align: left; padding: 10px 14px; background: #eff6ff; color: #1d4ed8; font-weight: 700; border-radius: 8px; }
+.emp-table td { padding: 12px 14px; border-bottom: 1px solid #e2e8f0; color: #0f172a; }
+.emp-table tr:hover td { background: #f8fafc; }
+
+.badge { padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; background: #e2e8f0; color: #475569; }
+.badge.active { background: #dcfce7; color: #16a34a; }
+
+.view-all { display: inline-block; margin-top: 16px; color: #2563eb; font-weight: 600; text-decoration: none; font-size: 0.9rem; }
+.view-all:hover { text-decoration: underline; }
