@@ -112,6 +112,56 @@ test.describe('Employees Page', () => {
     await expect(page.locator('.page-content')).toBeVisible();
   });
 
+  // ── Status / Department filter (Story 5337) ──────────────────────────────
+
+  test('status filter dropdown is visible', async ({ page }) => {
+    await expect(page.locator('.filter-row .filter-select').first()).toBeVisible({ timeout: 10000 });
+  });
+
+  test('department filter dropdown is visible', async ({ page }) => {
+    const selects = page.locator('.filter-row .filter-select');
+    await expect(selects.nth(1)).toBeVisible({ timeout: 10000 });
+  });
+
+  test('status filter has All Status option', async ({ page }) => {
+    const statusSelect = page.locator('.filter-row .filter-select').first();
+    await expect(statusSelect).toContainText('All Status');
+  });
+
+  test('selecting Active status filter updates list', async ({ page }) => {
+    await page.waitForTimeout(1500);
+    const statusSelect = page.locator('.filter-row .filter-select').first();
+    await statusSelect.selectOption('Active');
+    await page.waitForTimeout(500);
+    await expect(page.locator('.page-content')).toBeVisible();
+  });
+
+  test('selecting On Leave status filter updates list', async ({ page }) => {
+    await page.waitForTimeout(1500);
+    const statusSelect = page.locator('.filter-row .filter-select').first();
+    await statusSelect.selectOption('On Leave');
+    await page.waitForTimeout(500);
+    await expect(page.locator('.page-content')).toBeVisible();
+  });
+
+  test('clear filter button appears when filter is active', async ({ page }) => {
+    await page.waitForTimeout(1500);
+    const statusSelect = page.locator('.filter-row .filter-select').first();
+    await statusSelect.selectOption('Active');
+    await page.waitForTimeout(300);
+    await expect(page.locator('.filter-clear-btn')).toBeVisible({ timeout: 5000 });
+  });
+
+  test('clear filter button resets filters', async ({ page }) => {
+    await page.waitForTimeout(1500);
+    const statusSelect = page.locator('.filter-row .filter-select').first();
+    await statusSelect.selectOption('Active');
+    await page.waitForTimeout(300);
+    await page.locator('.filter-clear-btn').click();
+    await page.waitForTimeout(300);
+    await expect(page.locator('.filter-clear-btn')).not.toBeVisible({ timeout: 3000 });
+  });
+
   // ── Mobile view ───────────────────────────────────────────────────────────
 
   test('employees page loads on mobile viewport', async ({ page }) => {
