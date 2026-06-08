@@ -36,7 +36,7 @@ stages:
         npm --version
       displayName: 'Verify Node version'
 
-    - script: npm install
+    - script: npm install --legacy-peer-deps
       displayName: 'npm install'
 
     - script: node ./node_modules/@angular/cli/bin/ng.js build --configuration production
