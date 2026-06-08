@@ -249,6 +249,10 @@
 
       <div class="modal-body-custom">
 
+        @if (saveError) {
+          <div style="color:#ef4444;font-size:13px;font-weight:600;padding:10px 12px;background:rgba(239,68,68,0.1);border-radius:8px;border:1px solid rgba(239,68,68,0.3);margin-bottom:14px;">⚠ {{ saveError }}</div>
+        }
+
         <div class="mb-3">
           <label>Name <span class="required-star">*</span></label>
           <input
@@ -281,20 +285,16 @@
           <input
             type="email"
             class="form-control"
-            [class.input-error]="emailRequired || emailInvalid"
+            [class.input-error]="emailRequired || emailInvalid || emailDuplicate"
             [(ngModel)]="employee.email"
-            list="emailList"
             name="email"
             data-testid="employee-email" />
-          <datalist id="emailList">
-            <option value="tamil@gmail.com"></option><option value="rahul@gmail.com"></option>
-            <option value="priya@gmail.com"></option><option value="karthika@gmail.com"></option>
-            <option value="sneha@gmail.com"></option><option value="arun@gmail.com"></option>
-          </datalist>
           @if (emailRequired) {
             <small class="error-text" data-testid="email-required-error">Email is required</small>
           } @else if (emailInvalid) {
             <small class="error-text" data-testid="email-format-error">Please enter a valid email address (e.g. name&#64;example.com)</small>
+          } @else if (emailDuplicate) {
+            <small class="error-text" data-testid="email-duplicate-error">This email is already registered</small>
           }
         </div>
 
@@ -367,13 +367,10 @@
         }
 
         <div class="modal-footer-custom">
-          @if (saveError) {
-            <div style="width:100%;color:#ef4444;font-size:13px;font-weight:600;padding:8px 12px;background:rgba(239,68,68,0.1);border-radius:8px;border:1px solid rgba(239,68,68,0.3);margin-bottom:8px;">⚠ {{ saveError }}</div>
-          }
-          <button class="cancel-btn" (click)="closeModal()" [disabled]="saving">Cancel</button>
+          <button class="cancel-btn" (click)="closeModal()">Cancel</button>
           @if (!editMode) {
-            <button class="save-btn" (click)="addEmployee()" [disabled]="saving" data-testid="submit-add-employee">
-              {{ saving ? 'Saving...' : 'Add Employee' }}
+            <button class="save-btn" (click)="addEmployee()" data-testid="submit-add-employee">
+              Add Employee
             </button>
           }
           @if (editMode) {

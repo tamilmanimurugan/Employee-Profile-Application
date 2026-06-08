@@ -103,6 +103,7 @@ export class EmployeesComponent implements OnInit {
     this.showModal = false;
     this.submitted = false;
     this.saveError = '';
+    this.saving    = false;
   }
 
   // ── Add ────────────────────────────────────────────────────────────────────
@@ -115,39 +116,41 @@ export class EmployeesComponent implements OnInit {
       this.employee.image = this.pickUniqueAvatar();
     }
 
-    // API requires non-empty strings — use defaults for optional fields
+    // API requires non-empty strings and valid int for performance
     const payload = {
       ...this.employee,
-      department: this.employee.department?.trim() || 'N/A',
-      role:       this.employee.role?.trim()       || 'N/A',
-      experience: this.employee.experience?.trim() || 'N/A',
+      department:  this.employee.department?.trim()  || 'N/A',
+      role:        this.employee.role?.trim()        || 'N/A',
+      experience:  this.employee.experience?.trim()  || 'N/A',
+      performance: this.employee.performance ?? 0,
     };
 
+    // Optimistic add — close modal and show employee instantly
+    const tempId  = -(Date.now());
+    const tempEmp: Employee = { ...payload, id: tempId };
+    this.employees = [...this.employees, tempEmp]
+      .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+    this.closeModal();
+
     if (this.apiOnline) {
-      this.saving    = true;
-      this.saveError = '';
       this.api.create(payload).pipe(timeout(15000)).subscribe({
         next: (created) => {
-          this.saving = false;
-          this.closeModal();
-          const emp = { ...this.employee, id: created?.id ?? this.nextLocalId++ };
-          this.employees = [...this.employees, emp]
-            .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+          // Replace temp entry with real server data (includes createdAtUtc, real id)
+          this.employees = this.employees.map(e => e.id === tempId ? { ...e, ...created } : e);
           localStorage.setItem(LS_KEY, JSON.stringify(this.employees));
         },
-        error: (err) => {
-          this.saving = false;
-          this.saveError = err?.name === 'TimeoutError'
-            ? 'Server timeout — please try again'
-            : (err.message || 'Save failed. Please try again.');
+        error: () => {
+          // Revert optimistic add silently — employee was not saved
+          this.employees = this.employees.filter(e => e.id !== tempId);
+          localStorage.setItem(LS_KEY, JSON.stringify(this.employees));
         }
       });
     } else {
-      // Offline fallback — save to localStorage only
-      const newEmp: Employee = { ...this.employee, id: this.nextLocalId++ };
-      this.employees = [...this.employees, newEmp];
+      // Offline fallback — replace temp id with a real local id
+      this.employees = this.employees.map(e =>
+        e.id === tempId ? { ...e, id: this.nextLocalId++ } : e
+      );
       this.saveLocalStorage();
-      this.closeModal();
     }
   }
 
@@ -179,7 +182,14 @@ export class EmployeesComponent implements OnInit {
     this.closeModal();
 
     if (this.apiOnline) {
-      this.api.update(this.currentId, this.employee).subscribe({
+      const updatePayload = {
+        ...this.employee,
+        department:  this.employee.department?.trim()  || 'N/A',
+        role:        this.employee.role?.trim()        || 'N/A',
+        experience:  this.employee.experience?.trim()  || 'N/A',
+        performance: this.employee.performance ?? 0,
+      };
+      this.api.update(this.currentId, updatePayload).subscribe({
         next: (updated) => {
           // Replace optimistic entry with full server response (includes updatedAtUtc etc.)
           this.employees = this.employees.map(e => e.id === updated.id ? updated : e);
@@ -242,11 +252,16 @@ export class EmployeesComponent implements OnInit {
     );
   }
 
-  get nameRequired():  boolean { return this.submitted && !this.employee.name?.trim(); }
-  get nameTooLong():   boolean { return this.submitted && !!this.employee.name?.trim() && this.employee.name.trim().length > NAME_MAX_LENGTH; }
-  get nameCharCount(): number  { return this.employee.name?.length ?? 0; }
-  get emailRequired(): boolean { return this.submitted && !this.employee.email?.trim(); }
-  get emailInvalid():  boolean { return this.submitted && !!this.employee.email?.trim() && !EMAIL_REGEX.test(this.employee.email.trim()); }
+  get nameRequired():    boolean { return this.submitted && !this.employee.name?.trim(); }
+  get nameTooLong():     boolean { return this.submitted && !!this.employee.name?.trim() && this.employee.name.trim().length > NAME_MAX_LENGTH; }
+  get nameCharCount():   number  { return this.employee.name?.length ?? 0; }
+  get emailRequired():   boolean { return this.submitted && !this.employee.email?.trim(); }
+  get emailInvalid():    boolean { return this.submitted && !!this.employee.email?.trim() && !EMAIL_REGEX.test(this.employee.email.trim()); }
+  get emailDuplicate():  boolean {
+    if (!this.submitted || !this.employee.email?.trim()) return false;
+    const lower = this.employee.email.trim().toLowerCase();
+    return this.employees.some(e => e.email.toLowerCase() === lower && e.id !== this.currentId);
+  }
 
   get activeEmployeesCount():  number { return this.employees.filter(e => e.status === 'Active').length; }
   get onLeaveEmployeesCount(): number { return this.employees.filter(e => e.status === 'On Leave').length; }
@@ -297,7 +312,8 @@ export class EmployeesComponent implements OnInit {
       this.employee.name?.trim()                         &&
       this.employee.name.trim().length <= 100            &&
       this.employee.email?.trim()                        &&
-      EMAIL_REGEX.test(this.employee.email.trim())
+      EMAIL_REGEX.test(this.employee.email.trim())       &&
+      !this.emailDuplicate
     );
   }
 

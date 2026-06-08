@@ -66,7 +66,13 @@ export class EmployeeApiService {
   }
 
   private handleError(error: any): Observable<never> {
-    const msg = error?.error?.message ?? error?.message ?? 'Unknown API error';
+    const apiErrors = error?.error?.errors;
+    let msg: string;
+    if (apiErrors && typeof apiErrors === 'object') {
+      msg = Object.values(apiErrors).flat().join('; ');
+    } else {
+      msg = error?.error?.message ?? error?.error?.title ?? error?.message ?? 'Unknown API error';
+    }
     console.error('[EmployeeApiService]', msg, error);
     return throwError(() => new Error(msg));
   }
