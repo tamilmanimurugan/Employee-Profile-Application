@@ -112,27 +112,37 @@ test.describe('Contact Page', () => {
   });
 
   test('clicking Send Message shows success toast', async ({ page }) => {
-    await page.locator('input[placeholder="Enter your name"]').click();
-    await page.keyboard.type('Test User');
-    await page.locator('input[placeholder="Enter your email"]').click();
-    await page.keyboard.type('test@example.com');
-    await page.locator('input[placeholder="Enter subject"]').click();
-    await page.keyboard.type('Test Subject');
-    await page.locator('textarea[placeholder="Write your message..."]').click();
-    await page.keyboard.type('Test message content.');
+    await page.evaluate(() => {
+      const setInput = (sel: string, val: string) => {
+        const el = document.querySelector(sel) as HTMLInputElement | HTMLTextAreaElement;
+        if (!el) return;
+        const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+        (Object.getOwnPropertyDescriptor(proto, 'value')!.set as Function).call(el, val);
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+      };
+      setInput('input[placeholder="Enter your name"]', 'Test User');
+      setInput('input[placeholder="Enter your email"]', 'test@example.com');
+      setInput('input[placeholder="Enter subject"]', 'Test Subject');
+      setInput('textarea[placeholder="Write your message..."]', 'Test message content.');
+    });
     await page.locator('button.send-btn').click();
     await expect(page.locator('.success-toast')).toBeVisible({ timeout: 10000 });
   });
 
   test('success toast contains Message Sent Successfully', async ({ page }) => {
-    await page.locator('input[placeholder="Enter your name"]').click();
-    await page.keyboard.type('Tamil');
-    await page.locator('input[placeholder="Enter your email"]').click();
-    await page.keyboard.type('tamil@test.com');
-    await page.locator('input[placeholder="Enter subject"]').click();
-    await page.keyboard.type('Hi');
-    await page.locator('textarea[placeholder="Write your message..."]').click();
-    await page.keyboard.type('Test.');
+    await page.evaluate(() => {
+      const setInput = (sel: string, val: string) => {
+        const el = document.querySelector(sel) as HTMLInputElement | HTMLTextAreaElement;
+        if (!el) return;
+        const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+        (Object.getOwnPropertyDescriptor(proto, 'value')!.set as Function).call(el, val);
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+      };
+      setInput('input[placeholder="Enter your name"]', 'Tamil');
+      setInput('input[placeholder="Enter your email"]', 'tamil@test.com');
+      setInput('input[placeholder="Enter subject"]', 'Hi');
+      setInput('textarea[placeholder="Write your message..."]', 'Test.');
+    });
     await page.locator('button.send-btn').click();
     await expect(page.locator('.success-toast')).toContainText('Message Sent Successfully', { timeout: 10000 });
   });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -20,7 +20,7 @@ export class ContactComponent {
 
   showToast = false;
 
-  constructor(private location: Location) {}
+  constructor(private location: Location, private cdr: ChangeDetectorRef) {}
 
   goBack(): void { this.location.back(); }
 
@@ -64,9 +64,13 @@ export class ContactComponent {
 
       };
 
+      this.cdr.detectChanges();
+
       setTimeout(() => {
 
         this.showToast = false;
+
+        this.cdr.detectChanges();
 
       }, 3000);
 
