@@ -19,6 +19,7 @@ import { SettingsComponent } from './settings.component/settings.component';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 
 import { ContactComponent } from './contact/contact.component';
+import { ReportsComponent } from './reports/reports.component';
 export const routes: Routes = [
 
   {
@@ -72,6 +73,11 @@ export const routes: Routes = [
       {
         path: 'employee-details',
         component: EmployeeDetailsComponent
+      },
+
+      {
+        path: 'reports',
+        component: ReportsComponent
       }
 
     ]
