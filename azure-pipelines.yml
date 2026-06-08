@@ -33,7 +33,14 @@ stages:
     - script: npm install
       displayName: 'npm install'
 
-    - script: npm run build -- --verbose 2>&1 || (cat /tmp/ng-build.log 2>/dev/null; exit 1)
+    - script: |
+        echo "=== Versions ==="
+        node --version
+        npm --version
+        ./node_modules/.bin/ng version || true
+        echo "=== Building ==="
+        ./node_modules/.bin/ng build --configuration production 2>&1
+        echo "=== Exit code: $? ==="
       displayName: 'ng build (production)'
 
     - task: PublishBuildArtifacts@1
