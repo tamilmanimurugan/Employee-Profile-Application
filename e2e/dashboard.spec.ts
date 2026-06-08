@@ -3,7 +3,14 @@ import { test, expect } from '@playwright/test';
 test.describe('Dashboard', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => localStorage.setItem('token', 'employee-token'));
+    await page.addInitScript(() => {
+      localStorage.setItem('token', 'employee-token');
+      // Pre-seed employees so dashboard skips loading skeleton and shows stats immediately
+      localStorage.setItem('employees', JSON.stringify([
+        { id: 1, name: 'Test User', email: 'test@test.com', department: 'Engineering', role: 'Developer', experience: '3 years', status: 'Active', performance: 80, image: '' },
+        { id: 2, name: 'Test User 2', email: 'test2@test.com', department: 'HR', role: 'Manager', experience: '5 years', status: 'On Leave', performance: 70, image: '' }
+      ]));
+    });
     await page.goto('/dashboard');
     await expect(page).toHaveURL(/dashboard/, { timeout: 10000 });
   });
