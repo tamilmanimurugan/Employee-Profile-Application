@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { EmployeeApiService } from '../services/employee-api.service';
+import { DashboardService } from '../services/dashboard.service';
 import { Employee } from '../services/employee.model';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -24,51 +25,53 @@ export class DashboardComponent implements OnInit {
   showModal  = false;
   submitted  = false;
   loading    = false;
+  apiError   = '';
   today      = new Date();
 
   employees: Employee[] = [];
 
-  // Real counts from API
-  totalCount      = 0;
-  activeCount     = 0;
-  onLeaveCount    = 0;
+  totalCount       = 0;
+  activeCount      = 0;
+  onLeaveCount     = 0;
   departmentsCount = 0;
 
   constructor(
     private router: Router,
-    private api: EmployeeApiService
+    private dashboardService: DashboardService
   ) {}
 
   ngOnInit(): void {
-    // Show cached data immediately — no skeleton wait
     const raw = localStorage.getItem('employees');
     if (raw) {
-      const local: Employee[] = JSON.parse(raw);
-      this.setData(local);
-      this.loading = false;
+      this.applyData(JSON.parse(raw));
     } else {
       this.loading = true;
     }
 
-    // Fetch fresh from API in background
-    this.api.getAll().subscribe({
-      next: (data) => {
-        this.setData(data);
-        this.loading = false;
-        if (data.length > 0) {
-          localStorage.setItem('employees', JSON.stringify(data));
+    this.dashboardService.getSummary().subscribe({
+      next: (summary) => {
+        this.totalCount       = summary.totalCount;
+        this.activeCount      = summary.activeCount;
+        this.onLeaveCount     = summary.onLeaveCount;
+        this.departmentsCount = summary.departmentsCount;
+        this.employees        = summary.employees;
+        this.loading          = false;
+        this.apiError         = '';
+        if (summary.employees.length > 0) {
+          localStorage.setItem('employees', JSON.stringify(summary.employees));
         }
       },
       error: () => {
+        this.loading  = false;
+        this.apiError = 'Could not load latest data — showing cached results.';
         if (!raw) {
-          this.setData([]);
+          this.applyData([]);
         }
-        this.loading = false;
       }
     });
   }
 
-  private setData(data: Employee[]): void {
+  private applyData(data: Employee[]): void {
     this.employees        = data;
     this.totalCount       = data.length;
     this.activeCount      = data.filter(e => e.status === 'Active').length;

@@ -34,25 +34,47 @@
 
       </div>
 
+      <!-- ERROR BANNER -->
+      @if (apiError) {
+        <div class="api-error-banner">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          {{ apiError }}
+        </div>
+      }
+
+      <!-- STATS SKELETON (loading) -->
+      @if (loading) {
+        <div class="stats-grid">
+          @for (i of [1,2,3,4]; track i) {
+            <div class="stat-card skeleton-card">
+              <div class="skeleton-line wide"></div>
+              <div class="skeleton-line narrow"></div>
+            </div>
+          }
+        </div>
+      }
+
       <!-- STATS (desktop/tablet) -->
-      <div class="stats-grid">
-        <div class="stat-card blue">
-          <div><span>Total Employees</span><h2>{{ totalCount }}</h2></div>
-          <i class="bi bi-people-fill"></i>
+      @if (!loading) {
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div><span>Total Employees</span><h2>{{ totalCount }}</h2></div>
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <div class="stat-card green">
+            <div><span>Active Employees</span><h2>{{ activeCount }}</h2></div>
+            <i class="bi bi-person-check-fill"></i>
+          </div>
+          <div class="stat-card orange">
+            <div><span>On Leave</span><h2>{{ onLeaveCount }}</h2></div>
+            <i class="bi bi-calendar-event-fill"></i>
+          </div>
+          <div class="stat-card purple">
+            <div><span>Departments</span><h2>{{ departmentsCount }}</h2></div>
+            <i class="bi bi-building-fill"></i>
+          </div>
         </div>
-        <div class="stat-card green">
-          <div><span>Active Employees</span><h2>{{ activeCount }}</h2></div>
-          <i class="bi bi-person-check-fill"></i>
-        </div>
-        <div class="stat-card orange">
-          <div><span>On Leave</span><h2>{{ onLeaveCount }}</h2></div>
-          <i class="bi bi-calendar-event-fill"></i>
-        </div>
-        <div class="stat-card purple">
-          <div><span>Departments</span><h2>{{ departmentsCount }}</h2></div>
-          <i class="bi bi-building-fill"></i>
-        </div>
-      </div>
+      }
 
       <!-- MOBILE DASHBOARD (shown only on mobile) -->
       <div class="mobile-dashboard">
