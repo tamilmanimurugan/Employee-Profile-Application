@@ -1,0 +1,116 @@
+<div class="reports-page">
+
+  <div class="reports-header">
+    <div>
+      <h1><i class="bi bi-bar-chart-line-fill"></i> Reports</h1>
+      <p>Select a month and year to view and download the employee portal report.</p>
+    </div>
+  </div>
+
+  <!-- FILTER CARD -->
+  <div class="filter-card">
+    <h4>Filter Report</h4>
+
+    <div class="filter-controls">
+
+      <div class="filter-group">
+        <label>Month <span class="req">*</span></label>
+        <select [(ngModel)]="selectedMonth" class="filter-select" [class.invalid]="submitted && !selectedMonth">
+          <option value="">Select month</option>
+          @for (m of months; track m.value) {
+            <option [value]="m.value">{{ m.label }}</option>
+          }
+        </select>
+        @if (submitted && !selectedMonth) {
+          <span class="error-hint">Month is required</span>
+        }
+      </div>
+
+      <div class="filter-group">
+        <label>Year <span class="req">*</span></label>
+        <select [(ngModel)]="selectedYear" class="filter-select" [class.invalid]="submitted && !selectedYear">
+          <option value="">Select year</option>
+          @for (y of years; track y) {
+            <option [value]="y">{{ y }}</option>
+          }
+        </select>
+        @if (submitted && !selectedYear) {
+          <span class="error-hint">Year is required</span>
+        }
+      </div>
+
+      <div class="filter-actions">
+        <button class="btn-search" (click)="search()">
+          <i class="bi bi-search"></i> View Report
+        </button>
+        <button
+          class="btn-download"
+          (click)="download()"
+          [disabled]="!filtersSelected || filteredReports.length === 0"
+          [title]="!filtersSelected ? 'Select month and year first' : filteredReports.length === 0 ? 'No data to download' : 'Download PDF'">
+          <i class="bi bi-download"></i> Download PDF
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  @if (hasSearched) {
+
+    @if (!filtersSelected) {
+      <div class="validation-banner">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        Please select both month and year to view the report.
+      </div>
+    }
+
+    @else if (filteredReports.length === 0) {
+      <div class="no-data-card">
+        <i class="bi bi-inbox"></i>
+        <h4>No records found</h4>
+        <p>No stories were resolved in the selected period.</p>
+      </div>
+    }
+
+    @else {
+      <div class="report-table-card">
+        <div class="table-header-row">
+          <h4>{{ filteredReports.length }} record(s) found</h4>
+        </div>
+        <div class="table-responsive">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>Story #</th>
+                <th>Story Name</th>
+                <th>Project</th>
+                <th>Sub-Project</th>
+                <th>Assigned User</th>
+                <th>Resolved Date</th>
+                <th>Team Lead</th>
+                <th>Project Manager</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of filteredReports; track row.storyNumber) {
+                <tr>
+                  <td><span class="story-num">{{ row.storyNumber }}</span></td>
+                  <td class="story-name">{{ row.storyName }}</td>
+                  <td>{{ row.project }}</td>
+                  <td><span class="sub-proj">{{ row.subProject }}</span></td>
+                  <td>{{ row.assignedUser }}</td>
+                  <td>{{ row.resolvedDate | date:'dd MMM yyyy' }}</td>
+                  <td>{{ row.teamLead }}</td>
+                  <td>{{ row.projectManager }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+  }
+
+</div>
