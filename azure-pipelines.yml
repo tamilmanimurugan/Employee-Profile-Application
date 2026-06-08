@@ -38,11 +38,11 @@ stages:
         workingDir: '.'
 
     - task: Npm@1
-      displayName: 'ng build --configuration production'
+      displayName: 'ng build (production)'
       inputs:
         command: 'custom'
         workingDir: '.'
-        customCommand: 'run build -- --configuration production'
+        customCommand: 'run build'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Upload Web artifact'
