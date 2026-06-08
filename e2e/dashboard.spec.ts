@@ -23,19 +23,19 @@ test.describe('Dashboard', () => {
   // ── Stat cards ────────────────────────────────────────────────────────────
 
   test('Total Employees stat card is visible', async ({ page }) => {
-    await expect(page.locator('.stats-grid').getByText('Total Employees')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.stat-card.blue').getByText('Total Employees')).toBeVisible({ timeout: 15000 });
   });
 
   test('Active Today stat card is visible', async ({ page }) => {
-    await expect(page.locator('.stats-grid').getByText('Active Employees')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.stat-card.green').getByText('Active Employees')).toBeVisible({ timeout: 15000 });
   });
 
   test('On Leave stat card is visible', async ({ page }) => {
-    await expect(page.locator('.stats-grid').getByText('On Leave')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.stat-card.orange').getByText('On Leave')).toBeVisible({ timeout: 15000 });
   });
 
   test('Departments stat card is visible', async ({ page }) => {
-    await expect(page.locator('.stats-grid').getByText('Departments')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.stat-card.purple').getByText('Departments')).toBeVisible({ timeout: 15000 });
   });
 
   // ── Employee table ────────────────────────────────────────────────────────

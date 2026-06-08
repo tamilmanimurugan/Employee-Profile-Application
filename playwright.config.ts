@@ -8,7 +8,7 @@ const baseURL =
 
 export default defineConfig({
   testDir: '.',
-  testMatch: ['tests/e2e/**/*.spec.ts', 'e2e/**/*.spec.ts'],
+  testMatch: ['e2e/**/*.spec.ts'],
   timeout: 60_000,
   expect: {
     timeout: 10_000,
