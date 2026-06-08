@@ -216,8 +216,19 @@ export class EmployeesComponent implements OnInit {
 
     if (this.apiOnline) {
       this.api.delete(emp.id!).subscribe({
-        next:  () => { this.employees = this.employees.filter(e => e.id !== emp.id); },
-        error: (err) => alert('Delete failed: ' + err.message)
+        next: () => {
+          this.employees = this.employees.filter(e => e.id !== emp.id);
+          this.saveLocalStorage();
+        },
+        error: (err) => {
+          if (err.status === 404) {
+            // Already deleted from DB — remove from local list silently
+            this.employees = this.employees.filter(e => e.id !== emp.id);
+            this.saveLocalStorage();
+          } else {
+            alert('Delete failed: ' + err.message);
+          }
+        }
       });
     } else {
       this.employees = this.employees.filter(e => e.id !== emp.id);
