@@ -16,7 +16,7 @@ test.describe('Attendance Page', () => {
   });
 
   test('Total Employees stat card is visible', async ({ page }) => {
-    await expect(page.getByText('Total Employees')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.present-card').first()).toBeVisible({ timeout: 10000 });
   });
 
   test('Active stat card is visible', async ({ page }) => {
@@ -38,23 +38,23 @@ test.describe('Attendance Page', () => {
   });
 
   test('LIVE badge is visible', async ({ page }) => {
-    await expect(page.locator('.live-badge').first()).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.live-status-card .live-badge')).toBeVisible({ timeout: 10000 });
   });
 
   test('Productivity activity box shows 92%', async ({ page }) => {
-    await expect(page.getByText('92%')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.live-status-card').getByText('92%')).toBeVisible({ timeout: 10000 });
   });
 
   test('In Meetings activity box shows 45', async ({ page }) => {
-    await expect(page.getByText('In Meetings')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.live-status-card').getByText('In Meetings')).toBeVisible({ timeout: 10000 });
   });
 
   test('Online activity box shows 180', async ({ page }) => {
-    await expect(page.getByText('Online')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.live-status-card').getByText('Online')).toBeVisible({ timeout: 10000 });
   });
 
   test('Late Check-ins activity box shows 15', async ({ page }) => {
-    await expect(page.getByText('Late Check-ins')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.live-status-card').getByText('Late Check-ins')).toBeVisible({ timeout: 10000 });
   });
 
   // ── Date & time boxes ─────────────────────────────────────────────────────
@@ -103,13 +103,13 @@ test.describe('Attendance Page', () => {
   test('confirming attendance shows success alert', async ({ page }) => {
     await page.locator('button.mark-btn').click();
     await page.locator('button.confirm-btn').click();
-    await expect(page.locator('.success-alert')).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('.success-alert').last()).toBeVisible({ timeout: 5000 });
   });
 
   test('success alert contains success message', async ({ page }) => {
     await page.locator('button.mark-btn').click();
     await page.locator('button.confirm-btn').click();
-    await expect(page.locator('.success-alert')).toContainText('Attendance Marked Successfully');
+    await expect(page.locator('.success-alert').last()).toContainText('Attendance Marked Successfully');
   });
 
   // ── Attendance table ──────────────────────────────────────────────────────

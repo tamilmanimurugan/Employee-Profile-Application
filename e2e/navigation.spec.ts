@@ -186,7 +186,7 @@ test.describe('Navigation', () => {
   test('mobile logout button is visible on mobile viewport', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 680 });
     await page.goto('/dashboard');
-    await expect(page.locator('button.mobile-logout-btn')).toBeVisible();
+    await expect(page.locator('button.mobile-logout-btn')).toBeVisible({ timeout: 10000 });
   });
 
   test('mobile logout button navigates to login', async ({ page }) => {

@@ -147,10 +147,14 @@ test.describe('Authentication', () => {
   });
 
   test('after logout, navigating to /dashboard redirects to login', async ({ page }) => {
-    await page.addInitScript(() => localStorage.setItem('token', 'employee-token'));
+    // Set token via evaluate (not addInitScript) so it doesn't re-run on subsequent navigations
+    await page.goto('/login');
+    await page.evaluate(() => localStorage.setItem('token', 'employee-token'));
     await page.goto('/dashboard');
+    await expect(page).toHaveURL(/dashboard/, { timeout: 10000 });
     await page.locator('button.logout-btn').click();
     await expect(page).toHaveURL(/login/, { timeout: 10000 });
+    // Token is now cleared — navigating to /dashboard should redirect back to login
     await page.goto('/dashboard');
     await expect(page).toHaveURL(/login/, { timeout: 10000 });
   });

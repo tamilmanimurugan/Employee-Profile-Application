@@ -126,24 +126,13 @@
       </div>
 
       <div class="top-right">
-         <!-- <button class="theme-btn" (click)="toggleTheme()">
-
-      <i class="bi" [class.bi-moon-fill]="!darkMode" [class.bi-sun-fill]="darkMode">
-      </i>
-
-    </button> -->
-
-        <!-- <div class="search-box">
-          <i class="bi bi-search"></i>
-
-          <input type="text" placeholder="Search employees...">
-        </div> -->
-
         <button class="notification-btn">
           <i class="bi bi-bell-fill"></i>
         </button>
         <img [src]="profileImage" class="profile-img">
-
+        <button class="mobile-logout-btn" (click)="logout()">
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
       </div>
 
     </header>

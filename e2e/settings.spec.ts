@@ -16,11 +16,15 @@ test.describe('Settings Page', () => {
   });
 
   test('Profile Information card is visible', async ({ page }) => {
-    await expect(page.getByText('Profile Information').first()).toBeVisible({ timeout: 10000 });
+    const el = page.locator('h3').filter({ hasText: 'Profile Information' });
+    await el.scrollIntoViewIfNeeded();
+    await expect(el).toBeVisible({ timeout: 10000 });
   });
 
   test('Security Settings card is visible', async ({ page }) => {
-    await expect(page.getByText('Security Settings').first()).toBeVisible({ timeout: 10000 });
+    const el = page.locator('h3').filter({ hasText: 'Security Settings' });
+    await el.scrollIntoViewIfNeeded();
+    await expect(el).toBeVisible({ timeout: 10000 });
   });
 
   test('Notification Preferences card is visible', async ({ page }) => {
@@ -30,7 +34,9 @@ test.describe('Settings Page', () => {
   // ── Profile form ──────────────────────────────────────────────────────────
 
   test('Full Name input is visible', async ({ page }) => {
-    await expect(page.locator('input[placeholder*="ull"]').first()).toBeVisible({ timeout: 10000 });
+    const el = page.locator('.settings-card.desktop-only input[type="text"]').first();
+    await el.scrollIntoViewIfNeeded();
+    await expect(el).toBeVisible({ timeout: 10000 });
   });
 
   test('Email Address input is visible', async ({ page }) => {
@@ -68,11 +74,11 @@ test.describe('Settings Page', () => {
   // ── Dark Mode toggle ──────────────────────────────────────────────────────
 
   test('Dark Mode toggle is visible', async ({ page }) => {
-    await expect(page.getByText('Dark Mode')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.settings-card.desktop-only h5').filter({ hasText: 'Dark Mode' })).toBeVisible({ timeout: 10000 });
   });
 
   test('Dark Mode checkbox toggle works', async ({ page }) => {
-    const checkbox = page.locator('.form-check-input').first();
+    const checkbox = page.locator('.settings-card.desktop-only').first().locator('.form-check-input');
     const initialState = await checkbox.isChecked();
     await checkbox.click();
     const newState = await checkbox.isChecked();
@@ -80,7 +86,7 @@ test.describe('Settings Page', () => {
   });
 
   test('toggling Dark Mode adds dark-theme to body', async ({ page }) => {
-    const checkbox = page.locator('.form-check-input').first();
+    const checkbox = page.locator('.settings-card.desktop-only').first().locator('.form-check-input');
     const isChecked = await checkbox.isChecked();
     if (!isChecked) {
       await checkbox.click();
@@ -94,15 +100,15 @@ test.describe('Settings Page', () => {
   // ── Notifications ─────────────────────────────────────────────────────────
 
   test('Email Notifications toggle is visible', async ({ page }) => {
-    await expect(page.getByText('Email Notifications')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('h5').filter({ hasText: 'Email Notifications' })).toBeVisible({ timeout: 10000 });
   });
 
   test('Attendance Alerts toggle is visible', async ({ page }) => {
-    await expect(page.getByText('Attendance Alerts')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('h5').filter({ hasText: 'Attendance Alerts' })).toBeVisible({ timeout: 10000 });
   });
 
   test('Push Notifications toggle is visible', async ({ page }) => {
-    await expect(page.getByText('Push Notifications')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('h5').filter({ hasText: 'Push Notifications' })).toBeVisible({ timeout: 10000 });
   });
 
   // ── Save button ───────────────────────────────────────────────────────────
@@ -127,7 +133,7 @@ test.describe('Settings Page', () => {
   });
 
   test('Notifications quick card is visible', async ({ page }) => {
-    await expect(page.getByText('Notifications').first()).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.quick-card span').filter({ hasText: /^Notifications$/ })).toBeVisible({ timeout: 10000 });
   });
 
   test('Cloud Backup quick card is visible', async ({ page }) => {

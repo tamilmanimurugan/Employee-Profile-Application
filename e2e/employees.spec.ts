@@ -18,7 +18,7 @@ test.describe('Employees Page', () => {
   // ── Page load ─────────────────────────────────────────────────────────────
 
   test('employees page loads without errors', async ({ page }) => {
-    await expect(page.locator('.employees-page, .page-content')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.employees-page')).toBeVisible({ timeout: 10000 });
   });
 
   test('Employees heading or title is visible', async ({ page }) => {
@@ -66,11 +66,7 @@ test.describe('Employees Page', () => {
   // ── Employee list / table ─────────────────────────────────────────────────
 
   test('employee table or card list is visible', async ({ page }) => {
-    const table = page.locator('table');
-    const cards = page.locator('.employee-card, .emp-card, .employee-row');
-    const hasTable = await table.isVisible().catch(() => false);
-    const hasCards = await cards.count().then(c => c > 0).catch(() => false);
-    expect(hasTable || hasCards).toBe(true);
+    await expect(page.locator('.employee-table-card')).toBeVisible({ timeout: 10000 });
   });
 
   test('at least one employee row is visible after load', async ({ page }) => {

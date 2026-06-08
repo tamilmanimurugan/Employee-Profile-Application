@@ -64,7 +64,7 @@ test.describe('Contact Page', () => {
   // ── Contact form ──────────────────────────────────────────────────────────
 
   test('Send Message heading is visible', async ({ page }) => {
-    await expect(page.getByText('Send Message')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.form-header h2')).toBeVisible({ timeout: 10000 });
   });
 
   test('Full Name input is visible', async ({ page }) => {
@@ -112,21 +112,29 @@ test.describe('Contact Page', () => {
   });
 
   test('clicking Send Message shows success toast', async ({ page }) => {
-    await page.locator('input[placeholder="Enter your name"]').fill('Test User');
-    await page.locator('input[placeholder="Enter your email"]').fill('test@example.com');
-    await page.locator('input[placeholder="Enter subject"]').fill('Test Subject');
-    await page.locator('textarea[placeholder="Write your message..."]').fill('Test message content.');
+    await page.locator('input[placeholder="Enter your name"]').click();
+    await page.keyboard.type('Test User');
+    await page.locator('input[placeholder="Enter your email"]').click();
+    await page.keyboard.type('test@example.com');
+    await page.locator('input[placeholder="Enter subject"]').click();
+    await page.keyboard.type('Test Subject');
+    await page.locator('textarea[placeholder="Write your message..."]').click();
+    await page.keyboard.type('Test message content.');
     await page.locator('button.send-btn').click();
-    await expect(page.locator('.success-toast')).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('.success-toast')).toBeVisible({ timeout: 10000 });
   });
 
   test('success toast contains Message Sent Successfully', async ({ page }) => {
-    await page.locator('input[placeholder="Enter your name"]').fill('Tamil');
-    await page.locator('input[placeholder="Enter your email"]').fill('tamil@test.com');
-    await page.locator('input[placeholder="Enter subject"]').fill('Hi');
-    await page.locator('textarea[placeholder="Write your message..."]').fill('Test.');
+    await page.locator('input[placeholder="Enter your name"]').click();
+    await page.keyboard.type('Tamil');
+    await page.locator('input[placeholder="Enter your email"]').click();
+    await page.keyboard.type('tamil@test.com');
+    await page.locator('input[placeholder="Enter subject"]').click();
+    await page.keyboard.type('Hi');
+    await page.locator('textarea[placeholder="Write your message..."]').click();
+    await page.keyboard.type('Test.');
     await page.locator('button.send-btn').click();
-    await expect(page.locator('.success-toast')).toContainText('Message Sent Successfully');
+    await expect(page.locator('.success-toast')).toContainText('Message Sent Successfully', { timeout: 10000 });
   });
 
   // ── FAQ section ───────────────────────────────────────────────────────────

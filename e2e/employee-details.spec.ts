@@ -49,7 +49,7 @@ test.describe('Employee Details Page', () => {
   // ── Profile section ───────────────────────────────────────────────────────
 
   test('employee name is displayed', async ({ page }) => {
-    await expect(page.getByText('Tamilmani')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.profile-section h1').filter({ hasText: 'Tamilmani' })).toBeVisible({ timeout: 10000 });
   });
 
   test('employee role is displayed', async ({ page }) => {
@@ -182,7 +182,7 @@ test.describe('Employee Details Page', () => {
     await page.setViewportSize({ width: 320, height: 680 });
     await page.goto('/employee-details');
     await page.waitForTimeout(500);
-    await expect(page.getByText('Tamilmani')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.profile-section h1').filter({ hasText: 'Tamilmani' })).toBeVisible({ timeout: 10000 });
   });
 
   test('back button works on mobile', async ({ page }) => {
