@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { timeout } from 'rxjs/operators';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -117,7 +118,7 @@ export class EmployeesComponent implements OnInit {
     if (this.apiOnline) {
       this.saving    = true;
       this.saveError = '';
-      this.api.create(this.employee).subscribe({
+      this.api.create(this.employee).pipe(timeout(15000)).subscribe({
         next: (created) => {
           this.saving = false;
           this.closeModal();
@@ -126,7 +127,12 @@ export class EmployeesComponent implements OnInit {
             .sort((a, b) => (a.name || '').localeCompare(b.name || ''));
           localStorage.setItem(LS_KEY, JSON.stringify(this.employees));
         },
-        error: (err) => { this.saveError = err.message || 'Save failed'; this.saving = false; }
+        error: (err) => {
+          this.saving = false;
+          this.saveError = err?.name === 'TimeoutError'
+            ? 'Server timeout — please try again'
+            : (err.message || 'Save failed. Please try again.');
+        }
       });
     } else {
       // Offline fallback — save to localStorage only

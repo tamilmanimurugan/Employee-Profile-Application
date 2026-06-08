@@ -366,11 +366,10 @@
           </div>
         }
 
-        @if (saveError) {
-          <div style="color:#ef4444;font-size:14px;font-weight:600;margin:10px 0;padding:10px 14px;background:rgba(239,68,68,0.1);border-radius:8px;border:1px solid rgba(239,68,68,0.3);">⚠ {{ saveError }}</div>
-        }
-
         <div class="modal-footer-custom">
+          @if (saveError) {
+            <div style="width:100%;color:#ef4444;font-size:13px;font-weight:600;padding:8px 12px;background:rgba(239,68,68,0.1);border-radius:8px;border:1px solid rgba(239,68,68,0.3);margin-bottom:8px;">⚠ {{ saveError }}</div>
+          }
           <button class="cancel-btn" (click)="closeModal()" [disabled]="saving">Cancel</button>
           @if (!editMode) {
             <button class="save-btn" (click)="addEmployee()" [disabled]="saving" data-testid="submit-add-employee">
@@ -383,6 +382,7 @@
             </button>
           }
         </div>
+
 
       </div>
     </div>
