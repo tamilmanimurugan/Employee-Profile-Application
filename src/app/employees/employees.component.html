@@ -83,6 +83,26 @@
     <input type="text" placeholder="Search employees..." [(ngModel)]="searchText" />
   </div>
 
+  <!-- Filter row -->
+  <div class="filter-row">
+    <select class="filter-select" [(ngModel)]="filterStatus">
+      <option value="">All Status</option>
+      <option value="Active">Active</option>
+      <option value="On Leave">On Leave</option>
+    </select>
+    <select class="filter-select" [(ngModel)]="filterDepartment">
+      <option value="">All Departments</option>
+      @for (dept of uniqueDepartments; track dept) {
+        <option [value]="dept">{{ dept }}</option>
+      }
+    </select>
+    @if (filterStatus || filterDepartment) {
+      <button class="filter-clear-btn" (click)="filterStatus=''; filterDepartment=''">
+        <i class="bi bi-x-circle"></i> Clear
+      </button>
+    }
+  </div>
+
   <!-- Employee table -->
   <div class="employee-table-card">
     <div class="table-top">

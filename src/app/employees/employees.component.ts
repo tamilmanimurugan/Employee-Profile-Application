@@ -23,7 +23,9 @@ const NAME_MAX_LENGTH = 100;
 export class EmployeesComponent implements OnInit {
 
   employees:  Employee[] = [];
-  searchText  = '';
+  searchText      = '';
+  filterStatus    = '';
+  filterDepartment = '';
   submitted   = false;
   showModal   = false;
   editMode    = false;
@@ -244,12 +246,19 @@ export class EmployeesComponent implements OnInit {
 
   get filteredEmployees(): Employee[] {
     const q = this.searchText.toLowerCase();
-    if (!q) return this.employees;
-    return this.employees.filter(e =>
-      e.name.toLowerCase().includes(q)       ||
-      e.email.toLowerCase().includes(q)      ||
-      e.department.toLowerCase().includes(q)
-    );
+    return this.employees.filter(e => {
+      const matchesSearch = !q ||
+        e.name.toLowerCase().includes(q)       ||
+        e.email.toLowerCase().includes(q)      ||
+        e.department.toLowerCase().includes(q);
+      const matchesStatus = !this.filterStatus || e.status === this.filterStatus;
+      const matchesDept   = !this.filterDepartment || e.department === this.filterDepartment;
+      return matchesSearch && matchesStatus && matchesDept;
+    });
+  }
+
+  get uniqueDepartments(): string[] {
+    return [...new Set(this.employees.map(e => e.department).filter(Boolean))].sort();
   }
 
   get nameRequired():    boolean { return this.submitted && !this.employee.name?.trim(); }
