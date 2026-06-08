@@ -115,10 +115,18 @@ export class EmployeesComponent implements OnInit {
       this.employee.image = this.pickUniqueAvatar();
     }
 
+    // API requires non-empty strings — use defaults for optional fields
+    const payload = {
+      ...this.employee,
+      department: this.employee.department?.trim() || 'N/A',
+      role:       this.employee.role?.trim()       || 'N/A',
+      experience: this.employee.experience?.trim() || 'N/A',
+    };
+
     if (this.apiOnline) {
       this.saving    = true;
       this.saveError = '';
-      this.api.create(this.employee).pipe(timeout(15000)).subscribe({
+      this.api.create(payload).pipe(timeout(15000)).subscribe({
         next: (created) => {
           this.saving = false;
           this.closeModal();
