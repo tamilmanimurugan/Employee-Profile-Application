@@ -339,6 +339,14 @@ export class EmployeesComponent implements OnInit {
     );
   }
 
+  getAvatar(emp: Employee): string {
+    if (emp.image && !emp.image.startsWith('data:')) return emp.image;
+    const name = encodeURIComponent(emp.name?.trim() || 'E');
+    const colors = ['2563eb','7c3aed','059669','ea580c','db2777','0891b2'];
+    const bg = colors[(emp.name?.charCodeAt(0) ?? 0) % colors.length];
+    return `https://ui-avatars.com/api/?name=${name}&background=${bg}&color=fff&size=128&bold=true&rounded=true`;
+  }
+
   private pickUniqueAvatar(): string {
     const name  = encodeURIComponent(this.employee.name.trim() || 'Employee');
     const colors = ['2563eb','7c3aed','059669','ea580c','db2777','0891b2'];

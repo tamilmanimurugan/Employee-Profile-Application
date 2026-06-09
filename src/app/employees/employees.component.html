@@ -173,7 +173,7 @@
               <tr>
                 <td>
                   <div class="employee-info">
-                    <img [src]="emp.image" alt="employee" />
+                    <img [src]="getAvatar(emp)" alt="employee" />
                     <div>
                       <h6>{{ emp.name }}</h6>
                       <span>{{ emp.email }}</span>
@@ -216,7 +216,7 @@
         @for (emp of filteredEmployees; track emp.id) {
           <div class="emp-card">
             <div class="emp-card-top">
-              <img [src]="emp.image" alt="employee" class="emp-card-img" />
+              <img [src]="getAvatar(emp)" alt="employee" class="emp-card-img" />
               <div class="emp-card-info">
                 <h6 class="emp-card-name">{{ emp.name }}</h6>
                 <span class="emp-card-email">{{ emp.email }}</span>
