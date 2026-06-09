@@ -711,6 +711,7 @@
 /* Desktop/tablet table — always visible above mobile breakpoint */
 .desktop-table {
   display: block;
+  overflow-x: auto;
 }
 
 /* Mobile search — hidden on desktop */

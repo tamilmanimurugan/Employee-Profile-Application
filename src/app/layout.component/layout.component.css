@@ -838,7 +838,7 @@ body{
 
 /* TABLET — icon-only sidebar */
 
-@media(max-width:992px){
+@media(max-width:1200px){
 
   .sidebar{
     width:90px;
