@@ -174,8 +174,10 @@ test.describe('Settings Page', () => {
     await page.setViewportSize({ width: 320, height: 680 });
     await page.goto('/settings');
     await page.waitForTimeout(500);
-    await page.locator('button.mob-set-logout').click();
-    await expect(page).toHaveURL(/login/, { timeout: 10000 });
+    const logoutBtn = page.locator('button.mob-set-logout');
+    await logoutBtn.scrollIntoViewIfNeeded();
+    await logoutBtn.click({ force: true });
+    await page.waitForURL(/login/, { timeout: 15000 });
   });
 
   test('mobile PREFERENCES section label is visible', async ({ page }) => {

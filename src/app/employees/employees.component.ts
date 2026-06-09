@@ -184,12 +184,14 @@ export class EmployeesComponent implements OnInit {
     this.closeModal();
 
     if (this.apiOnline) {
+      const isBase64 = this.employee.image?.startsWith('data:');
       const updatePayload = {
         ...this.employee,
         department:  this.employee.department?.trim()  || 'N/A',
         role:        this.employee.role?.trim()        || 'N/A',
         experience:  this.employee.experience?.trim()  || 'N/A',
         performance: this.employee.performance ?? 0,
+        image: isBase64 ? (this.employees.find(e => e.id === this.currentId)?.image ?? '') : (this.employee.image ?? ''),
       };
       this.api.update(this.currentId, updatePayload).subscribe({
         next: (updated) => {
