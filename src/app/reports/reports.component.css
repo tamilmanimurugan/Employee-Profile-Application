@@ -244,6 +244,29 @@
   white-space: nowrap;
 }
 
+.emp-name {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-badge.active {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status-badge.inactive {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
 @media (min-width: 1024px) and (max-width: 1200px) {
   .reports-page { padding: 18px; }
   .filter-card { padding: 18px; }
