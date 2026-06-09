@@ -3,7 +3,7 @@
   <div class="reports-header">
     <div>
       <h1><i class="bi bi-bar-chart-line-fill"></i> Reports</h1>
-      <p>Select a month and year to view and download the employee portal report.</p>
+      <p>Select a month and year to view and download the employee report.</p>
     </div>
   </div>
 
@@ -69,40 +69,42 @@
       <div class="no-data-card">
         <i class="bi bi-inbox"></i>
         <h4>No records found</h4>
-        <p>No stories were resolved in the selected period.</p>
+        <p>No employees joined in the selected period.</p>
       </div>
     }
 
     @else {
       <div class="report-table-card">
         <div class="table-header-row">
-          <h4>{{ filteredReports.length }} record(s) found</h4>
+          <h4>{{ filteredReports.length }} employee(s) found</h4>
         </div>
         <div class="table-responsive">
           <table class="report-table">
             <thead>
               <tr>
-                <th>Story #</th>
-                <th>Story Name</th>
-                <th>Project</th>
-                <th>Sub-Project</th>
-                <th>Assigned User</th>
-                <th>Resolved Date</th>
-                <th>Team Lead</th>
-                <th>Project Manager</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Performance</th>
+                <th>Joined Date</th>
               </tr>
             </thead>
             <tbody>
-              @for (row of filteredReports; track row.storyNumber) {
+              @for (emp of filteredReports; track emp.id ?? emp.email) {
                 <tr>
-                  <td><span class="story-num">{{ row.storyNumber }}</span></td>
-                  <td class="story-name">{{ row.storyName }}</td>
-                  <td>{{ row.project }}</td>
-                  <td><span class="sub-proj">{{ row.subProject }}</span></td>
-                  <td>{{ row.assignedUser }}</td>
-                  <td>{{ row.resolvedDate | date:'dd MMM yyyy' }}</td>
-                  <td>{{ row.teamLead }}</td>
-                  <td>{{ row.projectManager }}</td>
+                  <td class="emp-name">{{ emp.name }}</td>
+                  <td>{{ emp.email }}</td>
+                  <td><span class="sub-proj">{{ emp.department }}</span></td>
+                  <td>{{ emp.role }}</td>
+                  <td>
+                    <span class="status-badge" [class.active]="emp.status === 'Active'" [class.inactive]="emp.status !== 'Active'">
+                      {{ emp.status }}
+                    </span>
+                  </td>
+                  <td>{{ emp.performance }}</td>
+                  <td>{{ emp.createdAtUtc | date:'dd MMM yyyy' }}</td>
                 </tr>
               }
             </tbody>
