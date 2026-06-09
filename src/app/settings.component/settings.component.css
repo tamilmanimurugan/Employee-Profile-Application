@@ -327,6 +327,16 @@ label{
 
 .mobile-settings { display: none; }
 
+@media(min-width:1024px) and (max-width:1200px){
+  .settings-page { padding: 16px; }
+  .settings-grid { grid-template-columns: 1fr; gap: 16px; }
+  .quick-cards { grid-template-columns: repeat(2,1fr); }
+}
+
+@media(min-width:1440px){
+  .settings-page { padding: 40px; }
+}
+
 @media(max-width:768px){
 
   .settings-page { padding: 0; }

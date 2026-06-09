@@ -769,6 +769,18 @@
 .api-status-chip.offline { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.4); color: #b45309; }
 .api-status-chip i { animation: none !important; }
 
+@media (min-width: 1024px) and (max-width: 1200px) {
+  .employees-page { padding: 16px; }
+  .employee-table-card { padding: 16px; }
+  .employee-stats { gap: 12px; }
+  .stat-card { padding: 16px; }
+  .filter-row { flex-wrap: wrap; gap: 8px; }
+}
+
+@media (min-width: 1440px) {
+  .employees-page { padding: 32px; }
+}
+
 @media (max-width: 768px) {
   .employees-page {
     padding: 12px;

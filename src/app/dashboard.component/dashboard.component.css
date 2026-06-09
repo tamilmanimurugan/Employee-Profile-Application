@@ -529,7 +529,7 @@
    RESPONSIVE
 ============================================================ */
 
-@media(max-width:992px){
+@media(max-width:1200px){
 
   .stats-grid{
     grid-template-columns: repeat(2,1fr);
@@ -544,6 +544,21 @@
     width: 180px;
   }
 
+}
+
+@media(min-width:1024px) and (max-width:1200px){
+  .stats-grid{
+    grid-template-columns: repeat(2,1fr);
+  }
+  .employee-table-card{
+    overflow-x: auto;
+  }
+}
+
+@media(min-width:1440px){
+  .stats-grid{
+    grid-template-columns: repeat(4,1fr);
+  }
 }
 
 /* ============================================================

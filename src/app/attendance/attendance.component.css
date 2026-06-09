@@ -5,3 +5,12 @@
 .card:hover {
   transform: translateY(-5px);
 }
+
+@media(min-width:1024px) and (max-width:1200px){
+  .container-fluid { padding: 12px; }
+  .col-md-3 { flex: 0 0 50%; max-width: 50%; }
+}
+
+@media(min-width:1440px){
+  .container-fluid { padding: 32px; }
+}
