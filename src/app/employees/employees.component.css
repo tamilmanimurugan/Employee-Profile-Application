@@ -319,11 +319,17 @@
   color: #6b7280;
   padding: 18px;
   border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
 }
 
 .employee-table td {
   padding: 20px 18px;
   vertical-align: middle;
+  white-space: nowrap;
+}
+
+.employee-table .employee-info {
+  min-width: 160px;
 }
 
 .employee-table tbody tr {
