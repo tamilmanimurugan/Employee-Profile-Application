@@ -853,6 +853,25 @@ body{
     display:none;
   }
 
+  .profile-box img{
+    width: 48px;
+    height: 48px;
+  }
+
+  .profile-box{
+    padding: 8px 0;
+    justify-content: center;
+  }
+
+  .logo-section{
+    justify-content: center;
+  }
+
+  .logout-btn{
+    justify-content: center;
+    padding: 10px;
+  }
+
   .main-content{
     margin-left:90px;
     width:calc(100% - 90px);
@@ -860,6 +879,7 @@ body{
 
   .sidebar-menu a{
     justify-content:center;
+    padding: 12px 8px;
   }
 
 }
