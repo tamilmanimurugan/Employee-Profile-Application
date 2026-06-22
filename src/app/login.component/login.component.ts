@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,14 @@ export class LoginComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private router: Router,
+    private auth: AuthService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    if (localStorage.getItem('token')) {
+    if (this.auth.getToken()) {
       this.router.navigate(['/dashboard']);
     }
   }
@@ -29,19 +34,15 @@ export class LoginComponent implements OnInit {
     this.errorMessage = '';
     this.isLoading = true;
 
-    setTimeout(() => {
-      if (
-        this.username === 'admin@gmail.com' &&
-        this.password === '1234'
-      ) {
-        localStorage.setItem('token', 'employee-token');
+    this.auth.login(this.username, this.password).subscribe({
+      next: () => {
         this.router.navigate(['/dashboard']);
-      } else {
+      },
+      error: () => {
         this.isLoading = false;
         this.errorMessage = 'Invalid email or password. Please try again.';
         this.cdr.detectChanges();
       }
-    }, 800);
+    });
   }
-
 }

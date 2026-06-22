@@ -7,6 +7,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 import { EmployeeApiService } from '../services/employee-api.service';
+import { ToastService } from '../services/toast.service';
 import { Employee, CreateEmployeePayload } from '../services/employee.model';
 
 const LS_KEY = 'employees';
@@ -43,7 +44,8 @@ export class EmployeesComponent implements OnInit {
 
   constructor(
     private readonly api:    EmployeeApiService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly toast:  ToastService
   ) {}
 
   ngOnInit(): void { this.loadEmployees(); }
@@ -148,11 +150,10 @@ export class EmployeesComponent implements OnInit {
         }
       });
     } else {
-      // Offline fallback — replace temp id with a real local id
-      this.employees = this.employees.map(e =>
-        e.id === tempId ? { ...e, id: this.nextLocalId++ } : e
-      );
+      // API is offline — roll back the optimistic entry so no phantom record appears
+      this.employees = this.employees.filter(e => e.id !== tempId);
       this.saveLocalStorage();
+      this.toast.warning('Cannot save: API is offline. Please try again when the server is reachable.');
     }
   }
 
@@ -241,18 +242,17 @@ export class EmployeesComponent implements OnInit {
   // ── View details ───────────────────────────────────────────────────────────
 
   viewEmployee(emp: Employee): void {
-    localStorage.setItem('selectedEmployee', JSON.stringify(emp));
-    this.router.navigate(['/employee-details']);
+    this.router.navigate(['/employees', emp.id]);
   }
 
   // ── Image upload ───────────────────────────────────────────────────────────
 
   onImageSelected(event: any): void {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => { this.employee.image = reader.result as string; };
-    reader.readAsDataURL(file);
+    // Base64 images exceed the database column limit (nvarchar 500).
+    // Upload to blob storage and store only the URL is not yet implemented.
+    const input = event.target as HTMLInputElement;
+    if (input) input.value = '';
+    this.saveError = 'Image upload is not available yet. Use a direct image URL in the field instead.';
   }
 
   // ── Computed ───────────────────────────────────────────────────────────────

@@ -1,3 +1,15 @@
+@if (loading) {
+  <div class="container py-5 text-center">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-3 text-muted">Loading employee details...</p>
+  </div>
+} @else if (notFound) {
+  <div class="container py-5 text-center">
+    <i class="bi bi-person-x fs-1 text-danger"></i>
+    <p class="mt-3 text-muted">Employee not found.</p>
+    <button class="btn btn-outline-secondary mt-2" (click)="goBack()">Back to Employees</button>
+  </div>
+} @else {
 <div class="container py-5 employee-details-page">
 
   <!-- TOP BAR -->
@@ -206,21 +218,13 @@
 
           <div class="performance-label">
 
-            <span *ngIf="employee?.performance >= 90">
-              Excellent Performance 
-            </span>
-
-            <span
-              *ngIf="employee?.performance >= 70 &&
-                     employee?.performance < 90">
-
-              Good Performance 
-            </span>
-
-            <span *ngIf="employee?.performance < 70">
-
-              Needs Improvement ⚠️
-            </span>
+            @if ((employee?.performance ?? 0) >= 90) {
+              <span>Excellent Performance</span>
+            } @else if ((employee?.performance ?? 0) >= 70) {
+              <span>Good Performance</span>
+            } @else {
+              <span>Needs Improvement ⚠️</span>
+            }
 
           </div>
 
@@ -233,3 +237,4 @@
   </div>
 
 </div>
+}

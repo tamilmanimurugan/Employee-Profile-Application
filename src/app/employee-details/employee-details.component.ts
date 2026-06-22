@@ -1,47 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
-
-import { Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
+import { EmployeeApiService } from '../services/employee-api.service';
+import { Employee } from '../services/employee.model';
 
 @Component({
   selector: 'app-employee-details',
-
   standalone: true,
-
   imports: [CommonModule, RouterModule],
-
   templateUrl: './employee-details.component.html',
-
   styleUrls: ['./employee-details.component.css']
 })
+export class EmployeeDetailsComponent implements OnInit {
 
-export class EmployeeDetailsComponent
-implements OnInit {
+  employee: Employee | null = null;
+  loading = true;
+  notFound = false;
 
-  employee: any;
-
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private api: EmployeeApiService
+  ) {}
 
   ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    const data = localStorage.getItem(
-      'selectedEmployee'
-    );
-
-    if (data) {
-
-      this.employee = JSON.parse(data);
-
+    if (!id) {
+      this.notFound = true;
+      this.loading = false;
+      return;
     }
 
+    this.api.getById(id).subscribe({
+      next: (emp) => {
+        this.employee = emp;
+        this.loading = false;
+      },
+      error: () => {
+        this.notFound = true;
+        this.loading = false;
+      }
+    });
   }
 
-  goBack(){
-
+  goBack(): void {
     this.router.navigate(['/employees']);
-
   }
-
 }
