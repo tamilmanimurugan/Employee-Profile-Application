@@ -60,6 +60,14 @@ export class EmployeeApiService {
     );
   }
 
+  uploadPhoto(id: number, file: File): Observable<{ imageUrl: string }> {
+    const formData = new FormData();
+    formData.append('photo', file);
+    return this.http.post<{ imageUrl: string }>(`${API_BASE}/${id}/photo`, formData).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   // Force a fresh DB call next time getAll() is invoked
   invalidateCache(): void {
     this.cache$ = null;

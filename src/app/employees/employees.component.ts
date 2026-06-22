@@ -248,11 +248,13 @@ export class EmployeesComponent implements OnInit {
   // ── Image upload ───────────────────────────────────────────────────────────
 
   onImageSelected(event: any): void {
-    // Base64 images exceed the database column limit (nvarchar 500).
-    // Upload to blob storage and store only the URL is not yet implemented.
-    const input = event.target as HTMLInputElement;
-    if (input) input.value = '';
-    this.saveError = 'Image upload is not available yet. Use a direct image URL in the field instead.';
+    const file = event.target.files?.[0];
+    if (!file || !this.currentId) return;
+
+    this.api.uploadPhoto(this.currentId, file).subscribe({
+      next: (res) => { this.employee.image = res.imageUrl; },
+      error: () => { this.saveError = 'Image upload failed. Please try again.'; }
+    });
   }
 
   // ── Computed ───────────────────────────────────────────────────────────────

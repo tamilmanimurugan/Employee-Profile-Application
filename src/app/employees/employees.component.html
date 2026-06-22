@@ -366,11 +366,25 @@
         </div>
 
         <div class="mb-3">
-          <label>Upload Profile Image</label>
-          <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)" />
+          <label>Profile Image URL</label>
+          <input
+            type="url"
+            class="form-control"
+            placeholder="https://example.com/photo.jpg"
+            [(ngModel)]="employee.image"
+            name="image" />
+          <small class="text-muted">Paste a direct image link (max 500 characters)</small>
         </div>
 
-        @if (employee.image) {
+        @if (editMode && currentId) {
+          <div class="mb-3">
+            <label>Upload Profile Photo</label>
+            <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)" />
+            <small class="text-muted">Upload replaces the image URL above</small>
+          </div>
+        }
+
+        @if (employee.image && !employee.image.startsWith('data:')) {
           <div class="image-preview">
             <img [src]="employee.image" alt="preview" />
           </div>
